@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00FF0000"
+    android:maxHeight="130sp">
+
+    <TextView
+        android:id="@+id/text_heure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/heure"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="@string/dosage"
+        app:layout_constraintStart_toStartOf="@+id/text_heure"
+        app:layout_constraintTop_toBottomOf="@+id/text_heure" />
+
+
+    <NumberPicker
+        android:id="@+id/np_dosage"
+        android:layout_width="70dp"
+        android:layout_height="63dp"
+        android:clickable="false"
+        android:ems="10"
+        android:inputType="number"
+        android:longClickable="false"
+        app:layout_constraintBottom_toBottomOf="@+id/textView11"
+        app:layout_constraintEnd_toEndOf="@+id/text_timepicker"
+        app:layout_constraintTop_toTopOf="@+id/textView11" />
+
+    <TextView
+        android:id="@+id/text_timepicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="08:00"
+        android:textColor="@color/clickable_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/text_heure"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toEndOf="@+id/text_heure"
+        app:layout_constraintTop_toTopOf="@+id/text_heure"
+    />
+
+    <ImageButton
+        android:id="@+id/btn_delete"
+        android:layout_width="50dp"
+        android:layout_height="46dp"
+        android:backgroundTint="#00FF0000"
+        android:scaleType="fitCenter"
+        android:src="@drawable/delete"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_timepicker"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

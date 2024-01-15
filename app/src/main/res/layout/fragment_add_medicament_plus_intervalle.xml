@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text_timepicker_endHour"
+        android:layout_width="47dp"
+        android:layout_height="30dp"
+        android:text="08:00"
+        android:textAlignment="center"
+        android:textColor="@color/clickable_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/text_pause_entre"
+        app:layout_constraintEnd_toStartOf="@+id/text_et"
+        app:layout_constraintStart_toEndOf="@+id/text_pause_entre"
+        app:layout_constraintTop_toTopOf="@+id/text_pause_entre"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/text_timepicker_beginHour"
+        android:layout_width="47dp"
+        android:layout_height="30dp"
+        android:text="08:00"
+        android:textAlignment="center"
+        android:textColor="@color/clickable_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/text_pause_entre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.17"
+        app:layout_constraintStart_toEndOf="@+id/text_et"
+        app:layout_constraintTop_toTopOf="@+id/text_pause_entre"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/next_button"
+        style="@style/CustomButtonStyle3"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/suivant"
+        android:textColor="@color/clickable_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
+
+    <include
+        android:id="@+id/back_button"
+        layout="@layout/back_button" />
+
+    <TextView
+        android:id="@+id/intervalle_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/intervalle"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_button"
+        app:layout_constraintVertical_bias="0.07999998" />
+
+    <TextView
+        android:id="@+id/text_rappel_tous"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rappel_toutes_les"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/intervalle_title"
+        app:layout_constraintVertical_bias="0.19999999" />
+
+    <TextView
+        android:id="@+id/text_pause_entre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/faire_pause_entre"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/text_rappel_tous"
+        app:layout_constraintTop_toBottomOf="@+id/textView12"
+        app:layout_constraintVertical_bias="0.279" />
+
+    <TextView
+        android:id="@+id/text_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/et"
+        app:layout_constraintBottom_toBottomOf="@+id/text_pause_entre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.37"
+        app:layout_constraintStart_toEndOf="@+id/text_pause_entre"
+        app:layout_constraintTop_toTopOf="@+id/text_pause_entre"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/text_hour_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/heures"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.78"
+        app:layout_constraintStart_toEndOf="@+id/text_rappel_tous"
+        app:layout_constraintTop_toTopOf="@+id/text_rappel_tous" />
+
+    <NumberPicker
+        android:id="@+id/numberPicker"
+        android:layout_width="72dp"
+        android:layout_height="83dp"
+        android:layout_marginEnd="20dp"
+        android:clickable="false"
+        app:layout_constraintBottom_toBottomOf="@+id/text_rappel_tous"
+        app:layout_constraintEnd_toStartOf="@+id/text_hour_day"
+        app:layout_constraintTop_toTopOf="@+id/text_rappel_tous" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dosage_du_medicament"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/text_rappel_tous"
+        app:layout_constraintTop_toBottomOf="@+id/text_rappel_tous"
+        app:layout_constraintVertical_bias="0.18" />
+
+    <EditText
+        android:id="@+id/numberPicker_weight"
+        android:layout_width="72dp"
+        android:layout_height="56dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toBottomOf="@+id/textView12"
+        app:layout_constraintEnd_toEndOf="@+id/numberPicker"
+        app:layout_constraintStart_toStartOf="@+id/numberPicker"
+        app:layout_constraintTop_toTopOf="@+id/textView12" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

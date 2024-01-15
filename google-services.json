@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "33750974911",
+    "project_id": "medimate-eb2e9",
+    "storage_bucket": "medimate-eb2e9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33750974911:android:c5c4736ea6cc418d38210a",
+        "android_client_info": {
+          "package_name": "com.example.mms"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoN4YLvpp9ZKHR3xecB91wjtfBS9Q7M0g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

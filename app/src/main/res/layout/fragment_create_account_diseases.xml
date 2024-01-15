@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.createAccount.CADiseasesFragment">
+
+
+    <include
+        android:id="@+id/back_button"
+        layout="@layout/back_button" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/creer_mon_compte"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/text_soucis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/soucis"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.15" />
+
+    <TextView
+        android:id="@+id/edit_soucis"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/text_soucis"
+        app:layout_constraintTop_toBottomOf="@+id/text_soucis" />
+
+    <ImageButton
+        android:id="@+id/button_add_health_disease"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/baseline_add_24"
+        style="@style/CustomButtonStyle1"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_soucis"
+        app:layout_constraintStart_toEndOf="@+id/edit_soucis"
+        app:layout_constraintTop_toTopOf="@+id/edit_soucis"
+        app:tint="@color/black" />
+
+    <TextView
+        android:id="@+id/text_regime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/regime"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="@+id/text_soucis"
+        app:layout_constraintTop_toBottomOf="@+id/edit_soucis"
+        app:layout_constraintVertical_bias="0.10" />
+
+    <TextView
+        android:id="@+id/edit_regime"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/text_regime"
+        app:layout_constraintTop_toBottomOf="@+id/text_regime" />
+
+    <ImageButton
+        android:id="@+id/button_add_diet_plan"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/baseline_add_24"
+        style="@style/CustomButtonStyle1"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_regime"
+        app:layout_constraintStart_toEndOf="@+id/edit_regime"
+        app:layout_constraintTop_toTopOf="@+id/edit_regime"
+        app:tint="@color/black" />
+
+
+    <TextView
+        android:id="@+id/text_allergies"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/allergies"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="@+id/text_soucis"
+        app:layout_constraintTop_toBottomOf="@+id/edit_regime"
+        app:layout_constraintVertical_bias="0.15" />
+
+    <TextView
+        android:id="@+id/edit_allergies"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/text_allergies"
+        app:layout_constraintTop_toBottomOf="@+id/text_allergies" />
+
+    <ImageButton
+        android:id="@+id/button_add_allergies"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/baseline_add_24"
+        style="@style/CustomButtonStyle1"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_allergies"
+        app:layout_constraintStart_toEndOf="@+id/edit_allergies"
+        app:layout_constraintTop_toTopOf="@+id/edit_allergies"
+        app:tint="@color/black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cette fonctionnalité n'est pas encore disponible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_allergies" />
+
+    <Button
+        android:id="@+id/button_suivant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/suivant"
+        style="@style/CustomButtonStyle3"
+        android:textColor="@color/clickable_blue"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

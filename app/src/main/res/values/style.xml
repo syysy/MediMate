@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomButtonStyle1">
+        <item name="android:background">@drawable/button_style_1</item>
+    </style>
+
+    <style name="CustomButtonStyle2">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="CustomButtonStyle3">
+        <item name="android:background">@drawable/button_style_3</item>
+        <item name="android:textColor">@color/clickable_blue</item>
+    </style>
+
+    <style name="CustomButtonStyleDisable">
+        <item name="android:background">@drawable/button_style_3_disable</item>
+        <item name="android:textColor">@color/clickable_blue_disable</item>
+    </style>
+
+    <style name="BoxShadow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">12dp</item> <!-- Marge autour de la vue -->
+        <item name="android:elevation">3dp</item> <!-- Élévation (définit l'ombre) -->
+        <item name="android:background">@color/white</item> <!-- Couleur de fond de la vue -->
+        <item name="android:outlineProvider">background</item>
+    </style>
+
+</resources>

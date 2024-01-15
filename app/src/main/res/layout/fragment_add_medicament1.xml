@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/back_button"
+        layout="@layout/back_button" />
+
+    <ImageView
+        android:id="@+id/add_medicament_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/add_medicament"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_button"
+        android:contentDescription="@string/pitite_image_de_medicament" />
+
+    <TextView
+        android:id="@+id/add_medicament_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/informations_du_medicament"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_medicament_image" />
+
+    <TextView
+        android:id="@+id/label_medicament_nom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nom_du_medicament"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/edit_medicament_nom"
+        app:layout_constraintTop_toBottomOf="@+id/add_medicament_title"
+        app:layout_constraintVertical_bias="0.10" />
+
+    <EditText
+        android:id="@+id/edit_medicament_nom"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:longClickable="false"
+        android:inputType="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/label_medicament_nom" />
+
+    <TextView
+        android:id="@+id/label_medicament_forme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/forme_pharamaceutique"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/spinner_forme"
+        app:layout_constraintTop_toBottomOf="@+id/edit_medicament_nom"
+        app:layout_constraintVertical_bias="0.10" />
+
+    <Spinner
+        android:id="@+id/spinner_forme"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/label_medicament_forme" />
+
+
+    <TextView
+        android:id="@+id/label_medicament_dosage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dosage_du_medicament"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/spinner_dosage"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_forme"
+        app:layout_constraintVertical_bias="0.10" />
+
+    <Spinner
+        android:id="@+id/spinner_dosage"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/label_medicament_dosage" />
+
+    <Button
+        android:id="@+id/next_button"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/suivant"
+        android:textColor="@color/clickable_blue"
+        style="@style/CustomButtonStyle3"
+
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

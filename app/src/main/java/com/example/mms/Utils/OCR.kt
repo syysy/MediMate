@@ -1,0 +1,229 @@
+package com.example.mms.Utils
+
+import android.os.Parcel
+import android.os.Parcelable
+import android.util.Log
+import androidx.core.text.isDigitsOnly
+import com.example.mms.database.inApp.AppDatabase
+import com.example.mms.database.inApp.SingletonDatabase
+import com.example.mms.ui.add.AddActivity
+import com.example.mms.ui.add.ScanLoading
+import edu.stanford.nlp.simple.Document
+import kotlinx.serialization.Serializable
+import kotlin.math.abs
+import java.util.regex.Pattern
+
+class OCR(private val db: AppDatabase) {
+    fun extractMedicationInfo(text: String): List<MedicationInfo> {
+        val tokens = tokenText(text)
+        val listMedFound = extractMedicationName(tokens)
+        val dosages = extractDosage(tokens)
+        val listMedDos = joinMedDos(listMedFound, dosages)
+        return listMedDos.map {
+            MedicationInfo(
+                it.value.split(" ")[0].uppercase(),
+                it.value.split(" ")[1],
+                "",
+                ""
+            )
+        }
+
+    }
+
+    private fun tokenText(text: String): List<String> {
+        var text2 = text.lowercase()
+        text2 = transformText(text2)
+        text2 = removeSpaceBetweenNumbers(text2)
+        val document = Document(text2)
+        return document.sentences().flatMap { it.words() }
+    }
+
+    private fun extractMedicationName(tokens: List<String>): Map<Int, String> {
+        val listMedicament = db.medicineDao().getAll().map { it.name }.filter { it.length > 2 }
+        val listMedFound = mutableMapOf<Int, String>()
+        for (token in tokens) {
+            for (medicament in listMedicament) {
+                if (levenshteinDistance(token, medicament.lowercase()) <= 2) { // seuil à ajuster
+                    listMedFound[tokens.indexOf(token)] = medicament.lowercase()
+                }
+            }
+        }
+        return listMedFound
+    }
+
+    private fun extractDosage(tokens: List<String>): Map<Int, String> {
+        val listDosFound = mutableMapOf<Int, String>()
+        for (i in tokens.indices) {
+            if (tokens[i].contains("mg")) {
+                var dosage = ""
+                var j = i - 1
+                while (tokens[j].isDigitsOnly()) {
+                    dosage = tokens[j] + dosage
+                    j--
+                }
+                if (dosage != "")
+                    listDosFound[j + 1] = dosage + "mg"
+            }
+        }
+        return listDosFound
+    }
+
+    private fun joinMedDos(listMed : Map<Int, String>, listDos : Map<Int, String>) : Map<Int, String> {
+        val listMedDos = mutableMapOf<Int, String>()
+        for (i in listDos.keys) {
+            for (j in listMed.keys) {
+                if (abs(i - j) <= 3) {
+                    listMedDos[j] = listMed[j] + " " + listDos[i]
+                }
+            }
+        }
+        return listMedDos
+    }
+
+    private fun extractFrequency(tokens: List<String>): String {
+        // Exemple : Identifier des phrases comme "une fois par jour", "2 fois par jour", etc.
+        val frequencyPattern = Pattern.compile("\\d+ par jour")
+        for (token in tokens) {
+            if (frequencyPattern.matcher(token).find()) {
+                return token
+            }
+        }
+        return ""
+    }
+
+    private fun extractDuration(tokens: List<String>): String {
+        // Exemple : Identifier des phrases comme "pendant 10 jours", "pendant 2 semaines", etc.
+        val durationPattern = Pattern.compile("pendant \\d+ (jours|semaines|mois)")
+        for (token in tokens) {
+            if (durationPattern.matcher(token).find()) {
+                return token
+            }
+        }
+        return ""
+    }
+
+    private fun transformText(text: String) : String {
+        val text2 = text.replace('o', '0')
+        var res = ""
+        for (i in text2.indices) {
+            if (text2[i] == '0') {
+                when (i) {
+                    0 -> {
+                        res += if (text2[1] in 'a'..'z') {
+                            'o'
+                        } else {
+                            '0'
+                        }
+                    }
+                    text2.length - 1 -> {
+                        res += if (text2[i - 1] in 'a'..'z') {
+                            'o'
+                        } else {
+                            '0'
+                        }
+                    }
+                    else -> {
+                        res += if ((text2[i - 1] in 'a'..'z' && text2[i + 1] in 'a'..'z') ||
+                            (text2[i - 1] in 'a'..'z' && text2[i + 1] == ' ') ||
+                            (text2[i - 1] == ' ' && text2[i + 1] in 'a'..'z')) {
+                            'o'
+                        } else {
+                            '0'
+                        }
+                    }
+                }
+            } else {
+                res += text2[i]
+            }
+
+        }
+        return res
+    }
+
+    private fun removeSpaceBetweenNumbers(text: String) : String {
+        var res = ""
+        for (i in text.indices) {
+            if (text[i] == ' ') {
+                if (i > 0 && i < text.length - 1) {
+                    if (text[i - 1] in '0'..'9' && text[i + 1] in '0'..'9') {
+                        continue
+                    }
+                }
+            }
+            res += text[i]
+        }
+        return res
+    }
+
+
+    private fun levenshteinDistance(lhs : CharSequence, rhs : CharSequence) : Int {
+        if (lhs == rhs) { return 0 }
+        if (lhs.isEmpty()) { return rhs.length }
+        if (rhs.isEmpty()) { return lhs.length }
+
+        val len0 = lhs.length + 1
+        val len1 = rhs.length + 1
+
+        if (abs(len0 - len1) > 3){
+            return 1000
+        }
+
+        var cost = Array(len0) { it }
+        var newCost = Array(len0) { 0 }
+
+        for (i in 1 until len1) {
+            newCost[0] = i
+
+            for (j in 1 until len0) {
+                val match = if(lhs[j - 1] == rhs[i - 1]) 0 else 1
+
+                val costReplace = cost[j - 1] + match
+                val costInsert = cost[j] + 1
+                val costDelete = newCost[j - 1] + 1
+
+                newCost[j] = minOf(minOf(costInsert, costDelete), costReplace)
+            }
+
+            val swap = cost
+            cost = newCost
+            newCost = swap
+        }
+
+        return cost[len0 - 1]
+    }
+
+    data class MedicationInfo(
+        val name: String,
+        val dosage: String,
+        val frequency: String,
+        val duration: String
+    ) : Parcelable {
+        constructor(parcel: Parcel) : this(
+            parcel.readString() ?: "",
+            parcel.readString() ?: "",
+            parcel.readString() ?: "",
+            parcel.readString() ?: ""
+        )
+
+        override fun writeToParcel(parcel: Parcel, flags: Int) {
+            parcel.writeString(name)
+            parcel.writeString(dosage)
+            parcel.writeString(frequency)
+            parcel.writeString(duration)
+        }
+
+        override fun describeContents(): Int {
+            return 0
+        }
+
+        companion object CREATOR : Parcelable.Creator<MedicationInfo> {
+            override fun createFromParcel(parcel: Parcel): MedicationInfo {
+                return MedicationInfo(parcel)
+            }
+
+            override fun newArray(size: Int): Array<MedicationInfo?> {
+                return arrayOfNulls(size)
+            }
+        }
+    }
+}

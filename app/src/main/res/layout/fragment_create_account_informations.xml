@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/back_button"
+        layout="@layout/back_button" />
+
+
+    <TextView
+        android:id="@+id/text_creer_compte"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/creer_mon_compte"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+    <TextView
+        android:id="@+id/text_sexe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/sexe"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_creer_compte"
+        app:layout_constraintVertical_bias="0.04" />
+
+    <Spinner
+        android:id="@+id/spinner_sexe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:entries="@array/sexe"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/text_sexe"
+        app:layout_constraintStart_toStartOf="@+id/text_sexe"
+        app:layout_constraintTop_toBottomOf="@+id/text_sexe" />
+
+    <TextView
+        android:id="@+id/text_nom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nom"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_sexe"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <EditText
+        android:id="@+id/edit_nom"
+        android:layout_width="300dp"
+        android:singleLine="true"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/text_nom"
+        app:layout_constraintTop_toBottomOf="@+id/text_nom" />
+
+    <TextView
+        android:id="@+id/text_prenom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/prenom"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_nom"
+        app:layout_constraintVertical_bias="0.02" />
+
+    <EditText
+        android:id="@+id/edit_prenom"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="@+id/text_prenom"
+        app:layout_constraintTop_toBottomOf="@+id/text_prenom" />
+
+    <TextView
+        android:id="@+id/text_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/email"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_prenom"
+        app:layout_constraintVertical_bias="0.02" />
+
+    <EditText
+        android:id="@+id/edit_email"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="@+id/text_email"
+        app:layout_constraintTop_toBottomOf="@+id/text_email" />
+
+    <TextView
+        android:id="@+id/text_age"
+        android:layout_width="75dp"
+        android:layout_height="wrap_content"
+        android:text="@string/date_naissance"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintVertical_bias="0.10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/text_taille"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_email" />
+
+    <EditText
+        android:id="@+id/edit_birthdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        android:text="---"
+        android:longClickable="false"
+        android:inputType="none"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="@+id/text_age"
+        app:layout_constraintStart_toStartOf="@+id/text_age"
+        app:layout_constraintTop_toBottomOf="@+id/text_age" />
+
+    <TextView
+        android:id="@+id/text_taille"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/taille"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/text_age"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/text_age" />
+
+    <EditText
+        android:id="@+id/edit_taille"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:singleLine="true"
+        android:maxLength="3"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_birthdate"
+        app:layout_constraintEnd_toEndOf="@+id/text_taille"
+        app:layout_constraintStart_toStartOf="@+id/text_taille"
+        app:layout_constraintTop_toBottomOf="@+id/text_age" />
+
+    <TextView
+        android:id="@+id/text_poids"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/poids"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/text_taille"
+        app:layout_constraintTop_toTopOf="@+id/text_taille" />
+
+    <EditText
+        android:id="@+id/edit_poids"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:singleLine="true"
+        android:maxLength="3"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_taille"
+        app:layout_constraintEnd_toEndOf="@+id/text_poids"
+        app:layout_constraintStart_toStartOf="@+id/text_poids"
+        app:layout_constraintTop_toTopOf="@+id/edit_taille" />
+
+
+    <Button
+        android:id="@+id/button_suivant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/suivant"
+        style="@style/CustomButtonStyle3"
+        android:textColor="@color/clickable_blue"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.95" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

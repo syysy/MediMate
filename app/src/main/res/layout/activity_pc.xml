@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/back_button"
+        layout="@layout/back_button" />
+
+    <TextView
+        android:id="@+id/titrePC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/titrePC"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_button"
+        app:layout_constraintVertical_bias="0.04" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/titrePC">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="200dp">
+
+            <TextView
+                android:id="@+id/pcdate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pcdate"
+                android:textSize="16sp"
+                android:paddingStart="12dp"
+                android:paddingEnd="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/pc1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pc1"
+                android:textSize="16sp"
+                android:paddingStart="12dp"
+                android:paddingEnd="10dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/pcdate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/pc11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pc11"
+                android:textSize="16sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/pc1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/pc12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pc12"
+                android:textSize="16sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/pc11"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/pc2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pc2"
+                android:textSize="16sp"
+                android:paddingStart="12dp"
+                android:paddingEnd="10dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/pc12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/pc21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pc21"
+                android:textSize="16sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/pc2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/pc3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pc3"
+                android:textSize="16sp"
+                android:paddingStart="12dp"
+                android:paddingEnd="10dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/pc21"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/pc31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pc31"
+                android:textSize="16sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/pc3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/pc32"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pc32"
+                android:textSize="16sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/pc31"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/pc4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pc4"
+                android:textSize="16sp"
+                android:paddingStart="12dp"
+                android:paddingEnd="10dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/pc32"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/pc41"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pc41"
+                android:textSize="16sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/pc4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/pc42"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pc42"
+                android:textSize="16sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/pc41"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/pc5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pc5"
+                android:textSize="16sp"
+                android:paddingStart="12dp"
+                android:paddingEnd="10dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/pc42"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/pc51"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pc51"
+                android:textSize="16sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/pc5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/pc6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pc6"
+                android:textSize="16sp"
+                android:paddingStart="16dp"
+                android:paddingEnd="10dp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/pc51"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/pc61"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pc61"
+                android:textSize="16sp"
+                android:paddingStart="20dp"
+                android:paddingEnd="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/pc6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

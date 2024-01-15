@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/back_button"
+        layout="@layout/back_button" />
+
+    <Button
+        android:id="@+id/btnMon"
+        style="@style/CustomButtonStyle3"
+        android:layout_width="53dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="5dp"
+        android:text="Mon"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toStartOf="@+id/btnWed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_button" />
+
+    <Button
+        android:id="@+id/btnTue"
+        style="@style/CustomButtonStyle3"
+        android:layout_width="53dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:text="Tue"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@+id/btnMon"
+        app:layout_constraintEnd_toStartOf="@+id/btnWed"
+        app:layout_constraintStart_toEndOf="@+id/btnMon"
+        app:layout_constraintTop_toTopOf="@+id/btnMon"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btnWed"
+        style="@style/CustomButtonStyle3"
+        android:layout_width="53dp"
+        android:layout_height="45dp"
+        android:text="Wed"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@+id/btnTue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnTue"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btnThu"
+        style="@style/CustomButtonStyle3"
+        android:layout_width="53dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:text="Thu"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@+id/btnTue"
+        app:layout_constraintEnd_toStartOf="@+id/btnFri"
+        app:layout_constraintStart_toEndOf="@+id/btnWed"
+        app:layout_constraintTop_toTopOf="@+id/btnTue"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btnFri"
+        style="@style/CustomButtonStyle3"
+        android:layout_width="53dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="5dp"
+        android:text="Fri"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@+id/btnThu"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnWed"
+        app:layout_constraintTop_toTopOf="@+id/btnThu"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btnSat"
+        style="@style/CustomButtonStyle3"
+        android:layout_width="53dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="4dp"
+        android:text="Sat"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@+id/btnWed"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="@+id/btnTue"
+        app:layout_constraintTop_toBottomOf="@+id/btnWed" />
+
+    <Button
+        android:id="@+id/btnSun"
+        style="@style/CustomButtonStyle3"
+        android:layout_width="53dp"
+        android:layout_height="45dp"
+        android:text="Sun"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@+id/btnSat"
+        app:layout_constraintEnd_toEndOf="@+id/btnThu"
+        app:layout_constraintStart_toStartOf="@+id/btnWed"
+        app:layout_constraintTop_toTopOf="@+id/btnSat" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/hourWeightListrv"
+        android:layout_width="410dp"
+        android:layout_height="322dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSat" />
+
+    <Button
+        android:id="@+id/btnAddMedi"
+        style="@style/CustomButtonStyle3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="10sp"
+        android:paddingRight="10sp"
+        android:text="@string/ajouter_tache"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hourWeightListrv" />
+
+    <Button
+        android:id="@+id/next_button"
+        style="@style/CustomButtonStyle3"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/suivant"
+        android:textColor="@color/clickable_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

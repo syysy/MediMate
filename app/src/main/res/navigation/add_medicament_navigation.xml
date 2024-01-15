@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_medicament_navigation"
+    app:startDestination="@id/navigation_add_medicament1">
+
+    <fragment
+        android:id="@+id/navigation_add_medicament1"
+        android:name="com.example.mms.ui.add.AddMedicament1Fragment"
+        android:label="AddMedicament1Fragment"
+        tools:layout="@layout/fragment_add_medicament1">
+        <action
+            android:id="@+id/action_AM1Fragment_to_AM2_Fragment"
+            app:destination="@id/navigation_add_medicament2"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_medicament2"
+        android:name="com.example.mms.ui.add.AddMedicament2Fragment"
+        android:label="AddMedicament2Fragment"
+        tools:layout="@layout/fragment_add_medicament2">
+        <action
+            android:id="@+id/action_AM2_Fragment_to_AMPlus_Fragment"
+            app:destination="@id/navigation_add_medicament_plus" />
+        <action
+            android:id="@+id/action_AM2_Fragment_to_AM1Fragment"
+            app:destination="@id/navigation_add_medicament1" />
+        <action
+            android:id="@+id/action_AM2_Fragment_to_AMUnOuPlusieursParJours_Fragment"
+            app:destination="@id/navigation_add_medicament_un_plusieurs_par_jours" />
+        <action
+            android:id="@+id/action_AM2_Fragment_to_AMOneTake_Fragment"
+            app:destination="@id/navigation_add_medicament_OneTake" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_medicament_plus"
+        android:name="com.example.mms.ui.add.AddMedicamentPlusOptionFragment"
+        android:label="AddMedicamentPlusFragment"
+        tools:layout="@layout/fragment_add_medicament_plus_option">
+        <action
+            android:id="@+id/action_AMPlus_Fragment_to_AM2_Fragment"
+            app:destination="@id/navigation_add_medicament2" />
+        <action
+            android:id="@+id/action_AMPlus_Fragment_to_AMPlusIntervalle_Fragment"
+            app:destination="@id/navigation_add_medicament_plus_intervalle" />
+        <action
+            android:id="@+id/action_navigation_AMPlus_to_AMJoursSpecifiques_Fragement"
+            app:destination="@id/navigation_add_medicament_JoursSpecifiques" />
+        <action
+            android:id="@+id/action_navigation_AMPlus_to_AMCycle"
+            app:destination="@id/navigation_add_medicament_cycle" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_medicament_plus_intervalle"
+        android:name="com.example.mms.ui.add.AddMedicamentIntervalleFragment"
+        android:label="AddMedicamentPlusIntervalleFragment"
+        tools:layout="@layout/fragment_add_medicament_plus_intervalle">
+        <action
+            android:id="@+id/action_AMIntervalle_to_AMPlus"
+            app:destination="@id/navigation_add_medicament_plus" />
+        <action
+            android:id="@+id/action_AMIntervalle_to_AMStorage"
+            app:destination="@id/navigation_add_medicament_storage" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_medicament_un_plusieurs_par_jours"
+        android:name="com.example.mms.ui.add.AddMedicamentUnOuPlusParJourFragment"
+        android:label="AddMedicamentUnPlusieursParJoursFragment"
+        tools:layout="@layout/fragment_add_medicament_un_plusieurs_par_jour">
+        <action
+            android:id="@+id/action_AMUnOuPlusParJour_Fragment_to_AMPlus_Fragment"
+            app:destination="@id/navigation_add_medicament2" />
+        <action
+            android:id="@+id/action_AMUnOuPlusParJour_Fragment_to_storage"
+            app:destination="@id/navigation_add_medicament_storage" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_medicament_recap"
+        android:name="com.example.mms.ui.add.AddMedicamentRecapFragment"
+        android:label="AddMedicamentRecapFragment"
+        tools:layout="@layout/fragment_add_recap">
+        <action
+            android:id="@+id/action_recap_to_start_end_date"
+            app:destination="@id/navigation_add_medicament_start_end_date" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_medicament_JoursSpecifiques"
+        android:name="com.example.mms.ui.add.AddMedicamentJoursSpecifiquesFragment"
+        android:label="AddMedicamentJoursSpecifiquesFragment"
+        tools:layout="@layout/fragment_add_medicament_plus_jours_specifiques">
+
+        <action
+            android:id="@+id/action_AMPlus_JoursSpecifiques_to_AMPlus_Fragment"
+            app:destination="@id/navigation_add_medicament_plus" />
+        <action
+            android:id="@+id/action_AMPlus_JoursSpecifiques_to_Storage"
+            app:destination="@id/navigation_add_medicament_storage" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_medicament_OneTake"
+        android:name="com.example.mms.ui.add.AddMedicamentOneTakeFragment"
+        android:label="AddMedicamentOneTakeFragment"
+        tools:layout="@layout/fragment_add_medicament_one_take">
+
+        <action
+            android:id="@+id/action_AMOneTake_to_AM2_Fragment"
+            app:destination="@id/navigation_add_medicament2" />
+        <action
+            android:id="@+id/action_AMOneTake_to_Recap"
+            app:destination="@id/navigation_add_medicament_storage" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_medicament_storage"
+        android:name="com.example.mms.ui.add.AddMedicamentStorageFragment"
+        android:label="AddMedicamentStorageFragment"
+        tools:layout="@layout/fragment_add_medicament_storage">
+        <action
+            android:id="@+id/action_storage_to_start_end_date"
+            app:destination="@id/navigation_add_medicament_start_end_date" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_medicament_start_end_date"
+        android:name="com.example.mms.ui.add.AddMedicamentDateDebutFinFragment"
+        android:label="AddMedicamentStartEndDateFragment"
+        tools:layout="@layout/fragment_add_medicament_start_end_date">
+
+        <action
+            android:id="@+id/action_start_end_date_to_recap"
+            app:destination="@id/navigation_add_medicament_recap" />
+        <action
+            android:id="@+id/action_start_end_date_to_storage"
+            app:destination="@id/navigation_add_medicament_storage" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_medicament_cycle"
+        android:name="com.example.mms.ui.add.AddMedicamentCycleFragment"
+        android:label="AddMedicamentCycleFragment"
+        tools:layout="@layout/fragment_add_medicament_cycle">
+
+        <action
+            android:id="@+id/action_AMCycle_to_AM2_Fragment"
+            app:destination="@id/navigation_add_medicament2" />
+        <action
+            android:id="@+id/action_AMCycle_to_AMCycleHourWeight"
+            app:destination="@id/navigation_add_medicament_cycle_hourweight" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_add_medicament_cycle_hourweight"
+        android:name="com.example.mms.ui.add.AddMedicamentCycleHourWeightFragment"
+        android:label="AddMedicamentCycleHourWeightFragment"
+        tools:layout="@layout/fragment_add_medicament_cycle_hourweight">
+
+        <action
+            android:id="@+id/action_AMCycleHourWeight_to_AMCycle"
+            app:destination="@id/navigation_add_medicament_cycle" />
+        <action
+            android:id="@+id/action_AMCycleHourWeight_to_Storage"
+            app:destination="@id/navigation_add_medicament_storage" />
+    </fragment>
+</navigation>

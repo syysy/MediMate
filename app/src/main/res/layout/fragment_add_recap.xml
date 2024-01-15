@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/back_button"
+        layout="@layout/back_button" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/recapitulatif_de_votre_tache"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.13" />
+
+    <TextView
+        android:id="@+id/name_medicine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Medicament"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/back_button"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/back_button"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        app:layout_constraintVertical_bias="0.060000002" />
+
+    <TextView
+        android:id="@+id/dosage_medicine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+
+        android:text="Dosage"
+        app:layout_constraintStart_toStartOf="@+id/name_medicine"
+        app:layout_constraintTop_toBottomOf="@+id/name_medicine" />
+
+    <TextView
+        android:id="@+id/type_medecine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="Type de medicament"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.07"
+        app:layout_constraintStart_toEndOf="@+id/dosage_medicine"
+        app:layout_constraintTop_toTopOf="@+id/dosage_medicine" />
+
+    <TextView
+        android:id="@+id/interval_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="Interval"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="@+id/name_medicine"
+        app:layout_constraintTop_toBottomOf="@+id/dosage_medicine" />
+
+    <TextView
+        android:id="@+id/hour_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Heure"
+        android:textSize="20sp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/interval_task"
+        app:layout_constraintStart_toEndOf="@+id/interval_task"
+        app:layout_constraintTop_toTopOf="@+id/interval_task"
+        app:layout_constraintVertical_bias="0.13" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:text="@string/date_prochaine_prise"
+        app:layout_constraintBottom_toTopOf="@+id/date_next_task"
+        app:layout_constraintStart_toStartOf="@+id/date_next_task" />
+
+
+    <TextView
+        android:id="@+id/date_next_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/hour_task"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/interval_task"
+        app:layout_constraintTop_toBottomOf="@+id/hour_task"
+        app:layout_constraintVertical_bias="0.13" />
+
+    <Button
+        android:id="@+id/btn_task_validate"
+        style="@style/CustomButtonStyle3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/valider"
+        android:textAllCaps="false"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSpecificdays"
+        android:layout_width="391dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date_next_task" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

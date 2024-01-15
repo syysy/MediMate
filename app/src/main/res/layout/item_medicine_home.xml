@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="130sp"
+    style="@style/BoxShadow">
+
+    <TextView
+        android:id="@+id/medicine_home_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10h00"
+        app:layout_constraintBottom_toTopOf="@+id/medicine_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/medicine_home_time_remaining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="Dans 8h"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/tv_stock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/stock"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toEndOf="@+id/medicine_home_time_remaining"
+        app:layout_constraintTop_toTopOf="@+id/medicine_home_time_remaining" />
+
+
+    <TextView
+        android:id="@+id/stock_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_stock"
+        app:layout_constraintTop_toTopOf="@+id/tv_stock" />
+
+    <ImageView
+        android:id="@+id/medicine_image"
+        android:layout_width="68dp"
+        android:layout_height="77dp"
+        app:layout_constraintBottom_toBottomOf="@+id/medicine_home_time_remaining"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/medicine_title"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/sachet" />
+
+    <TextView
+        android:id="@+id/medicine_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="Doliprane (Paracétamol)"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/medicine_image"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <TextView
+        android:id="@+id/medicine_information"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:alpha="50"
+        android:fontFamily="@font/poppins_regular"
+        android:text="1000 mg - Sachet"
+        android:textColor="@color/semi_transparent_black"
+        app:layout_constraintStart_toStartOf="@+id/medicine_title"
+        app:layout_constraintTop_toBottomOf="@+id/medicine_title" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="21dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/medicine_information"
+        app:layout_constraintTop_toBottomOf="@+id/medicine_information"
+        app:srcCompat="@drawable/clock" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/medicine_home_check"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/baseline_check_24"
+        app:backgroundTint="@color/clickable_blue"
+        app:fabCustomSize="40dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

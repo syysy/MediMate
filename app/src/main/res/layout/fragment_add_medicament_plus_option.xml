@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/back_button"
+        layout="@layout/back_button" />
+
+    <ImageView
+        android:id="@+id/add_medicament_image2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/pitite_image_de_calendrier"
+        android:src="@drawable/add_medicament2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_button" />
+
+    <RadioGroup
+        android:id="@+id/radio_frequence"
+        android:layout_width="410dp"
+        android:layout_height="250dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_medicament_image2"
+        app:layout_constraintVertical_bias="0.1">
+
+
+        <RadioButton
+            android:id="@+id/radio_intervalle"
+            android:layout_width="326dp"
+            android:layout_height="wrap_content"
+            android:background="@color/light_gray"
+            android:fontFamily="@font/poppins_bold"
+            android:layoutDirection="rtl"
+            android:text="@string/intervalle"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="328dp"
+            android:layout_height="wrap_content"
+            android:text="ex: un fois toutes les 6 heures, ..."
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="@+id/radio_intervalle"
+            app:layout_constraintTop_toBottomOf="@+id/radio_intervalle" />
+
+        <RadioButton
+            android:id="@+id/radio_specific_day"
+            android:layout_width="325dp"
+            android:layout_height="wrap_content"
+            android:background="@color/light_gray"
+            android:layoutDirection="rtl"
+            android:text="@string/specifique_day"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="332dp"
+            android:layout_height="wrap_content"
+            android:text="@string/ex_specifique_day"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="@+id/radio_specific_day"
+            app:layout_constraintTop_toBottomOf="@+id/radio_specific_day" />
+
+        <RadioButton
+            android:id="@+id/radio_cycle"
+            android:layout_width="322dp"
+            android:layout_height="wrap_content"
+            android:background="@color/light_gray"
+            android:layoutDirection="rtl"
+            android:text="@string/cycle"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="329dp"
+            android:layout_height="wrap_content"
+            android:text="@string/ex_cycle"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="@+id/radio_cycle"
+            app:layout_constraintTop_toBottomOf="@+id/radio_cycle" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/next_button"
+        style="@style/CustomButtonStyle3"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/suivant"
+        android:textColor="@color/clickable_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

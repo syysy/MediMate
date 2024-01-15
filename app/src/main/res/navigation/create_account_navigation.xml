@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/create_account_navigation"
+    app:startDestination="@id/navigation_CAInformations">
+
+    <fragment
+        android:id="@+id/navigation_CAInformations"
+        android:name="com.example.mms.ui.createAccount.CAInformationsFragment"
+        android:label="CAInformationsFragment"
+        tools:layout="@layout/fragment_create_account_informations">
+        <action
+            android:id="@+id/action_navigation_CAInformations_to_navigation_CAPin"
+            app:destination="@id/navigation_CAPin" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_CADiseases"
+        android:name="com.example.mms.ui.createAccount.CADiseasesFragment"
+        android:label="CADiseasesFragment"
+        tools:layout="@layout/fragment_create_account_diseases"/>
+
+    <fragment
+        android:id="@+id/navigation_CAPin"
+        android:name="com.example.mms.ui.createAccount.CAPinFragment"
+        android:label="CAPinFragment"
+        tools:layout="@layout/fragment_create_account_pin">
+        <action
+            android:id="@+id/action_navigation_CAPin_to_navigation_CAInformations"
+            app:destination="@id/navigation_CAInformations" />
+    </fragment>
+</navigation>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/next_button"
+        style="@style/CustomButtonStyle3"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/suivant"
+        android:textColor="@color/clickable_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/takes_cycle"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/add_medicament_image2"
+        app:layout_constraintHorizontal_bias="0.593"
+        app:layout_constraintStart_toStartOf="@+id/add_medicament_image2"
+        app:layout_constraintTop_toBottomOf="@+id/add_medicament_image2" />
+
+    <ImageView
+        android:id="@+id/add_medicament_image2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/pitite_image_de_calendrier"
+        android:src="@drawable/add_medicament2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_button" />
+
+    <include
+        android:id="@+id/back_button"
+        layout="@layout/back_button" />
+
+    <TextView
+        android:id="@+id/treatementDuration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nb_jours_prises"
+        android:fontFamily="@font/poppins_bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintVertical_bias="0.07999998" />
+
+    <TextView
+        android:id="@+id/days1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/jours"
+        android:fontFamily="@font/poppins_bold"
+        app:layout_constraintBottom_toBottomOf="@+id/treatementDuration"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintStart_toEndOf="@+id/treatementDuration"
+        app:layout_constraintTop_toTopOf="@+id/treatementDuration" />
+
+    <EditText
+        android:id="@+id/inputTreatementDuration"
+        android:layout_width="66dp"
+        android:layout_height="53dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toBottomOf="@+id/treatementDuration"
+        app:layout_constraintEnd_toStartOf="@+id/days1"
+        app:layout_constraintHorizontal_bias="0.89"
+        app:layout_constraintStart_toEndOf="@+id/treatementDuration"
+        app:layout_constraintTop_toTopOf="@+id/treatementDuration" />
+
+    <TextView
+        android:id="@+id/treatementRest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/nb_jours_repos"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/treatementDuration"
+        app:layout_constraintVertical_bias="0.16000003" />
+
+    <TextView
+        android:id="@+id/days2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/jours"
+        android:fontFamily="@font/poppins_bold"
+        app:layout_constraintBottom_toBottomOf="@+id/treatementRest"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.87"
+        app:layout_constraintStart_toEndOf="@+id/treatementDuration"
+        app:layout_constraintTop_toTopOf="@+id/treatementRest" />
+
+    <EditText
+        android:id="@+id/inputTreatementRest"
+        android:layout_width="68dp"
+        android:layout_height="52dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toBottomOf="@+id/treatementRest"
+        app:layout_constraintEnd_toStartOf="@+id/days1"
+        app:layout_constraintHorizontal_bias="0.89"
+        app:layout_constraintStart_toEndOf="@+id/treatementDuration"
+        app:layout_constraintTop_toTopOf="@+id/treatementRest" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
