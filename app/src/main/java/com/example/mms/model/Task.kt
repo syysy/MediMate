@@ -55,14 +55,25 @@ data class Task(
 ) {
     constructor() : this(0, "", LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(),LocalDateTime.now(), 0, "", Cycle(), mutableListOf())
 
+    /**
+     * The task is not empty, if the cycle is not empty, the specific days are not empty or the one take hour weight is not null
+     */
     fun isNotEmpty(): Boolean {
         return !this.isEmpty()
     }
 
+    /**
+     * The task is empty, if the cycle is empty, the specific days are empty and the one take hour weight is null
+     */
     fun isEmpty(): Boolean {
         return this.cycle.isEmpty() && this.specificDays.isEmpty() && this.oneTakeHourWeight == null
     }
 
+    /**
+     * String representation of the task
+     *
+     * @return the string representation of the task
+     */
     override fun toString(): String {
         return "$id $medicineCIS: cycle ${this.cycle.isEmpty()}, specificdays ${this.specificDays.size}"
     }

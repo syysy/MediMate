@@ -30,6 +30,12 @@ class Cycle(
 ) {
     constructor() : this(0, 0, 0, 0, 0, mutableListOf())
 
+    /**
+     * Returns true if the cycle is empty.
+     * A cycle is considered empty if all of its fields are 0.
+     *
+     * @return true if the cycle is empty, false otherwise
+     */
     fun isEmpty(): Boolean {
         return this.id == 0 &&
                 this.hoursOfTreatment == 0 &&
@@ -38,6 +44,12 @@ class Cycle(
                 this.hourWeights.isEmpty()
     }
 
+    /**
+     * Returns true if the cycle is not empty.
+     * A cycle is considered not empty if at least one of its fields is not 0.
+     *
+     * @return true if the cycle is not empty, false otherwise
+     */
     fun isNotEmpty(): Boolean {
         return !this.isEmpty()
     }

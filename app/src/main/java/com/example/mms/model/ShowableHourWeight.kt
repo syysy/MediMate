@@ -10,6 +10,11 @@ class ShowableHourWeight (
     val hourWeight: HourWeight,
     val medicineStorage: MedicineStorage?
 ) {
+    /**
+     * If the storage is enough to take the medicine
+     *
+     * @return true if the storage is enough, false otherwise
+     */
     fun hasEnoughStock(): Boolean {
         if (this.medicineStorage == null) {
             return true

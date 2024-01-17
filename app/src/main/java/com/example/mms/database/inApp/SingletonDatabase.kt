@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.mms.database.converter.DateConverter
 
+// Singleton object to get the database
 object SingletonDatabase {
     @Volatile
     private var INSTANCE: AppDatabase? = null

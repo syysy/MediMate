@@ -26,7 +26,7 @@ import com.example.mms.model.MedicineStorage
 import com.example.mms.model.Version
 import com.example.mms.model.medicines.Medicine
 
-
+// Declaration of the database
 @Database(entities = [
     User::class, Medicine::class, Task::class, Cycle::class,
     CycleHourWeight::class, HourWeight::class,
