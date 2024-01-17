@@ -14,6 +14,13 @@ import kotlin.math.abs
 import java.util.regex.Pattern
 
 class OCR(private val db: AppDatabase) {
+
+    /**
+     * Extracts the medication information from the text.
+     *
+     * @param text The text to extract the medication information from.
+     * @return The medication information extracted from the text.
+     */
     fun extractMedicationInfo(text: String): List<MedicationInfo> {
         val tokens = tokenText(text)
         val listMedFound = extractMedicationName(tokens)
@@ -30,6 +37,12 @@ class OCR(private val db: AppDatabase) {
 
     }
 
+    /**
+     * Transforms the text into a list of tokens.
+     *
+     * @param text The text to transform into a list of tokens.
+     * @return The list of tokens.
+     */
     private fun tokenText(text: String): List<String> {
         var text2 = text.lowercase()
         text2 = transformText(text2)
@@ -38,12 +51,18 @@ class OCR(private val db: AppDatabase) {
         return document.sentences().flatMap { it.words() }
     }
 
+    /**
+     * Extracts all the medication names from the tokens.
+     *
+     * @param tokens The tokens to extract the medication name from.
+     * @return The medication names extracted from the tokens, with the index of the first token of the name as key.
+     */
     private fun extractMedicationName(tokens: List<String>): Map<Int, String> {
         val listMedicament = db.medicineDao().getAll().map { it.name }.filter { it.length > 2 }
         val listMedFound = mutableMapOf<Int, String>()
         for (token in tokens) {
             for (medicament in listMedicament) {
-                if (levenshteinDistance(token, medicament.lowercase()) <= 2) { // seuil à ajuster
+                if (levenshteinDistance(token, medicament.lowercase()) <= 2) {
                     listMedFound[tokens.indexOf(token)] = medicament.lowercase()
                 }
             }
@@ -51,6 +70,12 @@ class OCR(private val db: AppDatabase) {
         return listMedFound
     }
 
+    /**
+     * Extracts all the dosages from the tokens.
+     *
+     * @param tokens The tokens to extract the dosages from.
+     * @return The dosages extracted from the tokens, with the index of the first token of the dosage as key.
+     */
     private fun extractDosage(tokens: List<String>): Map<Int, String> {
         val listDosFound = mutableMapOf<Int, String>()
         for (i in tokens.indices) {
@@ -68,6 +93,13 @@ class OCR(private val db: AppDatabase) {
         return listDosFound
     }
 
+    /**
+     * Joins the medication names and dosages.
+     *
+     * @param listMed The medication names, with the index of the first token of the name as key.
+     * @param listDos The dosages, with the index of the first token of the dosage as key.
+     * @return The medication names and dosages joined, with the index of the first token of the name as key.
+     */
     private fun joinMedDos(listMed : Map<Int, String>, listDos : Map<Int, String>) : Map<Int, String> {
         val listMedDos = mutableMapOf<Int, String>()
         for (i in listDos.keys) {
@@ -80,6 +112,12 @@ class OCR(private val db: AppDatabase) {
         return listMedDos
     }
 
+    /**
+     * Extracts the frequencies from the text. (Not used)
+     *
+     * @param tokens The tokens to extract the frequencies from.
+     * @return The frequencies extracted from the text.
+     */
     private fun extractFrequency(tokens: List<String>): String {
         // Exemple : Identifier des phrases comme "une fois par jour", "2 fois par jour", etc.
         val frequencyPattern = Pattern.compile("\\d+ par jour")
@@ -91,6 +129,12 @@ class OCR(private val db: AppDatabase) {
         return ""
     }
 
+    /**
+     * Extracts the duration from the text. (Not used)
+     *
+     * @param tokens The tokens to extract the duration from.
+     * @return The duration extracted from the text.
+     */
     private fun extractDuration(tokens: List<String>): String {
         // Exemple : Identifier des phrases comme "pendant 10 jours", "pendant 2 semaines", etc.
         val durationPattern = Pattern.compile("pendant \\d+ (jours|semaines|mois)")
@@ -102,6 +146,13 @@ class OCR(private val db: AppDatabase) {
         return ""
     }
 
+    /**
+     * Transforms the text to make it easier to extract the medication information.
+     * Replaces wrongly guessed 'o' and '0' by the right one.
+     *
+     * @param text The text to transform.
+     * @return The transformed text.
+     */
     private fun transformText(text: String) : String {
         val text2 = text.replace('o', '0')
         var res = ""
@@ -140,6 +191,12 @@ class OCR(private val db: AppDatabase) {
         return res
     }
 
+    /**
+     * Removes the spaces between numbers.
+     *
+     * @param text The text to remove the spaces between numbers from.
+     * @return The text without spaces between numbers.
+     */
     private fun removeSpaceBetweenNumbers(text: String) : String {
         var res = ""
         for (i in text.indices) {
@@ -156,6 +213,13 @@ class OCR(private val db: AppDatabase) {
     }
 
 
+    /**
+     * Computes the Levenshtein distance between two CharSequences.
+     *
+     * @param lhs The first CharSequence.
+     * @param rhs The second CharSequence.
+     * @return The Levenshtein distance between the two CharSequences.
+     */
     private fun levenshteinDistance(lhs : CharSequence, rhs : CharSequence) : Int {
         if (lhs == rhs) { return 0 }
         if (lhs.isEmpty()) { return rhs.length }
@@ -192,6 +256,14 @@ class OCR(private val db: AppDatabase) {
         return cost[len0 - 1]
     }
 
+    /**
+     * Data class representing the medication information.
+     *
+     * @property name The name of the medication.
+     * @property dosage The dosage of the medication.
+     * @property frequency The frequency of the medication.
+     * @property duration The duration of the medication.
+     */
     data class MedicationInfo(
         val name: String,
         val dosage: String,
