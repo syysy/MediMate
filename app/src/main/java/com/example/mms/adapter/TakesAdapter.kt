@@ -26,6 +26,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.time.LocalDateTime
 import java.util.Date
 
+/**
+ * Adapter for the recycler view of the tasks
+ * @param context the context of the activity
+ * @param items the list of tasks
+ * @param db the database
+ * @param currentDate the current date
+ * @param view the view
+ * @param funUpdateSmiley the function that updates the smiley
+ */
 class TakesAdapter(
     private val context: Context,
     private val items: MutableList<ShowableHourWeight>,
@@ -36,11 +45,15 @@ class TakesAdapter(
 ) :
     RecyclerView.Adapter<TakesAdapter.MyViewHolder>() {
 
+    // Services
     private val tasksService = TasksService(context)
     private val mStorageService = MedicineStorageService(context,view)
 
-    val layout_home = R.layout.item_medicine_home
 
+    /**
+     * Class that represents the view holder of the recycler view
+     * @param itemView the view
+     */
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val taskTitle: TextView = itemView.findViewById(R.id.medicine_title)
         val medicineImage  : ImageView = itemView.findViewById(R.id.medicine_image)
@@ -52,13 +65,23 @@ class TakesAdapter(
         val stock : TextView = itemView.findViewById(R.id.stock_value)
     }
 
+    /**
+     * Function that creates the view holder
+     * @param parent the parent view
+     * @param viewType the view type
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(layout_home, parent, false)
+        val view = inflater.inflate(R.layout.item_medicine_home, parent, false)
         return  MyViewHolder(view)
     }
 
 
+    /**
+     * Function that binds the view holder
+     * @param holder the view holder
+     * @param position the position of the item
+     */
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val item = this.items[position]
         context.run {
@@ -68,6 +91,7 @@ class TakesAdapter(
 
         holder.stock.visibility = View.GONE
         holder.tvStock.visibility = View.GONE
+        // if the medicine is in the storage we display the stock
         if (item.medicineStorage != null) {
             holder.tvStock.visibility = View.VISIBLE
             holder.stock.visibility = View.VISIBLE
@@ -79,10 +103,12 @@ class TakesAdapter(
         }
         holder.taskTime.text = this.context.getString(R.string.a_heures, item.hourWeight.hour)
 
+        // Get the remaining time
         val hourSplited = getHoursMinutesRemaining(item.hourWeight)
         val hoursRemaining = hourSplited.first
         val minutesRemaining = hourSplited.second
 
+        // Display the remaining time
         holder.timeRemaining.text = if (hoursRemaining < 0) {
             context.getString(R.string.dans) + (hoursRemaining * -1).toString() + " " + if (hoursRemaining == -1) context.getString(R.string.heure) else context.getString(R.string.heures)
         } else if (hoursRemaining == 0) {
@@ -90,7 +116,7 @@ class TakesAdapter(
                 context.getString(R.string.dans) + (minutesRemaining * -1).toString() + " " + if (minutesRemaining == -1) context.getString(R.string.minute) else context.getString(R.string.minutes)
             } else {
                 if (minutesRemaining == 1) {
-                    context.getString(R.string.il_y_a_minute, minutesRemaining.toString())
+                    context.getString(R.string.il_y_a_minute)
                 } else {
                     context.getString(R.string.il_y_a_minutes, minutesRemaining.toString())
                 }
@@ -103,6 +129,7 @@ class TakesAdapter(
             }
         }
 
+        // If the task is done we change the color of the item
         holder.itemView.setBackgroundColor(context.getColor(R.color.white))
         holder.buttonTaskChecked.setImageResource(R.drawable.baseline_check_24)
         val today = Date()
@@ -115,6 +142,7 @@ class TakesAdapter(
             t.start()
             t.join()
                 if (takes != null) {
+                    // If the task is done we change the color of the item
                     if (takes!!.isDone) {
                         context.run {
                             holder.buttonTaskChecked.setImageResource(R.drawable.baseline_info_24)
@@ -123,6 +151,7 @@ class TakesAdapter(
                             dialogDetails(item, true, position)
                         }
                     } else {
+                        // Else we set on click of the button buttonTaskChecked the action of validate the takes
                         holder.buttonTaskChecked.setOnClickListener {
                             val tt = Thread {
                                 var dismiss = false
@@ -146,6 +175,7 @@ class TakesAdapter(
                     }
                 }
             } else {
+                // if the takes is not for today we change the color of the item
                 holder.itemView.setBackgroundColor(context.getColor(R.color.light_gray))
                 holder.buttonTaskChecked.setImageResource(R.drawable.baseline_info_24)
                 holder.buttonTaskChecked.setOnClickListener {
@@ -168,6 +198,11 @@ class TakesAdapter(
          //TODO
     }
 
+    /**
+     * Function that returns the remaining time
+     * @param hW the hour weight
+     * @return the remaining time
+     */
     fun getHoursMinutesRemaining(hW: HourWeight): Pair<Int, Int> {
         val hour = hW.hour.split(":")[0].toInt()
         return Pair(
@@ -176,6 +211,13 @@ class TakesAdapter(
         )
     }
 
+    /**
+     * Function that creates the dialog for the takes
+     *
+     * @param sHw the showable hour weight
+     * @param taked if the takes is taked
+     * @param position the position of the item
+     */
     private fun dialogDetails(sHw: ShowableHourWeight, taked : Boolean = false, position: Int) {
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.custom_dialog_info_takes)
@@ -213,12 +255,16 @@ class TakesAdapter(
 
         // Buttons
         val btnCancelTakes = dialog.findViewById<TextView>(R.id.btn_avoid_take)
+        // if the takes is taked we display the button to cancel the takes
         if (taked) {
             btnCancelTakes.text = context.getString(R.string.annuler_la_prise)
             btnCancelTakes.setOnClickListener {
                 val tt = Thread {
+                    // We update the takes
                     db.takesDao().updateIsDone(false, sHw.hourWeight.id, LocalDateTime.now().toLocalDate().atStartOfDay(), LocalDateTime.now())
+                    // We update the smiley
                     funUpdateSmiley()
+                    // We update the stock
                     if (sHw.medicineStorage != null) {
                         sHw.medicineStorage.storage += sHw.hourWeight.weight
                         db.medicineStorageDao().update(sHw.medicineStorage)
@@ -226,13 +272,16 @@ class TakesAdapter(
                 }
                 tt.start()
                 tt.join()
+                // We update the recycler view
                 this@TakesAdapter.notifyItemChanged(position)
                 dialog.dismiss()
             }
         }else{
+            // else we hide the button
             btnCancelTakes.visibility = View.GONE
         }
 
+        // We bind the onClickListener of the button btnInfoTask to the action of going to the page myTasks (dashboard)
         val btnInfoTask = dialog.findViewById<TextView>(R.id.btn_info_task)
         btnInfoTask.setOnClickListener {
             val navView = (context as AppCompatActivity).findViewById<BottomNavigationView>(R.id.nav_view)
