@@ -13,6 +13,11 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
+/**
+ * Extract month and year from a date string
+ * @param dateString date string
+ * @return Pair of month and year
+ */
 fun extractMonthAndYearFromDate(dateString: String): Pair<String, String>? {
     try {
         val inputFormat = SimpleDateFormat("E MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH)
@@ -30,6 +35,11 @@ fun extractMonthAndYearFromDate(dateString: String): Pair<String, String>? {
 }
 
 
+/**
+ * Converts a string to a date, using the format "E MMM dd HH:mm:ss zzz yyyy"
+ * @param dateString date string
+ * @return Date
+ */
 fun stringToDate(dateString: String): Date {
     val inputFormat = SimpleDateFormat("E MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH)
     return inputFormat.parse(dateString)!!
