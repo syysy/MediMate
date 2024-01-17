@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.Locale
 
+//
 class TakesHistoryAdapter (
     private val context: Context,
     private val items: MutableList<ShowableTakes>
