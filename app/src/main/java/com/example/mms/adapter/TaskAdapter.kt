@@ -19,6 +19,12 @@ import com.example.mms.model.medicines.Medicine
 import com.example.mms.service.MedicineStorageService
 import com.example.mms.service.TasksService
 
+/**
+ * Adapter for the recycler view of the tasks
+ * @param context the context of the activity
+ * @param items the list of tasks
+ * @param db the database
+ */
 class TaskAdapter(
     private val context: Context,
     private val items : MutableList<Task>,
@@ -27,7 +33,10 @@ class TaskAdapter(
 
     private val taskService = TasksService(context)
 
-
+    /**
+     * Class that represents the view holder of the recycler view
+     * @param itemView the view
+     */
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
             val medicineName : TextView = itemView.findViewById(R.id.medicine_title)
             val medicineInformation : TextView = itemView.findViewById(R.id.medicine_information)
@@ -36,18 +45,32 @@ class TaskAdapter(
             val detailsTask : Button = itemView.findViewById(R.id.my_medicines_button_details)
     }
 
+    /**
+     * Function that creates the view holder
+     * @param parent the parent view
+     * @param viewType the view type
+     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_medicine_my_medicines, parent, false)
         return MyViewHolder(view)
     }
 
+    /**
+     * Function that returns the number of items
+     */
     override fun getItemCount(): Int {
         return this.items.size
     }
 
+    /**
+     * Function that binds the view holder
+     * @param holder the view holder
+     * @param position the position of the item
+     */
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val item = this.items[position]
         var medicine : Medicine? = null
+        // Get the medicine from the database in a Thread
         val t = Thread {
             medicine = db.medicineDao().getByCIS(item.medicineCIS)
             holder.medicineName.text = medicine!!.name
@@ -67,6 +90,12 @@ class TaskAdapter(
 
     }
 
+    /**
+     * Function that creates the dialog for the task
+     * @param task the task
+     * @param medicine the medicine
+     * @param edit if the task is editable
+     */
     fun dialogTask(task : Task, medicine: Medicine , edit : Boolean) {
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.custom_dialog_tasks)
@@ -85,6 +114,7 @@ class TaskAdapter(
         val tvStock = dialog.findViewById<TextView>(R.id.tv_stock)
         val stock = dialog.findViewById<TextView>(R.id.stock_value)
 
+        // Get the stock or null for a medicine from the database in a Thread
         var medicineStorage : MedicineStorage? = null
         val thread = Thread {
             medicineStorage = db.medicineStorageDao().getMedicineStorageByMedicineId(medicine.code_cis)
