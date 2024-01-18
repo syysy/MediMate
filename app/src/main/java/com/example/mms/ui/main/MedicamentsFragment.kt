@@ -62,7 +62,7 @@ class MedicamentsFragment : Fragment() {
 
         binding.btnHistory.setOnClickListener {
             // get data
-            val takes = this.tasksService.getCurrentUserAllShowableTakes()
+            val takes = this.tasksService.getCurrentUserAllTakenShowableTakes()
 
             // set adapter
             val takesHistoryAdapter = TakesHistoryAdapter(requireContext(), takes)

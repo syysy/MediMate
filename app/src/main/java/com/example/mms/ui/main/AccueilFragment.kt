@@ -5,7 +5,6 @@ import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,46 +64,37 @@ class AccueilFragment : Fragment() {
     ): View {
 
         val viewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
-        // We get the database singleton instance
         db = SingletonDatabase.getDatabase(requireContext())
 
         this.tasksService = TasksService(requireContext())
 
-        // If the user has not allowed the app to send notifications, we ask him
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ActivityCompat.requestPermissions(this.requireActivity(), arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
         }
 
         lifecycleScope.launch {
-            // We get the user connected from the database
             val user = withContext(Dispatchers.IO) {
                 db.userDao().getConnectedUser()
             }
-            // If the user is not connected, we redirect him to the loader activity
             if (user == null) {
                 startActivity(Intent(requireContext(), LoaderActivity::class.java))
             } else {
-                // else we set the user data in the view model
                 viewModel.setUserData(user)
             }
         }
         _binding = FragmentAccueilBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // we get calendarDays from database, those days are filled with tasks of the user connected if there are any
-        // calendarDays list is filled with 5 days, the day selected, 1 day before and 3 after, init with day selected as today
         val calendarRecyclerView = binding.calendarRecyclerView
         calendarDays = getNewCalendarDayList(mutableListOf(), today.time, this.requireContext())
 
 
-        // We set the month and year in the view
         binding.calendarCurrentMonthText.text =
             SimpleDateFormat("MMMM", Locale.FRENCH).format(today.time)
                 .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
         binding.calendarCurrentYearText.text =
             SimpleDateFormat("yyyy", Locale.FRENCH).format(today.time)
 
-        // We set the adapter for the calendar recycler view
         val screenWith = requireActivity().windowManager.currentWindowMetrics.bounds.width()
         val itemWith = screenWith / calendarDays.size
 
@@ -113,7 +103,6 @@ class AccueilFragment : Fragment() {
         calendarRecyclerView.layoutManager =
             LinearLayoutManager(inflater.context, LinearLayoutManager.HORIZONTAL, false)
 
-        // We get the takes of the day selected and we set the adapter for the recycler view of the takes
         val medicinesRV = binding.medicRecyclerView
         userMedicines = calendarDays[1].listTasks.toMutableList()
 
@@ -127,24 +116,20 @@ class AccueilFragment : Fragment() {
         medicinesRV.layoutManager = LinearLayoutManager(root.context)
         medicinesRV.adapter = takesAdapter
 
-        // We set the listener for the calendar recycler view
         calendarAdapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(position: Int) {
                 val clickedDay = calendarDays[position]
-                // We get the takes of the day selected and we set the adapter for the recycler view of the takes
                 val newCalendarDays = getNewCalendarDayList(
                     calendarDays,
                     stringToDate(clickedDay.date),
                     this@AccueilFragment.requireContext()
                 )
-                // we have to clear the list and add the new days because we can't change the list of the adapter
+
                 calendarDays.clear()
                 calendarDays.addAll(newCalendarDays)
-                // we have to toggle the selection of the day selected and notify the adapter
                 calendarAdapter.toggleDaySelection(calendarDays.indexOfFirst { it.date == clickedDay.date })
                 calendarAdapter.notifyDataSetChanged()
 
-                // Same for the takes
                 userMedicines.clear()
                 userMedicines.addAll(clickedDay.listTasks)
                 items.clear()
@@ -154,20 +139,18 @@ class AccueilFragment : Fragment() {
                     )
                 )
                 takesAdapter.updateCurrentDate(stringToDate(clickedDay.date))
+
                 takesAdapter.notifyDataSetChanged()
 
 
-                // If the day selected is not today, we show the button to go back to today
                 if (clickedDay.date != today.time.toString()) binding.floatingActionButtonBackToday.show()
                 else binding.floatingActionButtonBackToday.hide()
 
-                // We update the smiley
                 updateSmiley()
             }
 
         })
 
-        // We set the listener for the calendar adapter
         calendarAdapter.setCalendarAdapterInterface(object : CalendarAdapterInterface {
             override fun onMonthYearChanged(month: String, year: String) {
                 setMonthAndYear(month, year)
@@ -175,7 +158,6 @@ class AccueilFragment : Fragment() {
         })
 
 
-        // We set the listener for the buttons to change the month
         binding.buttonNextMonth.setOnClickListener {
             updateMonth(1)
         }
@@ -186,10 +168,8 @@ class AccueilFragment : Fragment() {
 
         binding.floatingActionButtonBackToday.hide()
 
-        // On click on the floating action button, we go back to today, we update the smiley and we hide the button and update adapters
         binding.floatingActionButtonBackToday.setOnClickListener {
             today.time = Date()
-            // We get the takes of the day selected and we set the adapter for the recycler view of the takes
             val newCalendarDays =
                 getNewCalendarDayList(calendarDays, today.time, this.requireContext())
 
@@ -221,7 +201,6 @@ class AccueilFragment : Fragment() {
         return root
     }
 
-    // Function to update the smiley
     private fun updateSmiley() {
         val numberTakesTook = this.tasksService.getNumberOfTaskDoneToday(items)
         val now = Date()
@@ -232,12 +211,10 @@ class AccueilFragment : Fragment() {
             return
         }
 
-        // If the user has not taken any medicine today, we show the smiley "very happy" and we show a text to tell him to take his medicine
         if (numberTakesTook.second == 0 || items.isEmpty()) {
             binding.imageView.setImageResource(R.drawable.tres_heureux)
             binding.textHome.text = getString(R.string.rien_prendre_aujourd_hui)
         } else {
-            // Else we show the smiley corresponding to the percentage of takes took
             val percent = numberTakesTook.first * 100 / numberTakesTook.second
             if (percent < 25) {
                 binding.imageView.setImageResource(R.drawable.en_colere)
@@ -253,7 +230,6 @@ class AccueilFragment : Fragment() {
         }
     }
 
-    // Function to update the month -> same idea as before with onClickListeners
     fun updateMonth(numberToAdd: Int) {
         val newCalendar = Calendar.getInstance()
         newCalendar.time = stringToDate(getDaySelected().date)
