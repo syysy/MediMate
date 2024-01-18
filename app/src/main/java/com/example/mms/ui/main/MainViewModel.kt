@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mms.model.User
 
+// Class used to share data between main fragments
+
 class MainViewModel : ViewModel() {
     private val _userData = MutableLiveData<User>()
     val userData: LiveData<User> get() = _userData

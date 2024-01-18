@@ -29,6 +29,7 @@ class ProfilFragment : Fragment() {
 
     private val binding get() = _binding!!
 
+    // We use this to get the result of the ModifyAccountActivity
     val modifyContrat : ActivityResultLauncher<Void?> = registerForActivityResult(
         ModifiyAccountContrat()
     ) {
@@ -51,6 +52,7 @@ class ProfilFragment : Fragment() {
         _binding = FragmentProfilBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        // We set an observer on the user data
         viewModel.userData.observe(viewLifecycleOwner) {
             binding.userName.text = it.surname
             binding.userNameProfil.text = it.surname
@@ -63,13 +65,16 @@ class ProfilFragment : Fragment() {
             binding.userHeight.text = "${it.height.toString()} " + resources.getString(R.string.cm)
         }
 
+        // With room we have to launch a thread to get access to the database
         val tt = Thread {
             if (user != null) {
+                // we get the user stats
                 val usersStats = tasksService.getUserStats()
-                Log.d("ProfilFragment", usersStats.toString())
                 val takesDone = usersStats.first
                 val takesPercent = usersStats.second
+                // We need to launch the UI thread to update the UI
                 requireActivity().runOnUiThread {
+                    // We set the progress bar and the text
                     binding.progressBarTakes.setProgress(takesPercent)
                     binding.percentTaken.text = takesPercent.toString() + "%"
                     binding.nbDoses.text = takesDone.toString() + " " + resources.getString(R.string.doses)
@@ -85,9 +90,12 @@ class ProfilFragment : Fragment() {
         tt.start()
         tt.join()
 
+        // buttonLogout setOnClickListener
         binding.buttonLogout.setOnClickListener {
             Thread {
+                // we update the user isConnected to false
                 if (user != null) db.userDao().updateIsConnected(false, user.email)
+                // we go to the loader activity and we clear the stack (we can't go back to the profil fragment)
                 val intent = Intent(this.context, LoaderActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
@@ -101,6 +109,7 @@ class ProfilFragment : Fragment() {
         }
 
         binding.buttonModifier.setOnClickListener {
+            // we launch the contract to modify the account
             modifyContrat.launch(null)
         }
 
