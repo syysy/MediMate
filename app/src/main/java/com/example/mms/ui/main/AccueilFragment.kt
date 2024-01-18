@@ -5,7 +5,6 @@ import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
-import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -107,7 +106,7 @@ class AccueilFragment : Fragment() {
         val medicinesRV = binding.medicRecyclerView
         userMedicines = calendarDays[1].listTasks.toMutableList()
 
-        this.items = this.tasksService.createShoawbleHourWeightsFromTasks(userMedicines)
+        this.items = this.tasksService.createShowableHourWeightsFromTasks(userMedicines)
 
         updateSmiley()
 
@@ -134,7 +133,7 @@ class AccueilFragment : Fragment() {
                 userMedicines.addAll(clickedDay.listTasks)
                 items.clear()
                 items.addAll(
-                    this@AccueilFragment.tasksService.createShoawbleHourWeightsFromTasks(
+                    this@AccueilFragment.tasksService.createShowableHourWeightsFromTasks(
                         userMedicines
                     )
                 )
@@ -186,7 +185,7 @@ class AccueilFragment : Fragment() {
             userMedicines.clear()
             userMedicines.addAll(clickedDay.listTasks)
             items.clear()
-            items.addAll(this.tasksService.createShoawbleHourWeightsFromTasks(userMedicines))
+            items.addAll(this.tasksService.createShowableHourWeightsFromTasks(userMedicines))
             takesAdapter.updateCurrentDate(stringToDate(clickedDay.date))
             takesAdapter.notifyDataSetChanged()
             binding.floatingActionButtonBackToday.hide()
@@ -250,7 +249,7 @@ class AccueilFragment : Fragment() {
         userMedicines.clear()
         userMedicines.addAll(clickedDay.listTasks)
         items.clear()
-        items.addAll(this.tasksService.createShoawbleHourWeightsFromTasks(userMedicines))
+        items.addAll(this.tasksService.createShowableHourWeightsFromTasks(userMedicines))
         takesAdapter.updateCurrentDate(stringToDate(clickedDay.date))
         takesAdapter.notifyDataSetChanged()
 

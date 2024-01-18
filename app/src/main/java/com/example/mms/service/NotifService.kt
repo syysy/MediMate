@@ -44,11 +44,14 @@ class NotifService(
 
 
     /**
-     *
+     * Create a notification channel
      */
     fun createNotificationChannel() {
+        // define the channel's name and description
         val name = this.context.getString(R.string.channel_name_reminder)
         val descriptionText = this.context.getString(R.string.channel_description_reminder)
+
+        // define the importance level of the notification
         val importance = NotificationManager.IMPORTANCE_HIGH
         val channel = NotificationChannel(this.CHANNEL_MEDI_REMINDER, name, importance).apply {
             description = descriptionText
@@ -60,6 +63,13 @@ class NotifService(
         notificationManager.createNotificationChannel(channel)
     }
 
+    /**
+     * Send a notification to remind the user to take his medicine
+     *
+     * @param medicineName The name of the medicine
+     * @param takes The takes of the medicine
+     * @param hasEnoughStock True if the user has enough stock to take the medicine
+     */
     fun sendReminder(medicineName: String, takes: Takes, hasEnoughStock: Boolean) {
         val title = medicineName
         val message = this.context.getString(R.string.notification_message)
@@ -74,6 +84,7 @@ class NotifService(
         }
         val pendingIntent: PendingIntent = PendingIntent.getActivity(this.context, 3, intent, PendingIntent.FLAG_IMMUTABLE)
 
+        // Build the notification
         val builder = NotificationCompat.Builder(this.context, this.CHANNEL_MEDI_REMINDER)
             .setSmallIcon(R.drawable.medicament)
             .setContentTitle(title)
@@ -83,13 +94,17 @@ class NotifService(
 
         // If enough stock, we can take on the notification
         if (hasEnoughStock) {
+            // Get the date of the takes
             val dateString = dateToString(takes.date.dayOfMonth, takes.date.monthValue, takes.date.year)
+
+            // Create an intent to take the medicine when the user clicks on the notification
             val takeMedicineIntent = Intent(this.context, NotifTakesButtonReceiver::class.java).apply {
                 putExtra("notifId", notifId)
                 putExtra("hourWeightId", takes.hourWeightId)
                 putExtra("date", dateString)
             }
 
+            // Add the action to the notification
             val takeMedicinePendingIntent = PendingIntent.getBroadcast(this.context, notifId, takeMedicineIntent, PendingIntent.FLAG_IMMUTABLE)
             builder.addAction(
                 R.drawable.medicament,
@@ -106,6 +121,11 @@ class NotifService(
         notificationManager.notify(notifId, builder.build())
     }
 
+    /**
+     * Planify the given notifications
+     *
+     * @param showableHourWeights The list of notifications to planify
+     */
     @RequiresApi(Build.VERSION_CODES.S)
     fun planifyTakesNotifications(showableHourWeights: MutableList<ShowableHourWeight>) {
         for (hourWeight in showableHourWeights) {
@@ -113,37 +133,45 @@ class NotifService(
         }
     }
 
-    // now est utilisé pour les tests
+    /**
+     * Planify a reminder notification
+     *
+     * @param showableHourWeight The notification to planify
+     * @param now The current date, this parameter is used for testing
+     *
+     * @return True if the notification has been planified, false otherwise
+     */
     @RequiresApi(Build.VERSION_CODES.S)
     fun planifyOneNotification(showableHourWeight: ShowableHourWeight, now: LocalDateTime = LocalDateTime.now()): Boolean {
         val alarmManager = this.context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
+        val hourMin = stringHourMinuteToInt(showableHourWeight.hourWeight.hour)
+
+        // if the hour is passed, we don't planify the notification
+        if (now.hour > hourMin.first || (now.hour == hourMin.first && now.minute > hourMin.second)) {
+            return false
+        }
+
+        // Create a LocalDateTime with the hour and minute of the notification
+        val takesDate = now
+            .withHour(hourMin.first)
+            .withMinute(hourMin.second)
+            .withSecond(0)
+        val zonedDateTime = ZonedDateTime.of(takesDate, ZoneOffset.systemDefault())
+
+        // Create an intent to send the notification
         val intent = Intent(this.context, SendNotifReminderReceiver::class.java).apply {
             putExtra("medicineName", showableHourWeight.medicineName)
             putExtra("hourWeightId", showableHourWeight.hourWeight.id)
             putExtra("hasEnoughStock", showableHourWeight.hasEnoughStock())
         }
-
-        val hourMin = stringHourMinuteToInt(showableHourWeight.hourWeight.hour)
-
-        // si l'heure est déjà passée, on retourne false
-        if (now.hour > hourMin.first || (now.hour == hourMin.first && now.minute > hourMin.second)) {
-            return false
-        }
-
-        val takesDate = now
-            .withHour(hourMin.first)
-            .withMinute(hourMin.second)
-            .withSecond(0)
-
         val pendingIntent = PendingIntent.getBroadcast(this.context, showableHourWeight.hourWeight.id, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE)
 
-        val zonedDateTime = ZonedDateTime.of(takesDate, ZoneOffset.systemDefault())
-
+        // if the device can schedule exact alarms, we planify the notification
         if (alarmManager.canScheduleExactAlarms()) {
             alarmManager.setExactAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
-                zonedDateTime.toEpochSecond() * 1000,
+                zonedDateTime.toEpochSecond() * 1000, // convert to milliseconds
                 pendingIntent
             )
             return true
@@ -151,6 +179,12 @@ class NotifService(
         return false
     }
 
+    /**
+     * Get the next free notification id
+     * The notification id is stored in the shared preferences
+     *
+     * @return The next notification id
+     */
     fun getNextNotificationId(): Int {
         // Get the current notification ID
         val prevNotificationId = sharedPref.getInt(KEY_NOTIFICATION_ID, 3)
