@@ -29,25 +29,29 @@ class LoginActivity : AppCompatActivity() {
         db = SingletonDatabase.getDatabase(this)
 
         Thread {
+            // get all users
             val users = db.userDao().getAllUsers()
             adapter = AccountAdapter(this, users)
 
             runOnUiThread {
+                // set adapter
                 binding.accountRecyclerView.adapter = adapter
                 binding.accountRecyclerView.layoutManager = LinearLayoutManager(this)
 
                 binding.accountRecyclerView.layoutManager = LinearLayoutManager(this)
             }
 
-
+            // check if there is a connected user
             val connectedUser = users.find { it.isConnected }
-            if(connectedUser != null) {
+            if (connectedUser != null) {
+                // if there is a connected user, go to locked activity
                 val intent = Intent(this, LockedActivity::class.java)
                 intent.putExtra("userEmail", connectedUser.email).putExtra("isLinkedToBiometric", connectedUser.isLinkedToBiometric)
                 startActivity(intent)
                 finish()
             }
 
+            // set on click listener
             adapter.setOnItemClickListener(object : OnItemClickListener {
                 override fun onItemClick(position: Int) {
                     val intent = Intent(this@LoginActivity, LockedActivity::class.java)

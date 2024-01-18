@@ -18,7 +18,7 @@ class WelcomeActivity : AppCompatActivity() {
         binding = WelcomeActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        // get buttons
         val cbCGU = binding.checkBoxCGU
         val cbPC = binding.checkBoxPC
         val btnCA = binding.buttonCreateAccount
@@ -27,6 +27,8 @@ class WelcomeActivity : AppCompatActivity() {
 
         cbCGU.setOnClickListener {
             btnCA.isEnabled = cbCGU.isChecked && cbPC.isChecked
+
+            // change button style
             if (btnCA.isEnabled) {
                 btnCA.setBackgroundResource(com.example.mms.R.drawable.button_style_3)
                 btnCA.setTextColor(resources.getColor(com.example.mms.R.color.clickable_blue))
@@ -38,6 +40,8 @@ class WelcomeActivity : AppCompatActivity() {
 
         cbPC.setOnClickListener {
             btnCA.isEnabled = cbCGU.isChecked && cbPC.isChecked
+
+            // change button style
             if (btnCA.isEnabled) {
                 btnCA.setBackgroundResource(com.example.mms.R.drawable.button_style_3)
                 btnCA.setTextColor(resources.getColor(com.example.mms.R.color.clickable_blue))
@@ -51,9 +55,11 @@ class WelcomeActivity : AppCompatActivity() {
             startActivity(Intent(this, CreateAccountActivity::class.java))
         }
 
+        // get text views
         val textCGU = binding.textCGU
         val textPC = binding.textPC
 
+        // set on click listeners
         textCGU.setOnClickListener {
             startActivity(Intent(this, ActivityCGU::class.java))
         }
@@ -61,7 +67,5 @@ class WelcomeActivity : AppCompatActivity() {
         textPC.setOnClickListener {
             startActivity(Intent(this, ActivityPC::class.java))
         }
-
     }
-
 }

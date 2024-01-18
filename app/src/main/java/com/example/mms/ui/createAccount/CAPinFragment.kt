@@ -30,7 +30,7 @@ class CAPinFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         val viewModel = ViewModelProvider(requireActivity())[SharedCAViewModel::class.java]
         db = SingletonDatabase.getDatabase(requireContext())
@@ -45,9 +45,14 @@ class CAPinFragment : Fragment() {
             navController.navigate(com.example.mms.R.id.action_navigation_CAPin_to_navigation_CAInformations)
         }
 
+        // set text and styles
         binding.codePin.userEmail.isVisible = false
         binding.codePin.textView5.text = getString(R.string.create_pin)
 
+        binding.codePin.buttonReturnToBiometrics.isEnabled = false
+        binding.codePin.buttonReturnToBiometrics.visibility = View.INVISIBLE
+
+        // Shuffle buttons
         var numbers = mutableListOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
         numbers = numbers.shuffled() as MutableList<Int>
         val listButtons = mutableListOf(
@@ -73,7 +78,10 @@ class CAPinFragment : Fragment() {
             binding.codePin.codePin3,
             binding.codePin.codePin4
         )
+
+        // Set input type to number and max length to 1
         listCodePin.forEach { it.inputType = InputType.TYPE_CLASS_NUMBER; it.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(1))}
+
         binding.codePin.buttonDelete.setOnClickListener {
             if (currentIndex > 0) {
                 currentIndex--
@@ -81,6 +89,8 @@ class CAPinFragment : Fragment() {
             }
         }
         for (button in listButtons) {
+
+            // Set onClickListener to each button
             button.setOnClickListener {
                 listCodePin[currentIndex].setText(button.text.toString())
                 currentIndex++
@@ -91,6 +101,7 @@ class CAPinFragment : Fragment() {
         }
 
         Thread {
+            // Check if user is linked to biometric
             val isLinkedToBiometric = db.userDao().getBiometricUsers()
             if (isLinkedToBiometric.isNotEmpty()) {
                 requireActivity().runOnUiThread {
@@ -101,15 +112,20 @@ class CAPinFragment : Fragment() {
         }.start()
 
         binding.buttonCreate.setOnClickListener {
-            if(listCodePin[0].text.toString() == "" || listCodePin[1].text.toString() == "" || listCodePin[2].text.toString() == "" || listCodePin[3].text.toString() == "") {
+            // Check if all fields are filled
+            if (listCodePin[0].text.toString() == "" || listCodePin[1].text.toString() == "" || listCodePin[2].text.toString() == "" || listCodePin[3].text.toString() == "") {
                 Toast.makeText(requireContext(), getString(R.string.pin_empty), Toast.LENGTH_SHORT).show()
-            }else {
+            } else {
                 Thread {
+                    // set codePin and isLinkedToBiometric to user
                     val user = viewModel.userData.value
                     val codePin =
                         listCodePin[0].text.toString() + listCodePin[1].text.toString() + listCodePin[2].text.toString() + listCodePin[3].text.toString()
+
                     user?.codePin = hashString(codePin)
                     user?.isLinkedToBiometric = binding.switchBiometric.isChecked
+
+                    // Insert user in database
                     db.userDao().insertUser(user!!)
                     requireActivity().runOnUiThread {
                         val intent = Intent(requireContext(), MainActivity::class.java)
@@ -117,11 +133,7 @@ class CAPinFragment : Fragment() {
                     }
                 }.start()
             }
-
         }
-
-        binding.codePin.buttonReturnToBiometrics.isEnabled = false
-        binding.codePin.buttonReturnToBiometrics.visibility = View.INVISIBLE
 
         return root
 

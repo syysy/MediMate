@@ -40,6 +40,7 @@ class CAInformationsFragment : Fragment() {
         val root: View = binding.root
         db = SingletonDatabase.getDatabase(requireContext())
 
+        // set user's information
         binding.editNom.setText(viewModel.userData.value?.name)
         binding.editPrenom.setText(viewModel.userData.value?.surname)
         binding.editBirthdate.setText(viewModel.userData.value?.birthday ?: "----")
@@ -51,11 +52,13 @@ class CAInformationsFragment : Fragment() {
         binding.editBirthdate.isFocusable = false
 
         binding.editBirthdate.setOnClickListener {
+            // init calendar
             val calendar = Calendar.getInstance()
             val year = calendar.get(Calendar.YEAR)
             val month = calendar.get(Calendar.MONTH)
             val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+            // build date picker dialog
             val datePickerDialog = DatePickerDialog(
                 root.context,
                 DatePickerDialog.OnDateSetListener { view, selectedYear, selectedMonth, selectedDay ->
@@ -66,12 +69,14 @@ class CAInformationsFragment : Fragment() {
                 month,
                 day
             )
+            // set max date to today
             datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+
             datePickerDialog.show()
         }
 
+        // regex for name and surname
         val nameSurnameRegex = Regex("^[a-zA-ZÀ-ÿ-'\\s]+$")
-
         val nameSurnameFilter = InputFilter { source, start, end, dest, dstart, dend ->
             if (source != null && !source.toString().matches(nameSurnameRegex)) {
                 ""  // Si le texte ne correspond pas à la regex, le caractère est supprimé
@@ -80,6 +85,7 @@ class CAInformationsFragment : Fragment() {
             }
         }
 
+        // fields options
         binding.editNom.filters = arrayOf(nameSurnameFilter)
         binding.editPrenom.filters = arrayOf(nameSurnameFilter)
 
@@ -89,6 +95,7 @@ class CAInformationsFragment : Fragment() {
         binding.editTaille.filters =  arrayOf(InputFilter.LengthFilter(3))
 
         binding.buttonSuivant.setOnClickListener {
+            // get values from fields
             val name = binding.editNom.text.toString()
             val surname = binding.editPrenom.text.toString()
             val email = binding.editEmail.text.toString()
@@ -99,6 +106,7 @@ class CAInformationsFragment : Fragment() {
 
             val nameRegex = Regex("^[a-zA-ZÀ-ÿ\\s]+$")
 
+            // if data is valid
             if (name.matches(nameRegex) &&
                 surname.matches(nameRegex) &&
                 brithDate.isNotBlank() &&
@@ -108,9 +116,11 @@ class CAInformationsFragment : Fragment() {
                 val weight = weightText.toInt()
                 val height = heightText.toInt()
 
+                // create a user object and store it in the view model
                 val user = User(name, surname, email, brithDate, sexe, weight, height, true, "", "", "", "", false)
                 viewModel.setUserData(user)
 
+                // go to next page
                 val navHostFragment =
                     requireActivity().supportFragmentManager.findFragmentById(R.id.nav_create_account) as NavHostFragment
                 val navController = navHostFragment.navController

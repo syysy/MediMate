@@ -27,12 +27,15 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         binding.buttonDelete.setOnClickListener {
+            // delete user
             Thread {
                 val user = db.userDao().getConnectedUser()
                 if (user != null) {
                     db.userDao().deleteUser(user.email)
                 }
             }.start()
+
+            // go to loader activity
             val intent = Intent(this, LoaderActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)

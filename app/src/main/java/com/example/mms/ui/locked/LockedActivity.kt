@@ -36,12 +36,15 @@ class LockedActivity : AppCompatActivity() {
         binding = ActivityLockedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Get data from intent
         val userEmail = intent.getStringExtra("userEmail")
         val isLinkedToBiometric = intent.getBooleanExtra("isLinkedToBiometric", false)
+
         db = SingletonDatabase.getDatabase(this)
 
         if (userEmail != null) { binding.userEmail.text = cryptEmail(userEmail) }else { binding.userEmail.isVisible = false }
 
+        // Biometric
         val executor = ContextCompat.getMainExecutor(this)
         val callback = object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
@@ -66,6 +69,7 @@ class LockedActivity : AppCompatActivity() {
         }
         biometricPrompt = BiometricPrompt(this, executor, callback)
 
+        // Shuffle buttons
         var numbers = mutableListOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
         numbers = numbers.shuffled() as MutableList<Int>
         val listButtons = mutableListOf(
@@ -84,6 +88,7 @@ class LockedActivity : AppCompatActivity() {
             listButtons[i].text = numbers[i].toString()
         }
 
+        // Set input type to number and max length to 1
         var currentIndex = 0
         val listCodePin = mutableListOf(
             binding.codePin1,
@@ -94,14 +99,16 @@ class LockedActivity : AppCompatActivity() {
         listCodePin.forEach { it.inputType = InputType.TYPE_CLASS_NUMBER; it.filters = arrayOf<InputFilter>(
             InputFilter.LengthFilter(1))}
 
-        fun codePin(){
+        fun codePin() {
             binding.buttonDelete.setOnClickListener {
+                // Delete last number
                 if (currentIndex > 0) {
                     currentIndex--
                     listCodePin[currentIndex].setText("")
                 }
             }
             for (button in listButtons) {
+                // Set onClickListener to each button
                 button.setOnClickListener {
                     listCodePin[currentIndex].setText(button.text.toString())
                     currentIndex++
@@ -113,6 +120,7 @@ class LockedActivity : AppCompatActivity() {
             }
         }
 
+        // if user is not linked to biometric, hide button
         val biometricManager = BiometricManager.from(this)
         if (!isLinkedToBiometric) {
             binding.buttonReturnToBiometrics.visibility = View.INVISIBLE
@@ -121,6 +129,7 @@ class LockedActivity : AppCompatActivity() {
         }
         else {
 
+            // Check if biometric is available
             when (biometricManager.canAuthenticate()) {
                 BiometricManager.BIOMETRIC_SUCCESS -> {
                     // L'authentification est possible
@@ -145,6 +154,12 @@ class LockedActivity : AppCompatActivity() {
 
     }
 
+    /**
+     * Check if password is correct
+     *
+     * @param listCodePin list of EditText
+     * @param userEmail user email
+     */
     private fun checkPassword(listCodePin: MutableList<EditText>, userEmail: String) {
 
         Thread {

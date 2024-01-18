@@ -37,6 +37,7 @@ class ModifyAccountActivity : AppCompatActivity() {
         Thread {
             val user = db.userDao().getConnectedUser()!!
             this.runOnUiThread {
+                // Set user information
                 binding.editNom.setText(user.name)
                 binding.editPrenom.setText(user.surname)
                 binding.editTaille.setText(user.height.toString())
@@ -99,12 +100,15 @@ class ModifyAccountActivity : AppCompatActivity() {
                 binding.editBirthdate.keyListener = null
                 binding.editBirthdate.isFocusable = false
 
+                // listener to edit birthdate
                 binding.editBirthdate.setOnClickListener {
+                    // init calendar
                     val calendar = Calendar.getInstance()
                     val year = calendar.get(Calendar.YEAR)
                     val month = calendar.get(Calendar.MONTH)
                     val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+                    // create date picker dialog
                     val datePickerDialog = DatePickerDialog(
                         this,
                         DatePickerDialog.OnDateSetListener { view, selectedYear, selectedMonth, selectedDay ->
@@ -115,12 +119,14 @@ class ModifyAccountActivity : AppCompatActivity() {
                         month,
                         day
                     )
+                    // set max date to today
                     datePickerDialog.datePicker.maxDate = System.currentTimeMillis()
+
                     datePickerDialog.show()
                 }
 
+                // filter to edit name and surname
                 val nameSurnameRegex = Regex("^[a-zA-ZÀ-ÿ-'\\s]+$")
-
                 val nameSurnameFilter = InputFilter { source, start, end, dest, dstart, dend ->
                     if (source != null && !source.toString().matches(nameSurnameRegex)) {
                         ""  // Si le texte ne correspond pas à la regex, le caractère est supprimé
@@ -129,10 +135,13 @@ class ModifyAccountActivity : AppCompatActivity() {
                     }
                 }
 
+                // set filters
                 binding.editNom.filters = arrayOf(nameSurnameFilter)
                 binding.editPrenom.filters = arrayOf(nameSurnameFilter)
 
+                // validate modification
                 binding.btnModifyValidate.setOnClickListener {
+                    // get user information
                     val name = binding.editNom.text.toString()
                     val surname = binding.editPrenom.text.toString()
                     val brithDate = binding.editBirthdate.text.toString()
@@ -141,6 +150,7 @@ class ModifyAccountActivity : AppCompatActivity() {
 
                     val nameRegex = Regex("^[a-zA-ZÀ-ÿ\\s]+$")
 
+                    // check if all fields are correct
                     if (name.matches(nameRegex) &&
                         surname.matches(nameRegex) &&
                         brithDate.isNotBlank()
@@ -154,10 +164,12 @@ class ModifyAccountActivity : AppCompatActivity() {
                         user.weight = weight
                         user.height = height
 
+                        // update user
                         Thread{
                             db.userDao().updateUser(user)
                         }.start()
 
+                        // return to profil fragment
                         val intent = Intent().putExtra("user", user)
                         setResult(RESULT_OK, intent)
                         finish()
