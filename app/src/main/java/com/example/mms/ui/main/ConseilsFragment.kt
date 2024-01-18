@@ -60,6 +60,7 @@ class ConseilsFragment : Fragment() {
         _binding = FragmentConseilsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        // set text
         val smsBtn = binding.itemMedecin.btnSms
         val mailBtn = binding.itemMedecin.btnMail
 
@@ -77,6 +78,7 @@ class ConseilsFragment : Fragment() {
             mail.text = getString(R.string.pour_ajouter_un_medecin)
         }
 
+        // set the state of the buttons
         if (number.text == getString(R.string.cliquez_sur_le_crayon) || number.text == "") {
             smsBtn.setBackgroundResource(R.drawable.button_style_3_disable)
             smsBtn.setTextColor(resources.getColor(R.color.clickable_blue_disable))

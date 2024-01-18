@@ -42,15 +42,14 @@ class LoaderActivity : AppCompatActivity() {
 
         db = SingletonDatabase.getDatabase(this)
 
-        val notifService = NotifService(this)
-        notifService.createNotificationChannel()
-
+        // Set the midnight alarm if it's not already set
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (!this.isMidnightAlarmSet()) {
                 this.startMidnightAlarmManager()
             }
         }
 
+        // == Update the medicines database ==
         updateDataService = UpdateDataService(this)
 
         Thread {
@@ -61,6 +60,7 @@ class LoaderActivity : AppCompatActivity() {
                 mediJsDb.transferJsonDBintoRoom(db.medicineDao())
             }
 
+            // call the api to check if the local version is up to date
             this.updateDataService.needToUpdate(
                 { needToUpdate ->
                     if (!needToUpdate) {
@@ -82,6 +82,7 @@ class LoaderActivity : AppCompatActivity() {
                         val numElements = this.updateDataService.numberOfItemsToDownload()
                         var progress: Int
 
+                        // Download the medicines
                         fun downloadNext() {
                             this.updateDataService.nextDownload({
                                 progress = ((this.updateDataService.nbMedicinesToDownload.toDouble() * 100) / numElements.toDouble()).toInt()
@@ -129,6 +130,9 @@ class LoaderActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Show a snackbar to inform the user that the connection failed
+     */
     private fun showSnackbar() {
         val snackbar = Snackbar.make(
             binding.root,
@@ -149,6 +153,9 @@ class LoaderActivity : AppCompatActivity() {
         snackbar.show()
     }
 
+    /**
+     * Set the midnight alarm to planify the notifications
+     */
     @RequiresApi(Build.VERSION_CODES.S)
     private fun startMidnightAlarmManager() {
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -159,14 +166,14 @@ class LoaderActivity : AppCompatActivity() {
             set(Calendar.MINUTE, 0)
             set(Calendar.SECOND, 0)
             set(Calendar.MILLISECOND, 0)
-            add(Calendar.DAY_OF_YEAR, 1) // Ajouter un jour pour le prochain minuit
+            add(Calendar.DAY_OF_YEAR, 1) // Add one day to be sure that the alarm will be triggered tomorrow
         }
 
         val intent = Intent(this, MidnightAlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
 
-        // Définir l'alarme quotidienne à minuit
+        // Set the alarm at midnight and repeat it every day
         alarmManager.setRepeating(
             AlarmManager.RTC_WAKEUP,
             calendar.timeInMillis,

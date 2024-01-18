@@ -50,6 +50,7 @@ class AddMedicamentRecapFragment : Fragment() {
         _binding = FragmentAddRecapBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        // get values from viewModel
         val task = viewModel.taskData.value!!
         val cycle = viewModel.cycle.value
         val specificDays = viewModel.specificDays.value
@@ -60,6 +61,7 @@ class AddMedicamentRecapFragment : Fragment() {
             medicine = db.medicineDao().getByCIS(task.medicineCIS)!!
 
             requireActivity().runOnUiThread {
+                // set medicine informations
                 binding.typeMedecine.text = medicine.type.complet
                 binding.dosageMedicine.text = medicine.type.weight
                 binding.nameMedicine.text = medicineName
@@ -74,6 +76,7 @@ class AddMedicamentRecapFragment : Fragment() {
 
             task.cycle = cycle
 
+            // display informations
             binding.hourTask.text = getHoursCycle(cycle)
             binding.intervalTask.text = task.type
             binding.dateNextTask.text = getFormattedDate(tasksService.getNextTakeDate(task))
@@ -87,6 +90,7 @@ class AddMedicamentRecapFragment : Fragment() {
             binding.hourTask.text = ""
             binding.intervalTask.text = task.type
 
+            // init an adapter to display all hours
             val sdAdapter = RecapSpecificDaysAdapter(requireContext(), specificDays)
             val recyclerView = binding.rvSpecificdays
             recyclerView.adapter = sdAdapter
@@ -95,6 +99,7 @@ class AddMedicamentRecapFragment : Fragment() {
             // OneTake
             taskIsOnlyOneTime = true
 
+            // display informations
             val now = LocalDateTime.now()
             val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault())
             val dateString = now.format(dateFormatter)
@@ -117,12 +122,20 @@ class AddMedicamentRecapFragment : Fragment() {
         return root
     }
 
+    /**
+     * Save a cycle in database
+     *
+     * @param addedTask the task to save
+     */
     private fun saveCycle(addedTask: Task) {
         val cycle = viewModel.cycle.value!!
         cycle.taskId = addedTask.id
         tasksService.storeCycle(cycle)
     }
 
+    /**
+     * Save specific days in database
+     */
     private fun saveSpecificDays(addedTask: Task) {
         val specificDays = viewModel.specificDays.value!!
         for (specificDay in specificDays) {
@@ -131,6 +144,9 @@ class AddMedicamentRecapFragment : Fragment() {
         }
     }
 
+    /**
+     * Save a one take task in database
+     */
     private fun saveOneTakeTask() {
         val cis = viewModel.taskData.value!!.medicineCIS
         val weight = viewModel.oneTakeWeight.value!!
@@ -142,8 +158,12 @@ class AddMedicamentRecapFragment : Fragment() {
         thread.join()
     }
 
+    /**
+     * Save the task in database and redirect to main activity
+     */
     private fun saveAndRedirect() {
         if (viewModel.storage.value != null) {
+            // save storage
             val t = Thread {
                 db.medicineStorageDao().insert(viewModel.storage.value!!)
             }
@@ -162,6 +182,7 @@ class AddMedicamentRecapFragment : Fragment() {
 
                 val currentUserId = userDAO.getConnectedUser()!!.email
 
+                // store the task
                 val task = viewModel.taskData.value!!
                 task.userId = currentUserId
                 tasksService.storeTask(task)
@@ -171,6 +192,7 @@ class AddMedicamentRecapFragment : Fragment() {
                 saveFunction(addedTask)
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    // planify notification
                     val now = LocalDateTime.now()
                     val taskWithHW = this.tasksService.getByIdAt(addedTask.id, now)
                     var todaysSwHourWeightsTask = this.tasksService.createOrGetOneTodaysSwHourWeight(taskWithHW)
@@ -185,6 +207,8 @@ class AddMedicamentRecapFragment : Fragment() {
             thread.start()
             thread.join() // wait for thread to finish
         }
+
+        // if the user come from OCR, we redirect him to the main activity
         if (viewModel.fromOCR.value!!){
             val intent = Intent().putExtra("taskId", idLastInserted )
             requireActivity().setResult(RESULT_OK, intent)
@@ -197,6 +221,9 @@ class AddMedicamentRecapFragment : Fragment() {
 
     }
 
+    /**
+     * Get all hours of a cycle
+     */
     private fun getHoursCycle(cycle: Cycle): String {
         var hours = ""
         for (hourWeight in cycle.hourWeights) {

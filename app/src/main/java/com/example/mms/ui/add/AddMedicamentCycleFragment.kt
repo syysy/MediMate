@@ -32,8 +32,6 @@ class AddMedicamentCycleFragment: Fragment() {
 
         val root: View = binding.root
 
-
-
         val cycle = viewModel.cycle.value
         if (cycle != null && cycle.isNotEmpty()) {
             // 24 to convert hours to days
@@ -46,13 +44,10 @@ class AddMedicamentCycleFragment: Fragment() {
             goTo(requireActivity(), R.id.action_AMCycle_to_AM2_Fragment)
         }
 
-
-
         binding.nextButton.setOnClickListener {
             // take values from the form
             val cycleDuration = binding.inputTreatementDuration.text.toString()
             val cycleRest = binding.inputTreatementRest.text.toString()
-
 
             // check if the values are correct
             val errorMessage = when (true) {
@@ -62,6 +57,7 @@ class AddMedicamentCycleFragment: Fragment() {
                 else -> ""
             }
 
+            // if there is an error, display it and stop the function
             if (errorMessage.isNotBlank()) {
                 Toast.makeText(root.context, errorMessage, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener

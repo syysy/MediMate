@@ -47,12 +47,12 @@ class AddMedicamentCycleHourWeightFragment: Fragment() {
         recyclerView.adapter = this.hourWeightAdapter
         recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
 
+        // OnClick listener for the time picker
         val tvTimePickerOnClick = object : OnItemClickListener {
             override fun onItemClick(position: Int) {
                 openTimePicker(position)
             }
         }
-
         this.hourWeightAdapter.setOnItemClickListener(tvTimePickerOnClick)
 
         // buttons listeners
@@ -87,6 +87,9 @@ class AddMedicamentCycleHourWeightFragment: Fragment() {
         return root
     }
 
+    /**
+     * Open a time picker dialog and set the time into a item
+     */
     private fun openTimePicker(position: Int) {
         val dialog = TimePickerDialog(
             this.requireContext(), { _, hourOfDay, minute ->

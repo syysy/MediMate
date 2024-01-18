@@ -38,6 +38,7 @@ class AddMedicamentOneTakeFragment : Fragment() {
         binding.nextButton.setOnClickListener {
             val weight = binding.inputWeight.text.toString().toIntOrNull() ?: -1
 
+            // Check if the weight is a positive number
             if (weight < 0) {
                 Toast.makeText(
                     requireContext(),

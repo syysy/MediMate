@@ -107,7 +107,7 @@ class AccueilFragment : Fragment() {
         userMedicines = calendarDays[1].listTasks.toMutableList()
 
         // We get special objects from the list of takes to show them in the view
-        this.items = this.tasksService.createShoawbleHourWeightsFromTasks(userMedicines)
+        this.items = this.tasksService.createShowableHourWeightsFromTasks(userMedicines)
 
         updateSmiley()
 
@@ -134,7 +134,7 @@ class AccueilFragment : Fragment() {
                 userMedicines.addAll(clickedDay.listTasks)
                 items.clear()
                 items.addAll(
-                    this@AccueilFragment.tasksService.createShoawbleHourWeightsFromTasks(
+                    this@AccueilFragment.tasksService.createShowableHourWeightsFromTasks(
                         userMedicines
                     )
                 )
@@ -186,7 +186,7 @@ class AccueilFragment : Fragment() {
             userMedicines.clear()
             userMedicines.addAll(clickedDay.listTasks)
             items.clear()
-            items.addAll(this.tasksService.createShoawbleHourWeightsFromTasks(userMedicines))
+            items.addAll(this.tasksService.createShowableHourWeightsFromTasks(userMedicines))
             takesAdapter.updateCurrentDate(stringToDate(clickedDay.date))
             takesAdapter.notifyDataSetChanged()
             binding.floatingActionButtonBackToday.hide()
@@ -250,7 +250,7 @@ class AccueilFragment : Fragment() {
         userMedicines.clear()
         userMedicines.addAll(clickedDay.listTasks)
         items.clear()
-        items.addAll(this.tasksService.createShoawbleHourWeightsFromTasks(userMedicines))
+        items.addAll(this.tasksService.createShowableHourWeightsFromTasks(userMedicines))
         takesAdapter.updateCurrentDate(stringToDate(clickedDay.date))
         takesAdapter.notifyDataSetChanged()
 

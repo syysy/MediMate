@@ -48,12 +48,14 @@ class AddMedicamentStorageFragment : Fragment() {
         t.start()
         t.join()
 
+        // set options
         binding.switch1.isChecked = false
         binding.tvAlreadyStored.visibility = View.GONE
         binding.constraintLayoutStorage.getViewById(R.id.edit_alert_storage).isEnabled = false
         binding.constraintLayoutStorage.getViewById(R.id.edit_actual_storage).isEnabled = false
 
 
+        // set storage informations
         if (medicineStorage != null) {
             if (isInDb) binding.tvAlreadyStored.visibility = View.VISIBLE
 
@@ -74,6 +76,7 @@ class AddMedicamentStorageFragment : Fragment() {
 
 
         binding.switch1.setOnCheckedChangeListener { _, isChecked ->
+            // change the style of the layout depending on the switch
             if (isChecked) {
                 binding.constraintLayoutStorage.setBackgroundColor(Color.WHITE)
                 binding.constraintLayoutStorage.getViewById(R.id.edit_alert_storage).isEnabled = true
@@ -92,17 +95,22 @@ class AddMedicamentStorageFragment : Fragment() {
             if (binding.switch1.isChecked) {
                 val storage = binding.constraintLayoutStorage.getViewById(R.id.edit_actual_storage) as EditText
                 val alertValue = binding.constraintLayoutStorage.getViewById(R.id.edit_alert_storage) as EditText
+
+                // get the id of the medicine
                 var medicineId : Long = 0
                 val tt = Thread {
                     medicineId = db.medicineDao().getMedicineIdByName(viewModel.medicineName.value!!)
                 }
                 tt.start()
                 tt.join()
+
                 val obj = MedicineStorage(
                     medicineId,
                     storage.text.toString().toInt(),
                     alertValue.text.toString().toInt()
                 )
+
+                // save the storage informations
                 viewModel.setStorage(obj)
             }
             goTo(requireActivity(), R.id.action_storage_to_start_end_date)

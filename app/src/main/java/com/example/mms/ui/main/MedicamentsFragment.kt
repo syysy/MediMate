@@ -78,6 +78,9 @@ class MedicamentsFragment : Fragment() {
         return root
     }
 
+    /**
+     * Open a dialog with the history of the takes
+     */
     private fun openHistoryDialog(adapter: TakesHistoryAdapter) {
         val dialog = Dialog(this.requireContext())
         dialog.setContentView(R.layout.custom_dialog_history)

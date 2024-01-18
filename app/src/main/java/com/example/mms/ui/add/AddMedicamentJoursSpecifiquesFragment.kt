@@ -135,21 +135,35 @@ class AddMedicamentJoursSpecifiquesFragment : Fragment() {
         return root
     }
 
+    /**
+     * Change the recycler view depending of the selected day
+     */
     private fun changeRecyclerViewDepingOnSelectedDay() {
         this.hourWeightAdapter.hourWeightList = this.weekOfSpecificDaysService.getDay(this.selectedDay)
         this.hourWeightAdapter.notifyDataSetChanged()
     }
 
+    /**
+     * Switch the style of the button to enable it
+     */
     private fun enableButton(numOfDay: Int) {
         this.daysButtons[numOfDay].setBackgroundResource(R.drawable.button_style_3)
         this.daysButtons[numOfDay].setTextColor(getColor(requireContext(), R.color.clickable_blue))
     }
 
+    /**
+     * Switch the style of the button to disable it
+     */
     private fun disableButton(numOfDay: Int) {
         this.daysButtons[numOfDay].setBackgroundResource(R.drawable.button_style_3_disable)
         this.daysButtons[numOfDay].setTextColor(getColor(requireContext(), R.color.clickable_blue_disable))
     }
 
+    /**
+     * Open the time picker
+     *
+     * @param position the position of the item in the recycler view
+     */
     private fun openTimePicker(position: Int) {
         val dialog = TimePickerDialog(
             this.requireContext(), { _, hourOfDay, minute ->

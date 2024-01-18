@@ -43,6 +43,7 @@ class AddMedicamentIntervalleFragment : Fragment() {
         _binding = FragmentAddMedicamentPlusIntervalleBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        // set text and options
         binding.textTimepickerBeginHour.text = this.beginHour
         binding.textTimepickerEndHour.text = this.endHour
 
@@ -53,6 +54,7 @@ class AddMedicamentIntervalleFragment : Fragment() {
 
         binding.numberPickerWeight.setText("1")
 
+        // Time picker
         binding.textTimepickerBeginHour.setOnClickListener {
             openTimePicker(true)
         }
@@ -67,6 +69,7 @@ class AddMedicamentIntervalleFragment : Fragment() {
         }
 
         binding.nextButton.setOnClickListener {
+            // check if fields are filled
             if (binding.numberPicker.value == 0 || binding.numberPickerWeight.text.isBlank()) {
                 Toast.makeText(
                     requireContext(),
@@ -77,6 +80,7 @@ class AddMedicamentIntervalleFragment : Fragment() {
                 return@setOnClickListener
             }
 
+            // check if begin hour is before end hour
             val hourWeightList = this.tasksService.generateHourWeightForInterval(
                 binding.numberPicker.value,
                 stringHourMinuteToInt(this.beginHour),
@@ -84,6 +88,7 @@ class AddMedicamentIntervalleFragment : Fragment() {
                 binding.numberPickerWeight.text.toString().toInt()
             )
 
+            // store the interval
             val cycle = Cycle(0,0,24,0,0, hourWeightList)
             viewModel.setCycle(cycle)
 
@@ -93,6 +98,11 @@ class AddMedicamentIntervalleFragment : Fragment() {
         return root
     }
 
+    /**
+     * Open the time picker dialog
+     *
+     * @param isBeginHour true if the time picker is for the begin hour, false otherwise
+     */
     private fun openTimePicker(isBeginHour: Boolean) {
         val hourToShowString = if (isBeginHour) {
             this.beginHour
@@ -100,10 +110,12 @@ class AddMedicamentIntervalleFragment : Fragment() {
             this.endHour
         }
 
+        // get the hour and minute from the string
         val splited = hourToShowString.split(":")
         val hour = splited[0].toInt()
         val minute = splited[1].toInt()
 
+        // define the dialog
         val dialog = TimePickerDialog(
             this.requireContext(), { _, hourOfDay, minuteOfDay ->
                 val hourMinuteString = hourMinuteToString(hourOfDay, minuteOfDay)

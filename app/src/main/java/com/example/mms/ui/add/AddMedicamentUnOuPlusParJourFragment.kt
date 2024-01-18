@@ -46,6 +46,7 @@ class AddMedicamentUnOuPlusParJourFragment : Fragment() {
 
         hourWeightList.add(HourWeight(0, "08:00", 1))
 
+        // create an adapter to display the list of hourWeight
         this.hourWeightAdapter = HourWeightAdapter(this.requireContext(), hourWeightList)
         val rvHeureDosage = binding.recyclerView
         rvHeureDosage.adapter = this.hourWeightAdapter
@@ -57,15 +58,16 @@ class AddMedicamentUnOuPlusParJourFragment : Fragment() {
         }
 
 
+        // set the onClickListener for the timePicker
         val tvTimePickerOnClick = object : OnItemClickListener {
             override fun onItemClick(position: Int) {
                 openTimePicker(position)
             }
         }
-
         this.hourWeightAdapter.setOnItemClickListener(tvTimePickerOnClick)
 
         binding.nextButton.setOnClickListener {
+            // check if the list is empty
             if (this.hourWeightList.size == 0) {
                 requireActivity().runOnUiThread {
                     Toast.makeText(
@@ -76,6 +78,8 @@ class AddMedicamentUnOuPlusParJourFragment : Fragment() {
                 }
                 return@setOnClickListener
             }
+
+            // store the data in the viewModel
             val cycle = Cycle(0,0,24,0,0, hourWeightList)
             viewModel.setCycle(cycle)
 
@@ -85,6 +89,9 @@ class AddMedicamentUnOuPlusParJourFragment : Fragment() {
         return root
     }
 
+    /**
+     * Open a timePickerDialog and set the hourWeightList[position].hour to the selected time
+     */
     private fun openTimePicker(position: Int) {
         val dialog = TimePickerDialog(
             this.requireContext(), { _, hourOfDay, minute ->

@@ -31,7 +31,7 @@ class AddMedicamentDateDebutFinFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAddMedicamentStartEndDateBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -79,12 +79,22 @@ class AddMedicamentDateDebutFinFragment : Fragment() {
         return root
     }
 
+    /**
+     * Setup the date picker dialog for the given EditText
+     *
+     * @param editText the EditText to setup
+     * @param initialDate the initial date to display in the EditText
+     * @param start true if the EditText is for the start date, false if it's for the end date
+     * @param editText2 the other EditText
+     */
     fun setupDatePickerDialog(editText: EditText, initialDate: LocalDateTime, start : Boolean, editText2: EditText)  {
+        // init date
         val calendar = Calendar.getInstance()
         val year = calendar.get(Calendar.YEAR)
         val month = calendar.get(Calendar.MONTH)
         val day = calendar.get(Calendar.DAY_OF_MONTH)
 
+        // define the date picker dialog
         val datePickerDialog = DatePickerDialog(
             editText.context,
             { _, selectedYear, selectedMonth, selectedDay ->
@@ -103,10 +113,13 @@ class AddMedicamentDateDebutFinFragment : Fragment() {
             month,
             day
         )
+
+        // if the date is for the end date, set the min date to the begin date
         if (!start) {
             datePickerDialog.datePicker.minDate = beginDate.toLocalDate().toEpochDay() * 24 * 60 * 60 * 1000
         }
 
+        // when the user click on the EditText, show the date picker dialog
         editText.setOnClickListener {
             if (!start) {
                 datePickerDialog.datePicker.minDate = beginDate.toLocalDate().toEpochDay() * 24 * 60 * 60 * 1000
