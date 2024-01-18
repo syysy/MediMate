@@ -106,7 +106,8 @@ class AccueilFragment : Fragment() {
         val medicinesRV = binding.medicRecyclerView
         userMedicines = calendarDays[1].listTasks.toMutableList()
 
-        this.items = this.tasksService.createShowableHourWeightsFromTasks(userMedicines)
+        // We get special objects from the list of takes to show them in the view
+        this.items = this.tasksService.createShoawbleHourWeightsFromTasks(userMedicines)
 
         updateSmiley()
 
@@ -133,7 +134,7 @@ class AccueilFragment : Fragment() {
                 userMedicines.addAll(clickedDay.listTasks)
                 items.clear()
                 items.addAll(
-                    this@AccueilFragment.tasksService.createShowableHourWeightsFromTasks(
+                    this@AccueilFragment.tasksService.createShoawbleHourWeightsFromTasks(
                         userMedicines
                     )
                 )
@@ -185,7 +186,7 @@ class AccueilFragment : Fragment() {
             userMedicines.clear()
             userMedicines.addAll(clickedDay.listTasks)
             items.clear()
-            items.addAll(this.tasksService.createShowableHourWeightsFromTasks(userMedicines))
+            items.addAll(this.tasksService.createShoawbleHourWeightsFromTasks(userMedicines))
             takesAdapter.updateCurrentDate(stringToDate(clickedDay.date))
             takesAdapter.notifyDataSetChanged()
             binding.floatingActionButtonBackToday.hide()
@@ -249,7 +250,7 @@ class AccueilFragment : Fragment() {
         userMedicines.clear()
         userMedicines.addAll(clickedDay.listTasks)
         items.clear()
-        items.addAll(this.tasksService.createShowableHourWeightsFromTasks(userMedicines))
+        items.addAll(this.tasksService.createShoawbleHourWeightsFromTasks(userMedicines))
         takesAdapter.updateCurrentDate(stringToDate(clickedDay.date))
         takesAdapter.notifyDataSetChanged()
 

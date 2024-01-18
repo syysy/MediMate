@@ -10,6 +10,15 @@ import androidx.core.util.set
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mms.R
 
+
+// NOT USED BECAUSE THE DISEASES ARE NOT IMPLEMENTED
+
+/**
+ * Adapter for the recycler view of the diseases
+ *
+ * @param dataList the list of diseases
+ * @param onItemsSelected the function to call when an item is selected
+ */
 class DialogAdapter(
     private val dataList: List<String>,
     private val onItemsSelected: (List<String>) -> Unit

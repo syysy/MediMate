@@ -96,6 +96,7 @@ class ConseilsFragment : Fragment() {
             mailBtn.isEnabled = true
         }
 
+        // We set the listener to open the sms app with the intent action send to and the phone number as data
         smsBtn.setOnClickListener {
             val phoneNumber = number.text.toString()
             if (phoneNumber.isNotEmpty()) {
@@ -111,6 +112,7 @@ class ConseilsFragment : Fragment() {
             }
         }
 
+        // We set the listener to open the mail app with the intent action send to and the mail address as data
         mailBtn.setOnClickListener {
             val mailAddress = mail.text.toString()
             if (mailAddress.isNotEmpty()) {
@@ -134,6 +136,8 @@ class ConseilsFragment : Fragment() {
             navController.navigate(R.id.action_navigation_notifications_to_navigation_modify_medecin)
         }
 
+
+        // MAP PART NOT FINISHED
 
         /**map = binding.itemMap.osmmap
         map.setTileSource(TileSourceFactory.USGS_SAT)

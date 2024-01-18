@@ -41,6 +41,7 @@ class MedicamentsFragment : Fragment() {
 
         this.tasksService = TasksService(requireContext())
 
+        // get Task of the user connected
         var items = mutableListOf<Task>()
         val thread = Thread {
             items = this.tasksService.getTasksFilled()
@@ -50,8 +51,10 @@ class MedicamentsFragment : Fragment() {
 
         val medicinesRV: RecyclerView = this.binding.medicinesMyMedicines
 
+        // If there is no task, we display a message
         binding.noTask.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
 
+        // set adapter
         taskAdapter = TaskAdapter(requireContext(), items, db)
         medicinesRV.layoutManager = LinearLayoutManager(requireContext())
         medicinesRV.adapter = taskAdapter
