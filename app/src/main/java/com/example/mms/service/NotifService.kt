@@ -22,6 +22,17 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.ZonedDateTime
 
+/**
+ * Service to send or planify notifications
+ * Singleton pattern
+ *
+ * @property context The context of the application
+ * @property CHANNEL_MEDI_REMINDER The channel id of reminder notifications
+ * @property KEY_NOTIFICATION_ID The key of the notification id in the shared preferences
+ * @property PREFS_NAME The name of the shared preferences
+ * @property sharedPref The shared preferences of the application
+ *
+ */
 class NotifService(
     private val context: Context
 ) {
@@ -32,6 +43,9 @@ class NotifService(
     private val sharedPref = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
 
+    /**
+     *
+     */
     fun createNotificationChannel() {
         val name = this.context.getString(R.string.channel_name_reminder)
         val descriptionText = this.context.getString(R.string.channel_description_reminder)
