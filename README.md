@@ -3,6 +3,7 @@
 </p>
 <h1 align="center">MediMate</h1>
 
+This application was created as part of a 3rd year Computer Science project at the IUT in Nantes.  
 Application that helps you store the different medication you have to take, allowing to scan prescription, manage your medications frequencies and stock, and sends you notifications.
 
 
