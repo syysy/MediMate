@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import com.example.mms.R
+import com.example.mms.Utils.goTo
 import com.example.mms.databinding.FragmentConseilsBinding
 import com.example.mms.databinding.FragmentModifyMedecinBinding
 
@@ -42,7 +43,7 @@ class ModifyMedecinFragment : Fragment() {
         }
 
         binding.searchDoctor.setOnClickListener {
-            // TODO: start new activity to search doctor by name or by rpps
+            navController.navigate(R.id.action_navigation_modify_medecin_to_navigation_find_doctor)
         }
 
         binding.buttonValiderMedecin.setOnClickListener {
