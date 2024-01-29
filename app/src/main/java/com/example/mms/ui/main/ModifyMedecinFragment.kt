@@ -41,6 +41,10 @@ class ModifyMedecinFragment : Fragment() {
             navController.navigate(R.id.action_navigation_modify_medecin_to_navigation_notifications)
         }
 
+        binding.searchDoctor.setOnClickListener {
+            // TODO: start new activity to search doctor by name or by rpps
+        }
+
         binding.buttonValiderMedecin.setOnClickListener {
             val nom = binding.editNomMedecin.text.toString()
             val numero = binding.editNumeroMedecin.text.toString()

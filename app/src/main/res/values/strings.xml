@@ -238,4 +238,6 @@
     <string name="annuler_prise">Annuler la prise</string>
     <string name="stock_faible_pensez_racheter">Votre stock est faible, pensez à en racheter</string>
     <string name="gerer_stock">Gérer mon stock</string>
+    <string name="recherche_medecin">Rechercher un médecin</string>
+    <string name="ou">ou</string>
 </resources>
