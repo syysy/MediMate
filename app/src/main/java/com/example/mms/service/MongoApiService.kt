@@ -4,11 +4,10 @@ import android.content.Context
 import android.util.Log
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
+import com.example.mms.constant.API_URL_MONGO
 import com.example.mms.database.mongoObjects.MongoVersion
 import com.example.mms.model.medicines.Medicine
 import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 
 
 /**
@@ -21,22 +20,10 @@ import kotlinx.serialization.json.Json
  * @property queue The queue of the requests
  * @property json The json parser
  */
-class ApiService private constructor(context: Context) {
-    private val url = "http://138.68.64.36:8080/"
-    private val queue = Volley.newRequestQueue(context)
-
-    private val json = Json { ignoreUnknownKeys = true }
-
-    /**
-     * Add a path to the api url
-     */
-    private fun makeUrl(path: String): String {
-        return this.url + path
-    }
+class MongoApiService private constructor(context: Context): Api(context, API_URL_MONGO) {
 
     /**
      * Get the version of the database and medicines to update if the local version is not up to date
-     *
      *
      * @param localVersion The version of the local database
      * @param callback The callback to call when the version and medicines to update are received
@@ -98,14 +85,14 @@ class ApiService private constructor(context: Context) {
      */
     companion object {
         @Volatile
-        private var INSTANCE: ApiService? = null
+        private var INSTANCE: MongoApiService? = null
 
         /**
          * get the instance of the service
          */
-        fun getInstance(context: Context): ApiService =
+        fun getInstance(context: Context): MongoApiService =
             INSTANCE ?: synchronized(this) {
-                INSTANCE ?: ApiService(context).also {
+                INSTANCE ?: MongoApiService(context).also {
                     INSTANCE = it
                 }
             }
