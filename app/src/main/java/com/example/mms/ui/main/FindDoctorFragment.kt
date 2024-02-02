@@ -41,15 +41,17 @@ class FindDoctorFragment: Fragment() {
             val doctorApi = DoctorApiService.getInstance(this.requireContext())
 
             if (rpps.isNotBlank()) {
-                doctorApi.getDoctorByRPPS(rpps, { doctor ->
-                    this.insertDoctor(doctor)
+                doctorApi.getDoctorByRPPS(rpps, { doctors ->
+                    this.toast(doctors.size.toString())
+                    TODO("proposer une liste de docteurs")
                 }, {
                     // show a toast error
                     this.toast(getString(R.string.erreur_recherche_docteur))
                 })
             } else if (firstName.isNotBlank() && lastName.isNotBlank()) {
-                doctorApi.getDoctorByName(firstName, lastName, { doctor ->
-                    this.insertDoctor(doctor)
+                doctorApi.getDoctorByName(firstName, lastName, { doctors ->
+                    this.toast(doctors.size.toString())
+                    TODO("proposer une liste de docteurs")
                 }, {
                     // show a toast error
                     this.toast(getString(R.string.erreur_recherche_docteur))

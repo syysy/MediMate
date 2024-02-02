@@ -6,19 +6,25 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.example.mms.constant.API_URL_DOCTOR
 import com.example.mms.model.Doctor
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.serialization.decodeFromString
 
 class DoctorApiService private constructor(context: Context): Api(context, API_URL_DOCTOR) {
 
-    private fun getDoctor(search: String, callback: (doctor: Doctor) -> Unit, callbackError: () -> Unit) {
+    private fun getDoctor(search: String, callback: (doctors: List<Doctor>) -> Unit, callbackError: () -> Unit) {
         // build the request
         val stringRequest = StringRequest(
             Request.Method.GET, this.makeUrl("rpps?page=1&_per_page=30"),
             { response ->
                 try {
+                    val gson = Gson()
+                    val apiResponse = gson.fromJson<Map<String, Any>>(response, object : TypeToken<Map<String, Any>>() {}.type)
+
                     // try to parse the response into a Doctor
-                    val doctor = this.json.decodeFromString<Doctor>(response)
-                    callback(doctor)
+                    val doctors = this.json.decodeFromString<List<Doctor>>(apiResponse["hyndra:member"].toString())
+                    Log.d(":3", doctors.toString())
+                    callback(doctors)
                 } catch (e: Exception) {
                     // if an error occurred, log and call the error callback
                     Log.d("parse_json", "error: $e")
@@ -40,7 +46,7 @@ class DoctorApiService private constructor(context: Context): Api(context, API_U
      * @param callback the callback to call when the request is successful
      * @param callbackError the callback to call when the request failed
      */
-    fun getDoctorByRPPS(rpps: String, callback: (doctor: Doctor) -> Unit, callbackError: () -> Unit) {
+    fun getDoctorByRPPS(rpps: String, callback: (doctors: List<Doctor>) -> Unit, callbackError: () -> Unit) {
         val searchUrl = "rpps=$rpps"
 
         this.getDoctor(searchUrl, callback, callbackError)
@@ -54,7 +60,7 @@ class DoctorApiService private constructor(context: Context): Api(context, API_U
      * @param callback the callback to call when the request is successful
      * @param callbackError the callback to call when the request failed
      */
-    fun getDoctorByName(firstName: String, lastName: String, callback: (doctor: Doctor) -> Unit, callbackError: () -> Unit) {
+    fun getDoctorByName(firstName: String, lastName: String, callback: (doctors: List<Doctor>) -> Unit, callbackError: () -> Unit) {
         val searchUrl = "firstName=$firstName&lastName=$lastName"
 
         this.getDoctor(searchUrl, callback, callbackError)

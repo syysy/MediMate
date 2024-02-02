@@ -20,4 +20,8 @@ class Doctor (
     val address: String?,
     val city: String?,
     val zipCode: String?,
-)
+) {
+    override fun toString(): String {
+        return "Doctor(rpps='$rpps', firstName='$firstName', lastName='$lastName', fullName=$fullName, phone=$phone, email=$email, address=$address, city=$city, zipCode=$zipCode)"
+    }
+}
