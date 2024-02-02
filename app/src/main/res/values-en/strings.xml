@@ -227,4 +227,8 @@
     <string name="gerer_stock">Manage my stock</string>
     <string name="recherche_medecin">Search a doctor</string>
     <string name="ou">or</string>
+    <string name="rechercher">search</string>
+    <string name="numero_rpps">Rpps code</string>
+    <string name="erreur_recherche_docteur">No doctors found</string>
+    <string name="medecin_ajoute">Doctor added</string>
 </resources>

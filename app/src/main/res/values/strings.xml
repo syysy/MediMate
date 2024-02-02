@@ -9,7 +9,7 @@
     <string name="chargement_scan">Lecture de l\'ordonnance…</string>
     <string name="médi_title">Mes tâches</string>
     <string name="retour">Retour</string>
-    <string name="find_medic">Chercher le nom d’un médicament</string>
+    <string name="find_medic">Aucun médecin trouvé</string>
     <string name="modifier">Modifier</string>
     <string name="details">Détails</string>
     <string name="add_a_task_to_do">Ajouter une tâche à faire</string>
@@ -240,4 +240,8 @@
     <string name="gerer_stock">Gérer mon stock</string>
     <string name="recherche_medecin">Rechercher un médecin</string>
     <string name="ou">ou</string>
+    <string name="rechercher">rechercher</string>
+    <string name="numero_rpps">Code rpps</string>
+    <string name="erreur_recherche_docteur">Erreur lors de la recherche du docteur</string>
+    <string name="medecin_ajoute">Médecin ajouté</string>
 </resources>
