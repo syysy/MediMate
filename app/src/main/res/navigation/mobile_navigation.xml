@@ -27,6 +27,12 @@
             app:destination="@id/navigation_modify_medecin" />
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_dairy"
+        android:name="com.example.mms.ui.main.DairyFragment"
+        android:label="@string/title_dairy"
+        tools:layout="@layout/fragment_dairy" />
+
 
     <fragment
         android:id="@+id/navigation_profil"
