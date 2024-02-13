@@ -9,6 +9,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -38,8 +39,6 @@ class ConseilsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-
-
         _binding = FragmentConseilsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
@@ -49,7 +48,7 @@ class ConseilsFragment : Fragment() {
 
         val name = binding.itemMedecin.nomMedecin
         val number = binding.itemMedecin.numeroMedecin
-        val mail = binding.itemMedecin.mailMedecin // 10100214179
+        val mail = binding.itemMedecin.mailMedecin
 
         val getDoctorThread = Thread {
             val db = SingletonDatabase.getDatabase(this.requireContext())
@@ -71,7 +70,7 @@ class ConseilsFragment : Fragment() {
         }
 
         // set the state of the buttons
-        if (number.text == getString(R.string.cliquez_sur_le_crayon) || number.text == "") {
+        if (this.isDoctorFieldIsEmpty(number)) {
             smsBtn.setBackgroundResource(R.drawable.button_style_3_disable)
             smsBtn.setTextColor(resources.getColor(R.color.clickable_blue_disable))
             smsBtn.isEnabled = false
@@ -80,7 +79,8 @@ class ConseilsFragment : Fragment() {
             smsBtn.setTextColor(resources.getColor(R.color.clickable_blue))
             smsBtn.isEnabled = true
         }
-        if (mail.text == getString(R.string.pour_ajouter_un_medecin) || mail.text == "") {
+
+        if (this.isDoctorFieldIsEmpty(mail)) {
             mailBtn.setBackgroundResource(R.drawable.button_style_3_disable)
             mailBtn.setTextColor(resources.getColor(R.color.clickable_blue_disable))
             mailBtn.isEnabled = false
@@ -192,6 +192,13 @@ class ConseilsFragment : Fragment() {
         return root
     }
 
+    private fun updateButton() {
+        val number = binding.itemMedecin.numeroMedecin
+        val mail = binding.itemMedecin.mailMedecin
+
+
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -240,6 +247,12 @@ class ConseilsFragment : Fragment() {
             )
         }
 
+    }
+
+    private fun isDoctorFieldIsEmpty(textView: TextView): Boolean {
+        return textView.text == getString(R.string.pas_d_informations) ||
+                textView.text == getString(R.string.cliquez_sur_le_crayon) ||
+                textView.text == ""
     }
 
 
