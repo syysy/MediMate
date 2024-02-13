@@ -1,5 +1,6 @@
 package com.example.mms.ui.main
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,8 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mms.R
-import com.example.mms.Utils.goTo
+import com.example.mms.adapter.DoctorsAdapter
 import com.example.mms.database.inApp.SingletonDatabase
 import com.example.mms.databinding.FragmentFindDoctorBinding
 import com.example.mms.model.Doctor
@@ -64,14 +67,36 @@ class FindDoctorFragment: Fragment() {
     }
 
     private fun addDoctors(doctors: List<Doctor>) {
-        if (doctors.size == 1) {
-            val doctor = doctors[0]
+        this.openDoctorChoiceDialog(doctors)
+//        if (doctors.size == 1) {
+//            val doctor = doctors[0]
+//
+//            this.insertDoctor(doctor)
+//            this.toast(getString(R.string.medecin_ajoute))
+//        } else {
+//            TODO("proposer une liste de docteurs")
+//        }
+    }
 
-            this.insertDoctor(doctor)
-            this.toast(getString(R.string.medecin_ajoute))
-        } else {
-            TODO("proposer une liste de docteurs")
+    private fun openDoctorChoiceDialog(doctors: List<Doctor>) {
+        val dialog = Dialog(this.requireContext())
+        dialog.setContentView(R.layout.custom_dialog_doctor)
+
+        val recyclerView = dialog.findViewById<RecyclerView>(R.id.rv_doctors)
+        val adapter = DoctorsAdapter(doctors) {
+            this.insertDoctor(it)
+            dialog.dismiss()
+            this.backToAdvice()
         }
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
+
+        val btnClose = dialog.findViewById<View>(R.id.btn_close_doctors)
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     private fun toast(message: String) {
@@ -96,5 +121,11 @@ class FindDoctorFragment: Fragment() {
         val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         val navController = navHostFragment.navController
         navController.navigate(R.id.action_navigation_find_doctor_to_navigation_modify_medecin)
+    }
+
+    private fun backToAdvice() {
+//        val navHostFragment = requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+//        val navController = navHostFragment.navController
+//        navController.navigate(R.id.action_navigation_find_doctor_to_navigation_conseils)
     }
 }

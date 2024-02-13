@@ -142,7 +142,7 @@ class ConseilsFragment : Fragment() {
 
         binding.itemMedecin.medecinModifier.setOnClickListener {
             val navHostFragment =
-                requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
+                requireActivity().supportFragmentManager.findFragmentById(R.id.navigation_notifications) as NavHostFragment
             val navController = navHostFragment.navController
             navController.navigate(R.id.action_navigation_notifications_to_navigation_modify_medecin)
         }

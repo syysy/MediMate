@@ -15,4 +15,3 @@ fun goToInAddFragments(activity : FragmentActivity, fragmentMove: Int) {
     val navController = navHostFragment.navController
     navController.navigate(fragmentMove)
 }
-

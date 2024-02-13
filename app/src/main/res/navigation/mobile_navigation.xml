@@ -49,12 +49,15 @@
 
     <fragment
         android:id="@+id/navigation_find_doctor"
-        android:name="com.example.mms.ui.main.FindDoctorFragment"
+        android:name="com.example.mms.ui.doctor.FindDoctorFragment"
         android:label="@layout/fragment_find_doctor"
         tools:layout="@layout/fragment_find_doctor" >
         <action
             android:id="@+id/action_navigation_find_doctor_to_navigation_modify_medecin"
             app:destination="@id/navigation_modify_medecin" />
+        <action
+            android:id="@+id/action_navigation_find_doctor_to_navigation_notifications"
+            app:destination="@id/navigation_notifications" />
     </fragment>
 
 </navigation>

@@ -25,6 +25,10 @@ class Doctor (
         return this.fullName ?: "$firstName $lastName"
     }
 
+    fun getDisplayAdress(): String {
+        return "${this.city} ${this.zipCode}: ${this.address} "
+    }
+
     override fun toString(): String {
         return "Doctor(rpps='$rpps', firstName='$firstName', lastName='$lastName', fullName=$fullName, phone=$phone, email=$email, address=$address, city=$city, zipCode=$zipCode)"
     }
