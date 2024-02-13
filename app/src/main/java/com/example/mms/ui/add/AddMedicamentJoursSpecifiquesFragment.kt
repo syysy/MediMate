@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mms.R
-import com.example.mms.Utils.goTo
+import com.example.mms.Utils.goToInAddFragments
 import com.example.mms.Utils.hourMinuteToString
 import com.example.mms.adapter.HourWeightAdapter
 import com.example.mms.adapter.Interface.OnItemClickListener
@@ -106,7 +106,7 @@ class AddMedicamentJoursSpecifiquesFragment : Fragment() {
 
         binding.backButton.root.setOnClickListener {
             viewModel.clearFrequencyData()
-            goTo(requireActivity(), R.id.action_AMPlus_JoursSpecifiques_to_AMPlus_Fragment)
+            goToInAddFragments(requireActivity(), R.id.action_AMPlus_JoursSpecifiques_to_AMPlus_Fragment)
         }
 
         binding.nextButton.setOnClickListener {
@@ -129,7 +129,7 @@ class AddMedicamentJoursSpecifiquesFragment : Fragment() {
             }
 
             viewModel.setSpecificDays(specificDays)
-            goTo(requireActivity(), R.id.action_AMPlus_JoursSpecifiques_to_Storage)
+            goToInAddFragments(requireActivity(), R.id.action_AMPlus_JoursSpecifiques_to_Storage)
         }
 
         return root

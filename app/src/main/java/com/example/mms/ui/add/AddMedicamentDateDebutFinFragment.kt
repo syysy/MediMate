@@ -12,11 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mms.R
 import com.example.mms.Utils.dateToString
-import com.example.mms.Utils.goTo
+import com.example.mms.Utils.goToInAddFragments
 import com.example.mms.databinding.FragmentAddMedicamentStartEndDateBinding
 import java.time.LocalDateTime
 import java.util.Calendar
-import java.util.Date
 
 class AddMedicamentDateDebutFinFragment : Fragment() {
 
@@ -72,7 +71,7 @@ class AddMedicamentDateDebutFinFragment : Fragment() {
                 viewModel.taskData.value!!.startDate = this.beginDate
                 viewModel.taskData.value!!.endDate = this.endDate
                 // go to next fragment
-                goTo(requireActivity(), R.id.action_start_end_date_to_recap)
+                goToInAddFragments(requireActivity(), R.id.action_start_end_date_to_recap)
             }
         }
 
