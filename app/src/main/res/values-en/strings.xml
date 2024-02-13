@@ -231,4 +231,5 @@
     <string name="numero_rpps">Rpps code</string>
     <string name="erreur_recherche_docteur">No doctors found</string>
     <string name="medecin_ajoute">Doctor added</string>
+    <string name="pas_d_informations">No informations</string>
 </resources>

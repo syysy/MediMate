@@ -8,9 +8,16 @@ import com.example.mms.constant.API_URL_DOCTOR
 import com.example.mms.model.Doctor
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import kotlinx.serialization.decodeFromString
 
 class DoctorApiService private constructor(context: Context): Api(context, API_URL_DOCTOR) {
+
+    private fun getField(map: Map<String, String>, field: String): String? {
+        return when (map[field]) {
+            null -> null
+            "null" -> null
+            else -> map[field]
+        }
+    }
 
     private fun getDoctor(search: String, callback: (doctors: List<Doctor>) -> Unit, callbackError: () -> Unit) {
         // build the request
@@ -35,12 +42,12 @@ class DoctorApiService private constructor(context: Context): Api(context, API_U
                             doctorMap["rpps"] ?: "rpps",
                             doctorMap["firstName"] ?: "firstName",
                             doctorMap["lastName"] ?: "lastName",
-                            doctorMap["fullName"],
-                            doctorMap["phone"],
-                            doctorMap["email"],
-                            doctorMap["address"],
-                            doctorMap["city"],
-                            doctorMap["zipCode"]
+                            this.getField(doctorMap, "fullName"),
+                            this.getField(doctorMap, "phoneNumber"),
+                            this.getField(doctorMap, "email"),
+                            this.getField(doctorMap, "address"),
+                            this.getField(doctorMap, "city"),
+                            this.getField(doctorMap, "zipcode")
                         )
 
                         doctors.add(doctor)

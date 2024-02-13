@@ -244,4 +244,5 @@
     <string name="numero_rpps">Code rpps</string>
     <string name="erreur_recherche_docteur">Erreur lors de la recherche du docteur</string>
     <string name="medecin_ajoute">Médecin ajouté</string>
+    <string name="pas_d_informations">Pas d\'informations</string>
 </resources>
