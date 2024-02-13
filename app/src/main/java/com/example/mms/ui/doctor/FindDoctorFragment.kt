@@ -62,15 +62,14 @@ class FindDoctorFragment : AppCompatActivity() {
     }
 
     private fun addDoctors(doctors: List<Doctor>) {
-        this.openDoctorChoiceDialog(doctors)
-//        if (doctors.size == 1) {
-//            val doctor = doctors[0]
-//
-//            this.insertDoctor(doctor)
-//            this.toast(getString(R.string.medecin_ajoute))
-//        } else {
-//            TODO("proposer une liste de docteurs")
-//        }
+        if (doctors.size == 1) {
+            val doctor = doctors[0]
+
+            this.insertDoctor(doctor)
+            this.toast(getString(R.string.medecin_ajoute))
+        } else {
+            this.openDoctorChoiceDialog(doctors)
+        }
     }
 
     private fun openDoctorChoiceDialog(doctors: List<Doctor>) {

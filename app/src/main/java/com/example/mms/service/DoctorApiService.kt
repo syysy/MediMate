@@ -22,7 +22,7 @@ class DoctorApiService private constructor(context: Context): Api(context, API_U
     private fun getDoctor(search: String, callback: (doctors: List<Doctor>) -> Unit, callbackError: () -> Unit) {
         // build the request
         val stringRequest = StringRequest(
-            Request.Method.GET, this.makeUrl("rpps??page=1&_per_page=30&$search"),
+            Request.Method.GET, this.makeUrl("rpps?page=1&_per_page=30&$search"),
             { response ->
                 try {
                     val gson = Gson()

@@ -9,6 +9,7 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -19,6 +20,7 @@ import com.example.mms.R
 import com.example.mms.constant.LIEN_EFFETS_INDESIRABLES
 import com.example.mms.database.inApp.SingletonDatabase
 import com.example.mms.databinding.FragmentConseilsBinding
+import com.example.mms.model.Doctor
 import com.example.mms.ui.doctor.ModifyMedecinFragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import org.osmdroid.api.IMapController
@@ -28,11 +30,18 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 class ConseilsFragment : Fragment() {
 
     private var _binding: FragmentConseilsBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var controller: IMapController
     private lateinit var myLocationOverlay: MyLocationNewOverlay
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
-    private val binding get() = _binding!!
+    private lateinit var smsBtn: Button
+    private lateinit var mailBtn: Button
+
+    private lateinit var name: TextView
+    private lateinit var number: TextView
+    private lateinit var mail: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,52 +53,14 @@ class ConseilsFragment : Fragment() {
         val root: View = binding.root
 
         // set text
-        val smsBtn = binding.itemMedecin.btnSms
-        val mailBtn = binding.itemMedecin.btnMail
+        smsBtn = binding.itemMedecin.btnSms
+        mailBtn = binding.itemMedecin.btnMail
 
-        val name = binding.itemMedecin.nomMedecin
-        val number = binding.itemMedecin.numeroMedecin
-        val mail = binding.itemMedecin.mailMedecin
+        name = binding.itemMedecin.nomMedecin
+        number = binding.itemMedecin.numeroMedecin
+        mail = binding.itemMedecin.mailMedecin
 
-        val getDoctorThread = Thread {
-            val db = SingletonDatabase.getDatabase(this.requireContext())
-            val actualDoctor = db.doctorDao().get()
-
-            if (actualDoctor != null) {
-                name.text = actualDoctor.getDisplayName()
-                number.text = actualDoctor.phone ?: getString(R.string.pas_d_informations)
-                mail.text = actualDoctor.email ?: getString(R.string.pas_d_informations)
-            }
-        }
-        getDoctorThread.start()
-        getDoctorThread.join()
-
-        if (name.text == "" && number.text == "" && mail.text == "") {
-            name.text = getString(R.string.aucun_medecin_enregistre)
-            number.text = getString(R.string.cliquez_sur_le_crayon)
-            mail.text = getString(R.string.pour_ajouter_un_medecin)
-        }
-
-        // set the state of the buttons
-        if (this.isDoctorFieldIsEmpty(number)) {
-            smsBtn.setBackgroundResource(R.drawable.button_style_3_disable)
-            smsBtn.setTextColor(resources.getColor(R.color.clickable_blue_disable))
-            smsBtn.isEnabled = false
-        } else {
-            smsBtn.setBackgroundResource(R.drawable.button_style_3)
-            smsBtn.setTextColor(resources.getColor(R.color.clickable_blue))
-            smsBtn.isEnabled = true
-        }
-
-        if (this.isDoctorFieldIsEmpty(mail)) {
-            mailBtn.setBackgroundResource(R.drawable.button_style_3_disable)
-            mailBtn.setTextColor(resources.getColor(R.color.clickable_blue_disable))
-            mailBtn.isEnabled = false
-        } else {
-            mailBtn.setBackgroundResource(R.drawable.button_style_3)
-            mailBtn.setTextColor(resources.getColor(R.color.clickable_blue))
-            mailBtn.isEnabled = true
-        }
+        this.updateDoctorData()
 
         // We set the listener to open the sms app with the intent action send to and the phone number as data
         smsBtn.setOnClickListener {
@@ -145,7 +116,6 @@ class ConseilsFragment : Fragment() {
             startActivity(Intent(this.requireContext(), ModifyMedecinFragment::class.java))
         }
 
-
         // MAP PART NOT FINISHED
 
         /**map = binding.itemMap.osmmap
@@ -190,11 +160,49 @@ class ConseilsFragment : Fragment() {
         return root
     }
 
-    private fun updateButton() {
-        val number = binding.itemMedecin.numeroMedecin
-        val mail = binding.itemMedecin.mailMedecin
+    private fun updateDoctorData() {
+        var actualDoctor: Doctor? = null
+        val getDoctorThread = Thread {
+            val db = SingletonDatabase.getDatabase(this.requireContext())
+            actualDoctor = db.doctorDao().get()
 
+            if (actualDoctor != null) {
+                this.requireActivity().runOnUiThread {
+                    name.text = actualDoctor!!.getDisplayName()
+                    number.text = actualDoctor!!.phone ?: getString(R.string.pas_d_informations)
+                    mail.text = actualDoctor!!.email ?: getString(R.string.pas_d_informations)
+                }
+            }
+        }
+        getDoctorThread.start()
+        getDoctorThread.join()
 
+        if (name.text == "" && number.text == "" && mail.text == "") {
+            name.text = getString(R.string.aucun_medecin_enregistre)
+            number.text = getString(R.string.cliquez_sur_le_crayon)
+            mail.text = getString(R.string.pour_ajouter_un_medecin)
+        }
+
+        // set the state of the buttons
+        if (actualDoctor?.phone == null) {
+            smsBtn.setBackgroundResource(R.drawable.button_style_3_disable)
+            smsBtn.setTextColor(resources.getColor(R.color.clickable_blue_disable))
+            smsBtn.isEnabled = false
+        } else {
+            smsBtn.setBackgroundResource(R.drawable.button_style_3)
+            smsBtn.setTextColor(resources.getColor(R.color.clickable_blue))
+            smsBtn.isEnabled = true
+        }
+
+        if (actualDoctor?.email == null) {
+            mailBtn.setBackgroundResource(R.drawable.button_style_3_disable)
+            mailBtn.setTextColor(resources.getColor(R.color.clickable_blue_disable))
+            mailBtn.isEnabled = false
+        } else {
+            mailBtn.setBackgroundResource(R.drawable.button_style_3)
+            mailBtn.setTextColor(resources.getColor(R.color.clickable_blue))
+            mailBtn.isEnabled = true
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -247,10 +255,9 @@ class ConseilsFragment : Fragment() {
 
     }
 
-    private fun isDoctorFieldIsEmpty(textView: TextView): Boolean {
-        return textView.text == getString(R.string.pas_d_informations) ||
-                textView.text == getString(R.string.cliquez_sur_le_crayon) ||
-                textView.text == ""
+    override fun onResume() {
+        super.onResume()
+        this.updateDoctorData()
     }
 
 
