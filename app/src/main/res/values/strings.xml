@@ -239,6 +239,9 @@
     <string name="stock_faible_pensez_racheter">Votre stock est faible, pensez à en racheter</string>
     <string name="gerer_stock">Gérer mon stock</string>
 
-    <string name="title_dairy" translatable="false">Journal</string>
+    <string name="title_dairy">Journal</string>
     <string name="dairy_note">Note</string>
+    <string name="add_note">Ajouter une note dans le journal</string>
+    <string name="ajouter_note">Ajouter</string>
+    <string name="text_note">Entrer votre note</string>
 </resources>

@@ -225,5 +225,9 @@
     <string name="annuler_prise">Cancel take</string>
     <string name="stock_faible_pensez_racheter">Your stock is low, think about buying more</string>
     <string name="gerer_stock">Manage my stock</string>
+    <string name="title_dairy">Dairy</string>
     <string name="dairy_note">Note</string>
+    <string name="add_note">Add a note in the dairy</string>
+    <string name="ajouter_note">Add</string>
+    <string name="text_note">Enter your note</string>
 </resources>

@@ -30,7 +30,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton_addMedic"
+        android:id="@+id/floatingActionButton_addNote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -45,6 +45,6 @@
         app:layout_constraintVertical_bias="1.0"
         android:focusable="true"
         app:backgroundTint="@color/clickable_blue"
-        android:contentDescription="@string/add_a_task_to_do" />
+        android:contentDescription="@string/add_note" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

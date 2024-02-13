@@ -1,5 +1,6 @@
 package com.example.mms.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mms.adapter.DailyAdapteur
 import com.example.mms.databinding.FragmentDairyBinding
 import com.example.mms.model.DairyNote
+import com.example.mms.ui.add.AddActivity
+import com.example.mms.ui.add.AddNote
 
 class DairyFragment: Fragment() {
 
@@ -38,6 +41,10 @@ class DairyFragment: Fragment() {
         textAdapter = DailyAdapteur(requireContext(), items)
         noteRV.layoutManager = LinearLayoutManager(requireContext())
         noteRV.adapter = textAdapter
+
+        binding.floatingActionButtonAddNote.setOnClickListener {
+            startActivity(Intent(root.context, AddNote::class.java))
+        }
 
         return root
     }
