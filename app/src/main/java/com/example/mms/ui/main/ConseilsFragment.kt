@@ -19,6 +19,7 @@ import com.example.mms.R
 import com.example.mms.constant.LIEN_EFFETS_INDESIRABLES
 import com.example.mms.database.inApp.SingletonDatabase
 import com.example.mms.databinding.FragmentConseilsBinding
+import com.example.mms.ui.doctor.ModifyMedecinFragment
 import com.google.android.gms.location.FusedLocationProviderClient
 import org.osmdroid.api.IMapController
 import org.osmdroid.util.GeoPoint
@@ -141,10 +142,7 @@ class ConseilsFragment : Fragment() {
         }
 
         binding.itemMedecin.medecinModifier.setOnClickListener {
-            val navHostFragment =
-                requireActivity().supportFragmentManager.findFragmentById(R.id.navigation_notifications) as NavHostFragment
-            val navController = navHostFragment.navController
-            navController.navigate(R.id.action_navigation_notifications_to_navigation_modify_medecin)
+            startActivity(Intent(this.requireContext(), ModifyMedecinFragment::class.java))
         }
 
 
