@@ -14,8 +14,8 @@ class Doctor (
     val firstName: String,
     val lastName: String,
     var fullName: String?,
-    val phone: String?,
-    val email: String?,
+    var phone: String?,
+    var email: String?,
 
     val address: String?,
     val city: String?,

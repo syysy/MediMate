@@ -246,4 +246,5 @@
     <string name="medecin_ajoute">Médecin ajouté</string>
     <string name="pas_d_informations">Pas d\'informations</string>
     <string name="selectionnez_votre_docteur">Sélectionnez votre docteur</string>
+    <string name="valider_modifs">Valider les modifications</string>
 </resources>

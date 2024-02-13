@@ -233,4 +233,5 @@
     <string name="medecin_ajoute">Doctor added</string>
     <string name="pas_d_informations">No informations</string>
     <string name="selectionnez_votre_docteur">Choose your doctor</string>
+    <string name="valider_modifs">Validate changes</string>
 </resources>
