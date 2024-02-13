@@ -15,14 +15,37 @@ class DoctorApiService private constructor(context: Context): Api(context, API_U
     private fun getDoctor(search: String, callback: (doctors: List<Doctor>) -> Unit, callbackError: () -> Unit) {
         // build the request
         val stringRequest = StringRequest(
-            Request.Method.GET, this.makeUrl("rpps?page=1&_per_page=30"),
+            Request.Method.GET, this.makeUrl(search),
             { response ->
                 try {
                     val gson = Gson()
                     val apiResponse = gson.fromJson<Map<String, Any>>(response, object : TypeToken<Map<String, Any>>() {}.type)
 
                     // try to parse the response into a Doctor
-                    val doctors = this.json.decodeFromString<List<Doctor>>(apiResponse["hyndra:member"].toString())
+                    val jsonString = apiResponse["hydra:member"]
+                        .toString()
+                        .replace("=", "=\"")
+                        .replace(", ", "\", ")
+                        .replace("}]", "\"}]")
+                    val doctorsMap = gson.fromJson<List<Map<String, String>>>(jsonString, object : TypeToken<List<Map<String, String>>>() {}.type)
+
+                    val doctors = mutableListOf<Doctor>()
+                    for (doctorMap in doctorsMap) {
+                        val doctor = Doctor(
+                            doctorMap["rpps"] ?: "rpps",
+                            doctorMap["firstName"] ?: "firstName",
+                            doctorMap["lastName"] ?: "lastName",
+                            doctorMap["fullName"],
+                            doctorMap["phone"],
+                            doctorMap["email"],
+                            doctorMap["address"],
+                            doctorMap["city"],
+                            doctorMap["zipCode"]
+                        )
+
+                        doctors.add(doctor)
+                    }
+
                     Log.d(":3", doctors.toString())
                     callback(doctors)
                 } catch (e: Exception) {
@@ -47,7 +70,7 @@ class DoctorApiService private constructor(context: Context): Api(context, API_U
      * @param callbackError the callback to call when the request failed
      */
     fun getDoctorByRPPS(rpps: String, callback: (doctors: List<Doctor>) -> Unit, callbackError: () -> Unit) {
-        val searchUrl = "rpps=$rpps"
+        val searchUrl = "rpps?page=1&_per_page=30&idRpps=$rpps"
 
         this.getDoctor(searchUrl, callback, callbackError)
     }

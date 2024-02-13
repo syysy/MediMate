@@ -34,7 +34,7 @@ class FindDoctorFragment: Fragment() {
 
         binding.searchDoctor.setOnClickListener {
             // get input's data
-            val rpps = binding.rppsCode.text.toString()
+            val rpps = binding.rppsCode.text.toString().trim()
             val firstName = binding.docteurPrenom.text.toString()
             val lastName = binding.docteurNom.text.toString()
 
@@ -42,16 +42,14 @@ class FindDoctorFragment: Fragment() {
 
             if (rpps.isNotBlank()) {
                 doctorApi.getDoctorByRPPS(rpps, { doctors ->
-                    this.toast(doctors.size.toString())
-                    TODO("proposer une liste de docteurs")
+                    this.addDoctors(doctors)
                 }, {
                     // show a toast error
                     this.toast(getString(R.string.erreur_recherche_docteur))
                 })
             } else if (firstName.isNotBlank() && lastName.isNotBlank()) {
                 doctorApi.getDoctorByName(firstName, lastName, { doctors ->
-                    this.toast(doctors.size.toString())
-                    TODO("proposer une liste de docteurs")
+                    this.addDoctors(doctors)
                 }, {
                     // show a toast error
                     this.toast(getString(R.string.erreur_recherche_docteur))
@@ -63,6 +61,17 @@ class FindDoctorFragment: Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun addDoctors(doctors: List<Doctor>) {
+        if (doctors.size == 1) {
+            val doctor = doctors[0]
+
+            this.insertDoctor(doctor)
+            this.toast(getString(R.string.medecin_ajoute))
+        } else {
+            TODO("proposer une liste de docteurs")
+        }
     }
 
     private fun toast(message: String) {

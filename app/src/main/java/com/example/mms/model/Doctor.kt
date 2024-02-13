@@ -21,6 +21,10 @@ class Doctor (
     val city: String?,
     val zipCode: String?,
 ) {
+    fun getDisplayName(): String {
+        return this.fullName ?: "$firstName $lastName"
+    }
+
     override fun toString(): String {
         return "Doctor(rpps='$rpps', firstName='$firstName', lastName='$lastName', fullName=$fullName, phone=$phone, email=$email, address=$address, city=$city, zipCode=$zipCode)"
     }
