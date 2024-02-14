@@ -2,6 +2,7 @@ package com.example.mms.ui.doctor
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mms.R
@@ -19,6 +20,16 @@ class ModifyMedecinFragment : AppCompatActivity() {
         var actualDoctor: Doctor? = null
         val thread = Thread {
             actualDoctor = this.db.doctorDao().get()
+
+            this.runOnUiThread {
+                if (actualDoctor != null) {
+                    val phone = actualDoctor?.phone ?: ""
+                    val email = actualDoctor?.email ?: ""
+
+                    binding.editNumeroMedecin.setText(phone)
+                    binding.editMailMedecin.setText(email)
+                }
+            }
         }
         thread.start()
         thread.join()
@@ -27,11 +38,6 @@ class ModifyMedecinFragment : AppCompatActivity() {
 
         supportActionBar?.hide()
 
-        if (actualDoctor != null) {
-            // TODO: récup pas les infos du médecin
-            binding.editNumeroMedecin.setText(actualDoctor!!.phone ?: "")
-            binding.editMailMedecin.setText(actualDoctor!!.email ?: "")
-        }
 
         binding = ActivityModifyMedecinBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -59,10 +65,10 @@ class ModifyMedecinFragment : AppCompatActivity() {
 
             if (binding.editNumeroMedecin.text.toString().isNotEmpty()) {
                 actualDoctor!!.phone = binding.editNumeroMedecin.text.toString()
-            } else if (binding.editMailMedecin.text.toString().isNotEmpty()) {
+            }
+
+            if (binding.editMailMedecin.text.toString().isNotEmpty()) {
                 actualDoctor!!.email = binding.editMailMedecin.text.toString()
-            } else {
-                return@setOnClickListener
             }
 
             val t = Thread {
