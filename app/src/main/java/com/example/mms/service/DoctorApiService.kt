@@ -20,20 +20,28 @@ class DoctorApiService private constructor(context: Context): Api(context, API_U
     }
 
     private fun getDoctor(search: String, callback: (doctors: List<Doctor>) -> Unit, callbackError: () -> Unit) {
+        val url = this.makeUrl("rpps?page=1&_per_page=30&$search")
+        Log.d(":3", url)
+
         // build the request
         val stringRequest = StringRequest(
-            Request.Method.GET, this.makeUrl("rpps?page=1&_per_page=30&$search"),
+            Request.Method.GET, url,
             { response ->
                 try {
                     val gson = Gson()
                     val apiResponse = gson.fromJson<Map<String, Any>>(response, object : TypeToken<Map<String, Any>>() {}.type)
 
                     // try to parse the response into a Doctor
-                    val jsonString = apiResponse["hydra:member"]
+                    var jsonString = apiResponse["hydra:member"]
                         .toString()
                         .replace("=", "=\"")
                         .replace(", ", "\", ")
                         .replace("}]", "\"}]")
+
+                    Log.d(":3", jsonString)
+                    jsonString = jsonString.replace("}\", {", "\"}, {")
+                    Log.d(":3", jsonString)
+
                     val doctorsMap = gson.fromJson<List<Map<String, String>>>(jsonString, object : TypeToken<List<Map<String, String>>>() {}.type)
 
                     val doctors = mutableListOf<Doctor>()
@@ -91,7 +99,18 @@ class DoctorApiService private constructor(context: Context): Api(context, API_U
      * @param callbackError the callback to call when the request failed
      */
     fun getDoctorByName(firstName: String, lastName: String, callback: (doctors: List<Doctor>) -> Unit, callbackError: () -> Unit) {
-        val searchUrl = "firstName=$firstName&lastName=$lastName"
+        var searchUrl = ""
+
+        if (firstName.isNotBlank()) {
+            searchUrl += "firstName=$firstName"
+        }
+
+        if (lastName.isNotBlank()) {
+            if (searchUrl.isNotBlank()) {
+                searchUrl += "&"
+            }
+            searchUrl += "lastName=$lastName"
+        }
 
         this.getDoctor(searchUrl, callback, callbackError)
     }

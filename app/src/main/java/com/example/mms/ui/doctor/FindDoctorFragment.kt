@@ -47,7 +47,7 @@ class FindDoctorFragment : AppCompatActivity() {
                     // show a toast error
                     this.toast(getString(R.string.erreur_recherche_docteur))
                 })
-            } else if (firstName.isNotBlank() && lastName.isNotBlank()) {
+            } else if (firstName.isNotBlank() || lastName.isNotBlank()) {
                 doctorApi.getDoctorByName(firstName, lastName, { doctors ->
                     this.addDoctors(doctors)
                 }, {
