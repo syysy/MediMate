@@ -32,15 +32,12 @@ class DoctorApiService private constructor(context: Context): Api(context, API_U
                     val apiResponse = gson.fromJson<Map<String, Any>>(response, object : TypeToken<Map<String, Any>>() {}.type)
 
                     // try to parse the response into a Doctor
-                    var jsonString = apiResponse["hydra:member"]
+                    val jsonString = apiResponse["hydra:member"]
                         .toString()
                         .replace("=", "=\"")
                         .replace(", ", "\", ")
                         .replace("}]", "\"}]")
-
-                    Log.d(":3", jsonString)
-                    jsonString = jsonString.replace("}\", {", "\"}, {")
-                    Log.d(":3", jsonString)
+                        .replace("}\", {", "\"}, {")
 
                     val doctorsMap = gson.fromJson<List<Map<String, String>>>(jsonString, object : TypeToken<List<Map<String, String>>>() {}.type)
 

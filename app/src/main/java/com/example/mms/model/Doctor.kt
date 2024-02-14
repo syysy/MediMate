@@ -26,7 +26,22 @@ class Doctor (
     }
 
     fun getDisplayAdress(): String {
-        return "${this.city} ${this.zipCode}: ${this.address} "
+        var string = ""
+
+        if (!this.city.isNullOrEmpty()) {
+            string += "${this.city} "
+        }
+        if (!this.zipCode.isNullOrEmpty()) {
+            string += "${this.zipCode}"
+        }
+        if (!this.address.isNullOrEmpty()) {
+            if (string.isNotEmpty()) {
+                string += ": "
+            }
+            string += this.address
+        }
+
+        return string
     }
 
     override fun toString(): String {
