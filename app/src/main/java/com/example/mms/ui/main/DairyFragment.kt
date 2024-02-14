@@ -2,9 +2,13 @@ package com.example.mms.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -34,16 +38,20 @@ class DairyFragment: Fragment() {
 
         val noteRV: RecyclerView = this.binding.notesMyNotes
 
-        val items = mutableListOf<DairyNote>()
-        items.add(DairyNote("test"))
+        val items = ArrayList<DairyNote>()
 
         // set adapter
         textAdapter = DailyAdapteur(requireContext(), items)
         noteRV.layoutManager = LinearLayoutManager(requireContext())
         noteRV.adapter = textAdapter
 
+        val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            result -> items.add(DairyNote(result.data?.extras?.get(AddNote.CLE).toString()))
+            textAdapter.notifyItemInserted(items.size)
+        }
+
         binding.floatingActionButtonAddNote.setOnClickListener {
-            startActivity(Intent(root.context, AddNote::class.java))
+            launcher.launch(Intent(root.context, AddNote::class.java))
         }
 
         return root
