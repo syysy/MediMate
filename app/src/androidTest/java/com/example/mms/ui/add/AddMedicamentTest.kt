@@ -9,7 +9,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.example.mms.R
 import org.junit.Test
 
-class FragmentAddMedicament1Test {
+class AddMedicamentTest {
 
     @Test
     fun testEditionNomDuMedicamentVidePresent() {
