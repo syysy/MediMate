@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mms.R
-import com.example.mms.Utils.goToInAddFragments
+import com.example.mms.Utils.goTo
 import com.example.mms.Utils.hourMinuteToString
 import com.example.mms.adapter.HourWeightAdapter
 import com.example.mms.adapter.Interface.OnItemClickListener
@@ -57,7 +57,7 @@ class AddMedicamentCycleHourWeightFragment: Fragment() {
 
         // buttons listeners
         binding.backButton.buttonArrowBack.setOnClickListener {
-            goToInAddFragments(requireActivity(), R.id.action_AMCycleHourWeight_to_AMCycle)
+            goTo(requireActivity(), R.id.action_AMCycleHourWeight_to_AMCycle)
         }
 
         binding.btnAddMedi.setOnClickListener {
@@ -81,7 +81,7 @@ class AddMedicamentCycleHourWeightFragment: Fragment() {
             cycle.hourWeights = this.hourWeightList
             viewModel.setCycle(cycle)
 
-            goToInAddFragments(requireActivity(), R.id.action_AMCycleHourWeight_to_Storage)
+            goTo(requireActivity(), R.id.action_AMCycleHourWeight_to_Storage)
         }
 
         return root

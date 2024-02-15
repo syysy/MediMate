@@ -36,28 +36,11 @@
 
     <fragment
         android:id="@+id/navigation_modify_medecin"
-        android:name="com.example.mms.ui.doctor.ModifyMedecinFragment"
+        android:name="com.example.mms.ui.main.ModifyMedecinFragment"
         android:label="@+id/titre_modify_medecin"
-        tools:layout="@layout/activity_modify_medecin" >
+        tools:layout="@layout/fragment_modify_medecin" >
         <action
             android:id="@+id/action_navigation_modify_medecin_to_navigation_notifications"
             app:destination="@id/navigation_notifications" />
-        <action
-            android:id="@+id/action_navigation_modify_medecin_to_navigation_find_doctor"
-            app:destination="@id/navigation_find_doctor" />
     </fragment>
-
-    <fragment
-        android:id="@+id/navigation_find_doctor"
-        android:name="com.example.mms.ui.doctor.FindDoctorFragment"
-        android:label="@layout/activity_find_doctor"
-        tools:layout="@layout/activity_find_doctor" >
-        <action
-            android:id="@+id/action_navigation_find_doctor_to_navigation_modify_medecin"
-            app:destination="@id/navigation_modify_medecin" />
-        <action
-            android:id="@+id/action_navigation_find_doctor_to_navigation_notifications"
-            app:destination="@id/navigation_notifications" />
-    </fragment>
-
 </navigation>
