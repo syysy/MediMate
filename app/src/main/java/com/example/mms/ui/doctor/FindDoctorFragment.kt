@@ -110,6 +110,7 @@ class FindDoctorFragment : AppCompatActivity() {
             val db = SingletonDatabase.getDatabase(this)
             val doctorDao = db.doctorDao()
 
+            doctorDao.delete()
             doctorDao.insert(doctor)
         }
         thread.start()

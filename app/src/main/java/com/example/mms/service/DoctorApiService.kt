@@ -21,7 +21,6 @@ class DoctorApiService private constructor(context: Context): Api(context, API_U
 
     private fun getDoctor(search: String, callback: (doctors: List<Doctor>) -> Unit, callbackError: () -> Unit) {
         val url = this.makeUrl("rpps?page=1&_per_page=30&$search")
-        Log.d(":3", url)
 
         // build the request
         val stringRequest = StringRequest(
@@ -44,7 +43,7 @@ class DoctorApiService private constructor(context: Context): Api(context, API_U
                     val doctors = mutableListOf<Doctor>()
                     for (doctorMap in doctorsMap) {
                         val doctor = Doctor(
-                            doctorMap["rpps"] ?: "rpps",
+                            doctorMap["idRpps"] ?: "rpps",
                             doctorMap["firstName"] ?: "firstName",
                             doctorMap["lastName"] ?: "lastName",
                             this.getField(doctorMap, "fullName"),
@@ -57,8 +56,6 @@ class DoctorApiService private constructor(context: Context): Api(context, API_U
 
                         doctors.add(doctor)
                     }
-
-                    Log.d(":3", doctors.toString())
                     callback(doctors)
                 } catch (e: Exception) {
                     // if an error occurred, log and call the error callback
