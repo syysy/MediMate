@@ -47,9 +47,10 @@
         android:id="@+id/edit_medicament_nom"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:singleLine="true"
-        android:longClickable="false"
+        android:editable="false"
         android:inputType="none"
+        android:longClickable="false"
+        android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/label_medicament_nom" />
