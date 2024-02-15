@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mms.adapter.HourWeightAdapter
 import com.example.mms.adapter.Interface.OnItemClickListener
 import com.example.mms.R
-import com.example.mms.Utils.goToInAddFragments
+import com.example.mms.Utils.goTo
 import com.example.mms.Utils.hourMinuteToString
 import com.example.mms.databinding.FragmentAddMedicamentUnPlusieursParJourBinding
 import com.example.mms.model.Cycle
@@ -41,7 +41,7 @@ class AddMedicamentUnOuPlusParJourFragment : Fragment() {
 
         binding.backButton.root.setOnClickListener {
             viewModel.clearFrequencyData()
-            goToInAddFragments(requireActivity(),R.id.action_AMUnOuPlusParJour_Fragment_to_AMPlus_Fragment)
+            goTo(requireActivity(),R.id.action_AMUnOuPlusParJour_Fragment_to_AMPlus_Fragment)
         }
 
         hourWeightList.add(HourWeight(0, "08:00", 1))
@@ -83,7 +83,7 @@ class AddMedicamentUnOuPlusParJourFragment : Fragment() {
             val cycle = Cycle(0,0,24,0,0, hourWeightList)
             viewModel.setCycle(cycle)
 
-            goToInAddFragments(requireActivity(),R.id.action_AMUnOuPlusParJour_Fragment_to_storage)
+            goTo(requireActivity(),R.id.action_AMUnOuPlusParJour_Fragment_to_storage)
         }
 
         return root

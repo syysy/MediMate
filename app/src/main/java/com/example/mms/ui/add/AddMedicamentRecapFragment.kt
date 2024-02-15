@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.mms.MainActivity
 import com.example.mms.R
 import com.example.mms.Utils.getFormattedDate
-import com.example.mms.Utils.goToInAddFragments
+import com.example.mms.Utils.goTo
 import com.example.mms.adapter.RecapSpecificDaysAdapter
 import com.example.mms.database.inApp.AppDatabase
 import com.example.mms.database.inApp.SingletonDatabase
@@ -112,7 +112,7 @@ class AddMedicamentRecapFragment : Fragment() {
 
 
         binding.backButton.buttonArrowBack.setOnClickListener {
-            goToInAddFragments(requireActivity(), R.id.action_recap_to_start_end_date)
+            goTo(requireActivity(), R.id.action_recap_to_start_end_date)
         }
 
         binding.btnTaskValidate.setOnClickListener {
