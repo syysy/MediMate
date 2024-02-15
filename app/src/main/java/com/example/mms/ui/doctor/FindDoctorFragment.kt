@@ -3,12 +3,13 @@ package com.example.mms.ui.doctor
 import android.app.Dialog
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mms.R
+import com.example.mms.Utils.LoaderDialog
 import com.example.mms.adapter.DoctorsAdapter
 import com.example.mms.database.inApp.SingletonDatabase
 import com.example.mms.databinding.ActivityFindDoctorBinding
@@ -40,19 +41,26 @@ class FindDoctorFragment : AppCompatActivity() {
 
             val doctorApi = DoctorApiService.getInstance(this)
 
+            val loaderDialog = LoaderDialog(getString(R.string.recherche_medecins), this)
+            loaderDialog.show()
+
             if (rpps.isNotBlank()) {
                 doctorApi.getDoctorByRPPS(rpps, { doctors ->
                     this.addDoctors(doctors)
+                    loaderDialog.dismiss()
                 }, {
                     // show a toast error
                     this.toast(getString(R.string.erreur_recherche_docteur))
+                    loaderDialog.dismiss()
                 })
             } else if (firstName.isNotBlank() || lastName.isNotBlank()) {
                 doctorApi.getDoctorByName(firstName, lastName, { doctors ->
                     this.addDoctors(doctors)
+                    loaderDialog.dismiss()
                 }, {
                     // show a toast error
                     this.toast(getString(R.string.erreur_recherche_docteur))
+                    loaderDialog.dismiss()
                 })
             } else {
                 // show a toast error

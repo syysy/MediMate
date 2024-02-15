@@ -234,4 +234,5 @@
     <string name="pas_d_informations">No informations</string>
     <string name="selectionnez_votre_docteur">Choose your doctor</string>
     <string name="valider_modifs">Validate changes</string>
+    <string name="recherche_medecins">Searching doctors</string>
 </resources>
