@@ -1,6 +1,5 @@
 package com.example.mms.ui.add
 
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +8,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.mms.R
-import com.example.mms.Utils.dateToString
-import com.example.mms.Utils.goTo
+import com.example.mms.Utils.goToInAddFragments
 import com.example.mms.databinding.FragmentAddMedicamentCycleBinding
 import com.example.mms.model.Cycle
-import java.time.LocalDateTime
-import java.util.Calendar
 
 class AddMedicamentCycleFragment: Fragment() {
     private var _binding: FragmentAddMedicamentCycleBinding? = null
@@ -41,7 +37,7 @@ class AddMedicamentCycleFragment: Fragment() {
 
         binding.backButton.buttonArrowBack.setOnClickListener {
             this.viewModel.clearFrequencyData()
-            goTo(requireActivity(), R.id.action_AMCycle_to_AM2_Fragment)
+            goToInAddFragments(requireActivity(), R.id.action_AMCycle_to_AM2_Fragment)
         }
 
         binding.nextButton.setOnClickListener {
@@ -73,7 +69,7 @@ class AddMedicamentCycleFragment: Fragment() {
             )
             viewModel.setCycle(cycle)
 
-            goTo(requireActivity(), R.id.action_AMCycle_to_AMCycleHourWeight)
+            goToInAddFragments(requireActivity(), R.id.action_AMCycle_to_AMCycleHourWeight)
         }
 
         return root
