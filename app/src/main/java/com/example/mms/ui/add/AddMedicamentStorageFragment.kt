@@ -2,7 +2,6 @@ package com.example.mms.ui.add
 
 import android.graphics.Color
 import android.os.Bundle
-import android.text.InputFilter
 import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mms.R
-import com.example.mms.Utils.goTo
+import com.example.mms.Utils.goToInAddFragments
 import com.example.mms.database.inApp.AppDatabase
 import com.example.mms.database.inApp.SingletonDatabase
 import com.example.mms.databinding.FragmentAddMedicamentStorageBinding
@@ -113,7 +112,7 @@ class AddMedicamentStorageFragment : Fragment() {
                 // save the storage informations
                 viewModel.setStorage(obj)
             }
-            goTo(requireActivity(), R.id.action_storage_to_start_end_date)
+            goToInAddFragments(requireActivity(), R.id.action_storage_to_start_end_date)
         }
 
         return root

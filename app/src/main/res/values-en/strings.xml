@@ -225,4 +225,14 @@
     <string name="annuler_prise">Cancel take</string>
     <string name="stock_faible_pensez_racheter">Your stock is low, think about buying more</string>
     <string name="gerer_stock">Manage my stock</string>
+    <string name="recherche_medecin">Search a doctor</string>
+    <string name="ou">or</string>
+    <string name="rechercher">search</string>
+    <string name="numero_rpps">Rpps code</string>
+    <string name="erreur_recherche_docteur">No doctors found</string>
+    <string name="medecin_ajoute">Doctor added</string>
+    <string name="pas_d_informations">No informations</string>
+    <string name="selectionnez_votre_docteur">Choose your doctor</string>
+    <string name="valider_modifs">Validate changes</string>
+    <string name="recherche_medecins">Searching doctors</string>
 </resources>

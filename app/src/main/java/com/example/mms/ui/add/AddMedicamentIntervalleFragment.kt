@@ -2,26 +2,20 @@ package com.example.mms.ui.add
 
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mms.R
-import com.example.mms.Utils.goTo
+import com.example.mms.Utils.goToInAddFragments
 import com.example.mms.Utils.hourMinuteToString
-import com.example.mms.Utils.intToStringAdd0IfNecessary
 import com.example.mms.Utils.stringHourMinuteToInt
 import com.example.mms.databinding.FragmentAddMedicamentPlusIntervalleBinding
 import com.example.mms.model.Cycle
-import com.example.mms.model.HourWeight
 import com.example.mms.service.TasksService
-import org.joda.time.Hours
 
 class AddMedicamentIntervalleFragment : Fragment() {
     private var _binding: FragmentAddMedicamentPlusIntervalleBinding? = null
@@ -65,7 +59,7 @@ class AddMedicamentIntervalleFragment : Fragment() {
 
         binding.backButton.buttonArrowBack.setOnClickListener {
             viewModel.clearFrequencyData()
-            goTo(requireActivity(), R.id.action_AMIntervalle_to_AMPlus)
+            goToInAddFragments(requireActivity(), R.id.action_AMIntervalle_to_AMPlus)
         }
 
         binding.nextButton.setOnClickListener {
@@ -92,7 +86,7 @@ class AddMedicamentIntervalleFragment : Fragment() {
             val cycle = Cycle(0,0,24,0,0, hourWeightList)
             viewModel.setCycle(cycle)
 
-            goTo(requireActivity(), R.id.action_AMIntervalle_to_AMStorage)
+            goToInAddFragments(requireActivity(), R.id.action_AMIntervalle_to_AMStorage)
         }
 
         return root
