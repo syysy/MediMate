@@ -22,6 +22,7 @@ class UpdateNote : AppCompatActivity() {
         binding = ActivityUpdateNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val id = intent.extras?.getInt("id")
         val position = intent.extras?.getInt("position")
         binding.textNote.setText(intent.extras?.getString("text"))
 
@@ -41,7 +42,10 @@ class UpdateNote : AppCompatActivity() {
         binding.updateButton.setOnClickListener {
             val saisi = binding.textNote.text.toString()
 
-            val valeurRetour = Intent().putExtra(CLE, saisi).putExtra("position", position)
+            val valeurRetour = Intent()
+                                .putExtra(CLE, saisi)
+                                .putExtra("id", id)
+                                .putExtra("position", position)
             setResult(AppCompatActivity.RESULT_OK, valeurRetour)
             finish()
         }

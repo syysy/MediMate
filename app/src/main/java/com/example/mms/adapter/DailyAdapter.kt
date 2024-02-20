@@ -19,7 +19,7 @@ import com.example.mms.model.DairyNote
 class DailyAdapter(
     private val context: Context,
     private val items: MutableList<DairyNote>,
-    private val func: (textValue: String, position: Int) -> Unit
+    private val func: (id: Int, textValue: String, position: Int) -> Unit
 ): RecyclerView.Adapter<DailyAdapter.MyViewHolder>() {
 
     /**
@@ -49,7 +49,7 @@ class DailyAdapter(
         val item = this.items[position]
         holder.textJournal.text = item.note
         holder.itemView.setOnClickListener {
-            func(item.note, position)
+            func(item.id, item.note, position)
         }
     }
 
