@@ -12,6 +12,11 @@
         android:title="@string/title_dashboard" />
 
     <item
+        android:id="@+id/navigation_dairy"
+        android:icon="@drawable/journal"
+        android:title="@string/title_dairy" />
+
+    <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/ampoule"
         android:title="@string/title_notifications" />

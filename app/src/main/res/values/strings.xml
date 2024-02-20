@@ -238,6 +238,13 @@
     <string name="annuler_prise">Annuler la prise</string>
     <string name="stock_faible_pensez_racheter">Votre stock est faible, pensez à en racheter</string>
     <string name="gerer_stock">Gérer mon stock</string>
+    <string name="title_dairy">Journal</string>
+    <string name="dairy_note">Note</string>
+    <string name="add_note">Ajouter une note dans le journal</string>
+    <string name="ajouter_note">Ajouter</string>
+    <string name="text_note">Entrer votre note</string>
+    <string name="modifier_note">Modifier</string>
+    <string name="delete_note">Supprimer</string>
     <string name="recherche_medecin">Rechercher un médecin</string>
     <string name="ou">ou</string>
     <string name="rechercher">rechercher</string>
