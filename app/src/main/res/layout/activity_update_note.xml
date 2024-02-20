@@ -8,25 +8,36 @@
     android:background="@color/white"
     android:textAlignment="center"
     android:visibility="visible"
-    tools:context=".ui.add.AddNote">
+    tools:context=".ui.main.UpdateNote">
 
     <include
         android:id="@+id/back_button"
         layout="@layout/back_button" />
 
     <Button
-        android:id="@+id/add_button"
+        android:id="@+id/update_button"
         style="@style/CustomButtonStyle3"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/ajouter_note"
+        android:text="@string/modifier_note"
         android:textColor="@color/clickable_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-
         />
+
+    <Button
+        android:id="@+id/delete_button"
+        style="@style/CustomButtonStyle3"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/delete_note"
+        android:textColor="@color/clickable_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/update_button" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
@@ -34,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="2dp"
         android:layout_marginBottom="348dp"
-        app:layout_constraintBottom_toTopOf="@+id/add_button"
+        app:layout_constraintBottom_toTopOf="@+id/update_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -47,6 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="182dp"
         android:hint="@string/text_note"
+        android:text="update your note"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

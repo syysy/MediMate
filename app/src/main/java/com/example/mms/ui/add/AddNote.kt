@@ -24,10 +24,12 @@ class AddNote : AppCompatActivity() {
         binding = ActivityAddNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // When back button clicked, go back on Dairy without adding
         binding.backButton.buttonArrowBack.setOnClickListener {
             finish()
         }
 
+        // When button add clicked, send code = RESULT_OK (-1), and the note
         binding.addButton.setOnClickListener {
             val saisi = binding.textNote.text.toString()
 

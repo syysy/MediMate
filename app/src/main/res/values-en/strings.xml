@@ -230,4 +230,6 @@
     <string name="add_note">Add a note in the dairy</string>
     <string name="ajouter_note">Add</string>
     <string name="text_note">Enter your note</string>
+    <string name="modifier_note">Update</string>
+    <string name="delete_note">Delete</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.example.mms.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +16,11 @@ import com.example.mms.model.DairyNote
  * @param context the context of the activity
  * @param items the list of item
  */
-class DailyAdapteur (
+class DailyAdapter(
     private val context: Context,
-    private val items: MutableList<DairyNote>
-): RecyclerView.Adapter<DailyAdapteur.MyViewHolder>() {
+    private val items: MutableList<DairyNote>,
+    private val func: (textValue: String, position: Int) -> Unit
+): RecyclerView.Adapter<DailyAdapter.MyViewHolder>() {
 
     /**
      * Class that represents the view holder of the recycler view
@@ -33,16 +35,9 @@ class DailyAdapteur (
      * @param parent the parent view
      * @param viewType the view type
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyAdapteur.MyViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DailyAdapter.MyViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.item_dairy, parent, false)
-        return DailyAdapteur.MyViewHolder(view)
-    }
-
-    /**
-     * Function that returns the number of items
-     */
-    override fun getItemCount(): Int {
-        return this.items.size
+        return DailyAdapter.MyViewHolder(view)
     }
 
     /**
@@ -50,9 +45,18 @@ class DailyAdapteur (
      * @param holder the view holder
      * @param position the position of the item
      */
-    override fun onBindViewHolder(holder: DailyAdapteur.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DailyAdapter.MyViewHolder, position: Int) {
         val item = this.items[position]
-
         holder.textJournal.text = item.note
+        holder.itemView.setOnClickListener {
+            func(item.note, position)
+        }
+    }
+
+    /**
+     * Function that returns the number of items
+     */
+    override fun getItemCount(): Int {
+        return this.items.size
     }
 }
