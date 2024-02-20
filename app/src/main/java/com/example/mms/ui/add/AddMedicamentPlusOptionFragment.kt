@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.mms.R
-import com.example.mms.Utils.goTo
+import com.example.mms.Utils.goToInAddFragments
 import com.example.mms.databinding.FragmentAddMedicamentPlusOptionBinding
 
 class AddMedicamentPlusOptionFragment : Fragment() {
@@ -25,12 +25,12 @@ class AddMedicamentPlusOptionFragment : Fragment() {
         val root: View = binding.root
 
         binding.backButton.buttonArrowBack.setOnClickListener {
-            goTo(requireActivity(), R.id.action_AMPlus_Fragment_to_AM2_Fragment)
+            goToInAddFragments(requireActivity(), R.id.action_AMPlus_Fragment_to_AM2_Fragment)
         }
 
         binding.nextButton.setOnClickListener {
             val nextLayoutId = this.getLayoutWithCheckedRadio()
-            goTo(requireActivity(),nextLayoutId)
+            goToInAddFragments(requireActivity(),nextLayoutId)
         }
 
         return root

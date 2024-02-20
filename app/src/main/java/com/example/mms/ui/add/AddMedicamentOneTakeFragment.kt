@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.mms.R
-import com.example.mms.Utils.goTo
+import com.example.mms.Utils.goToInAddFragments
 import com.example.mms.databinding.FragmentAddMedicamentOneTakeBinding
 
 class AddMedicamentOneTakeFragment : Fragment() {
@@ -32,7 +32,7 @@ class AddMedicamentOneTakeFragment : Fragment() {
         val root: View = binding.root
 
         binding.backButton.buttonArrowBack.setOnClickListener {
-            goTo(requireActivity(), R.id.action_AMOneTake_to_AM2_Fragment)
+            goToInAddFragments(requireActivity(), R.id.action_AMOneTake_to_AM2_Fragment)
         }
 
         binding.nextButton.setOnClickListener {
@@ -49,7 +49,7 @@ class AddMedicamentOneTakeFragment : Fragment() {
             }
 
             viewModel.setOneTakeWeight(weight)
-            goTo(requireActivity(), R.id.action_AMOneTake_to_Recap)
+            goToInAddFragments(requireActivity(), R.id.action_AMOneTake_to_Recap)
         }
 
         return root
