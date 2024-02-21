@@ -1,5 +1,6 @@
 package com.example.mms.ui.add
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.example.mms.database.inApp.SingletonDatabase
 import com.example.mms.R
 import com.example.mms.databinding.FragmentAddMedicament1Binding
 import com.example.mms.model.medicines.Medicine
+import com.example.mms.ui.main.MInformation
 
 class AddMedicament1Fragment : Fragment() {
 
@@ -164,6 +166,27 @@ class AddMedicament1Fragment : Fragment() {
             }.start()
         }
 
+        // When info button clicked, go to information page (MInformation.kt) with name and code_cis
+        binding.infoButton.setOnClickListener {
+            // TODO Warning - Some medicine deos not have a form or a weight. The code CIS cannot be obtain
+            val forme = binding.spinnerForme.selectedItem.toString()
+            val dosage = binding.spinnerDosage.selectedItem.toString()
+            var medecine: Medicine? = null
+
+            val t = Thread {
+                val mediDb = SingletonDatabase.getDatabase(this.requireContext()).medicineDao()
+                medecine = mediDb.getByNameTypeWeight(viewModel.medicineName.value!!, forme, dosage)
+            }
+            t.start()
+            t.join()
+
+            val versInfoMedicament = Intent(this@AddMedicament1Fragment.context, MInformation::class.java)
+                .putExtra("nom", "${binding.editMedicamentNom.text}")
+                .putExtra("cis", "${medecine?.code_cis}")
+            startActivity(versInfoMedicament)
+        }
+
+        // When back button clicked, go back
         binding.backButton.buttonArrowBack.setOnClickListener {
             requireActivity().finish()
         }
