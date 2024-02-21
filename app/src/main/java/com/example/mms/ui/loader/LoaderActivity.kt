@@ -57,7 +57,7 @@ class LoaderActivity : AppCompatActivity() {
 
             if (mediDB.getNbElements() == 0) {
                 val mediJsDb = MedicineJsonDatabase(this)
-                mediJsDb.transferJsonDBintoRoom(db.medicineDao())
+                mediJsDb.transferMedicinesJsonDBintoRoom(db.medicineDao())
             }
 
             // call the api to check if the local version is up to date
