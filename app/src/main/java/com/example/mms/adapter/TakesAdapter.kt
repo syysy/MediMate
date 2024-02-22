@@ -2,6 +2,7 @@ package com.example.mms.adapter
 
 import android.app.Dialog
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -182,7 +183,8 @@ class TakesAdapter(
                     dialogDetails(item, false, position)
                 }
             }
-         //TODO get image by medicine type
+        // gives the image depending on the type of medicine
+        holder.medicineImage.setImageResource(getImageByMedicineType(item))
     }
 
     override fun getItemCount(): Int {
@@ -194,8 +196,17 @@ class TakesAdapter(
         this.notifyDataSetChanged()
     }
 
-    fun getImageByMedicineType(task: Task) {
-         //TODO
+    fun getImageByMedicineType(item: ShowableHourWeight): Int {
+        return when {
+            "${item.medicineType.generic}" == "capsule" -> R.drawable.capsules
+            "${item.medicineType.generic}" == "comprime" -> R.drawable.comprimes
+            "${item.medicineType.generic}" == "suspension" -> R.drawable.suspension
+            "${item.medicineType.generic}" == "solution" -> R.drawable.suspension
+            "${item.medicineType.generic}" == "gelule" -> R.drawable.gelules
+            "${item.medicineType.generic}" == "gel" -> R.drawable.lotion
+            "${item.medicineType.generic}" == "collyre" -> R.drawable.collyre
+            else -> R.drawable.sachet
+        }
     }
 
     /**
