@@ -5,6 +5,7 @@ import com.example.mms.dao.MedicineDAO
 import com.example.mms.dao.SideEffectsDAO
 import com.example.mms.model.SideEffects
 import com.example.mms.model.medicines.Medicine
+import com.google.gson.Gson
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -19,6 +20,7 @@ class MedicineJsonDatabase(
 ) {
     private val dbMedicineFileName = "databases/medicines_flat.json"
     private val dbSideEffectsFileName = "databases/side_effects.json"
+    private val gson = Gson()
 
     /**
      * Transfers the medicines json database into the room database
@@ -42,7 +44,7 @@ class MedicineJsonDatabase(
      * @return The medicines from the json database
      */
     private fun getMedicinesFromJson(): List<Medicine> {
-        return Json.decodeFromString<List<Medicine>>(this.getJsonContent(this.dbMedicineFileName))
+        return Json{ ignoreUnknownKeys = true }.decodeFromString<List<Medicine>>(this.getJsonContent(this.dbMedicineFileName))
     }
 
     /**
