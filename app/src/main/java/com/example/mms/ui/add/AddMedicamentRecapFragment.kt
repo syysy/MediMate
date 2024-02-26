@@ -84,6 +84,11 @@ class AddMedicamentRecapFragment : Fragment() {
         thread.start()
         thread.join()
 
+        if (this.interactions.isNotEmpty()) {
+            binding.btnEffetsSecondaires.visibility = View.VISIBLE
+            binding.imageDanger.visibility = View.VISIBLE
+        }
+
         if (cycle != null) {
             // Cycle
             saveFunction = { addedTask ->

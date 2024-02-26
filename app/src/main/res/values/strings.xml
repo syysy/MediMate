@@ -256,5 +256,5 @@
     <string name="valider_modifs">Valider les modifications</string>
     <string name="recherche_medecins">Recherche des médecins</string>
     <string name="effets_secondaires">effets secondaires</string>
-    <string name="interactions_medicaments">interactions entre médicaments détectées</string>
+    <string name="interactions_medicaments">Intéractions médicamenteuses avec des médicaments que vous prenez</string>
 </resources>
