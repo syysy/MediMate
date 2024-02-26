@@ -18,6 +18,7 @@ import com.example.mms.model.SpecificDaysHourWeight
 import com.example.mms.model.Takes
 import com.example.mms.model.Task
 import com.example.mms.model.medicines.MType
+import com.example.mms.model.medicines.Medicine
 import java.time.LocalDateTime
 import java.util.Date
 
@@ -770,5 +771,21 @@ class TasksService(context: Context) {
         thread.join()
 
         return shTakes
+    }
+
+    fun getCurrentUserMedicines(): List<Medicine> {
+        val tasks = this.getCurrentUserTasks()
+        val medicines = mutableListOf<Medicine>()
+        val now = LocalDateTime.now()
+
+        for (task in tasks) {
+            val medicine = this.db.medicineDao().getByCIS(task.medicineCIS)
+
+            if (task.startDate <= now && task.endDate >= now) {
+                medicines.add(medicine!!)
+            }
+        }
+
+        return medicines
     }
 }

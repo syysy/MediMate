@@ -4,6 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.example.mms.R
 import com.example.mms.Utils.getFormattedDate
 import com.example.mms.Utils.goToInAddFragments
 import com.example.mms.adapter.RecapSpecificDaysAdapter
+import com.example.mms.dao.InteractionDao
 import com.example.mms.database.inApp.AppDatabase
 import com.example.mms.database.inApp.SingletonDatabase
 import com.example.mms.databinding.FragmentAddRecapBinding
@@ -112,8 +114,17 @@ class AddMedicamentRecapFragment : Fragment() {
         }
 
         binding.btnEffetsSecondaires.setOnClickListener {
-            val toast = Toast.makeText(requireContext(), "Effets secondaires", Toast.LENGTH_SHORT)
-            toast.show()
+            val interactionDao = InteractionDao(requireContext())
+
+            var interactions: Map<String, Map<String, String>> = mapOf()
+            val thread = Thread {
+                interactions = interactionDao.thisMedicineInteractsWith(medicine, this.tasksService.getCurrentUserMedicines())
+            }
+            thread.start()
+            thread.join()
+
+            Toast.makeText(requireContext(), interactions.size.toString(), Toast.LENGTH_LONG).show()
+            Log.d(":3", interactions.toString())
         }
 
         binding.backButton.buttonArrowBack.setOnClickListener {
@@ -145,7 +156,7 @@ class AddMedicamentRecapFragment : Fragment() {
         val specificDays = viewModel.specificDays.value!!
         for (specificDay in specificDays) {
             specificDay.taskId = addedTask.id
-            tasksService.storeSpecificDays(specificDay)
+            this.tasksService.storeSpecificDays(specificDay)
         }
     }
 
@@ -157,7 +168,7 @@ class AddMedicamentRecapFragment : Fragment() {
         val weight = viewModel.oneTakeWeight.value!!
 
         val thread = Thread {
-            tasksService.storeOneTake(cis, weight)
+            this.tasksService.storeOneTake(cis, weight)
         }
         thread.start()
         thread.join()
@@ -190,7 +201,7 @@ class AddMedicamentRecapFragment : Fragment() {
                 // store the task
                 val task = viewModel.taskData.value!!
                 task.userId = currentUserId
-                tasksService.storeTask(task)
+                this.tasksService.storeTask(task)
 
                 val addedTask = taskDAO.getLastInserted()!!
                 idLastInserted = addedTask.id

@@ -123,17 +123,18 @@
 
     <Button
         android:id="@+id/btn_effets_secondaires"
+        style="@style/CustomButtonStyle3"
         android:layout_width="175dp"
         android:layout_height="45dp"
-        style="@style/CustomButtonStyle3"
-        android:text="@string/effets_secondaires"
         android:drawableStart="@drawable/mal_de_crane_petit"
         android:drawableTint="@color/black"
-        app:layout_constraintBottom_toBottomOf="@+id/name_medicine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.78"
-        app:layout_constraintStart_toEndOf="@+id/name_medicine"
-        app:layout_constraintTop_toTopOf="@+id/name_medicine" />
+        android:text="@string/effets_secondaires"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_task_validate"
+        app:layout_constraintEnd_toStartOf="@+id/btn_task_validate"
+        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_task_validate"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -20,7 +20,7 @@ class MedicineJsonDatabase(
 ) {
     private val dbMedicineFileName = "databases/medicines_flat.json"
     private val dbSideEffectsFileName = "databases/side_effects.json"
-    private val gson = Gson()
+    private val dbInteractionFileName = "databases/interactions.json"
 
     /**
      * Transfers the medicines json database into the room database
@@ -30,13 +30,6 @@ class MedicineJsonDatabase(
         db.insertMany(medicines)
     }
 
-    /**
-     * Transfers the side effects json database into the room database
-     */
-    fun transferSideEffectsJsonDBintoRoom(db: SideEffectsDAO) {
-        val sideEffects = this.getSideEffects()
-        db.insertManySideEffects(sideEffects)
-    }
 
     /**
      * Returns the medicines from the json database
@@ -52,6 +45,13 @@ class MedicineJsonDatabase(
      */
     private fun getSideEffects(): List<SideEffects> {
         return Json.decodeFromString<List<SideEffects>>(this.getJsonContent(this.dbSideEffectsFileName))
+    }
+
+    /**
+     * Returns the interactions from the json database
+     */
+    fun getInteractions(): Map<String, Map<String, Map<String, String>>> {
+        return Json.decodeFromString(this.getJsonContent(this.dbInteractionFileName))
     }
 
     /**
