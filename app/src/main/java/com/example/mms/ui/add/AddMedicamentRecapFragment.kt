@@ -83,7 +83,6 @@ class AddMedicamentRecapFragment : Fragment() {
         }
         thread.start()
         thread.join()
-        Log.d(":3", "interactions: $interactions")
 
         if (cycle != null) {
             // Cycle
