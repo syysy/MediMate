@@ -1,6 +1,7 @@
 package com.example.mms.ui.add
 
 import android.app.Activity.RESULT_OK
+import android.app.Dialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -12,16 +13,19 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mms.MainActivity
 import com.example.mms.R
 import com.example.mms.Utils.getFormattedDate
 import com.example.mms.Utils.goToInAddFragments
+import com.example.mms.adapter.InteractionsAdapter
 import com.example.mms.adapter.RecapSpecificDaysAdapter
 import com.example.mms.dao.InteractionDao
 import com.example.mms.database.inApp.AppDatabase
 import com.example.mms.database.inApp.SingletonDatabase
 import com.example.mms.databinding.FragmentAddRecapBinding
 import com.example.mms.model.Cycle
+import com.example.mms.model.Interaction
 import com.example.mms.model.Task
 import com.example.mms.model.medicines.Medicine
 import com.example.mms.service.NotifService
@@ -40,6 +44,7 @@ class AddMedicamentRecapFragment : Fragment() {
     private lateinit var medicine: Medicine
     private var taskIsOnlyOneTime: Boolean = false
     private lateinit var db: AppDatabase
+    private lateinit var interactions: List<Interaction>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,6 +75,15 @@ class AddMedicamentRecapFragment : Fragment() {
                 binding.nameMedicine.text = medicineName
             }
         }.start()
+
+        val interactionDao = InteractionDao(requireContext())
+
+        val thread = Thread {
+            this.interactions = interactionDao.thisMedicineInteractsWith(medicine, this.tasksService.getCurrentUserMedicines())
+        }
+        thread.start()
+        thread.join()
+        Log.d(":3", "interactions: $interactions")
 
         if (cycle != null) {
             // Cycle
@@ -114,17 +128,7 @@ class AddMedicamentRecapFragment : Fragment() {
         }
 
         binding.btnEffetsSecondaires.setOnClickListener {
-            val interactionDao = InteractionDao(requireContext())
-
-            var interactions: Map<String, Map<String, String>> = mapOf()
-            val thread = Thread {
-                interactions = interactionDao.thisMedicineInteractsWith(medicine, this.tasksService.getCurrentUserMedicines())
-            }
-            thread.start()
-            thread.join()
-
-            Toast.makeText(requireContext(), interactions.size.toString(), Toast.LENGTH_LONG).show()
-            Log.d(":3", interactions.toString())
+            this.openInteractionsDialog()
         }
 
         binding.backButton.buttonArrowBack.setOnClickListener {
@@ -248,5 +252,23 @@ class AddMedicamentRecapFragment : Fragment() {
         }
 
         return hours
+    }
+
+    private fun openInteractionsDialog() {
+        val interactionsAdapters = InteractionsAdapter(interactions)
+
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.custom_dialog_interaction)
+
+        val recyclerView = dialog.findViewById<RecyclerView>(R.id.rv_interactions)
+        recyclerView.adapter = interactionsAdapters
+        recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
+
+        val btnClose = dialog.findViewById<View>(R.id.btn_close_interactions)
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 }

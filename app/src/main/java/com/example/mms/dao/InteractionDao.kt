@@ -2,12 +2,13 @@ package com.example.mms.dao
 
 import android.content.Context
 import com.example.mms.database.jsonMedicines.MedicineJsonDatabase
+import com.example.mms.model.Interaction
 import com.example.mms.model.medicines.Medicine
 
 class InteractionDao(context: Context) {
     private val interactions = MedicineJsonDatabase(context).getInteractions()
 
-    fun thisMedicineInteractsWith(medicine: Medicine, othersMedicines: List<Medicine>): Map<String, Map<String, String>> {
+    fun thisMedicineInteractsWith(medicine: Medicine, othersMedicines: List<Medicine>): List<Interaction> {
 
         var medicineInteractions: Map<String, Map<String, String>>? = null
         for (key in this.interactions.keys) {
@@ -18,12 +19,25 @@ class InteractionDao(context: Context) {
             }
         }
 
+        // ACIDE ACETYLSALICYLIQUE
+        // CLOPIDOGREL
         if (medicineInteractions == null) {
-            return emptyMap()
+            return listOf()
         }
 
-        return medicineInteractions.filterKeys {it ->
-            it in othersMedicines.map { it.composition?.substance_name ?: it.name }
+        medicineInteractions = medicineInteractions.filterKeys { key ->
+            othersMedicines.any {
+                it.name.contains(key, ignoreCase = true) ||
+                        (it.composition?.substance_name ?: "").contains(key, ignoreCase = true)
+            }
+        }
+
+        return medicineInteractions.map { it ->
+            Interaction(
+                it.key,
+                it.value["type"] ?: "",
+                it.value["message"] ?: ""
+            )
         }
     }
 }

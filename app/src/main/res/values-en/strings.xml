@@ -243,4 +243,5 @@
     <string name="valider_modifs">Validate changes</string>
     <string name="recherche_medecins">Searching doctors</string>
     <string name="effets_secondaires">side effects</string>
+    <string name="interactions_medicaments">drug-to-drug interactions detected</string>
 </resources>
