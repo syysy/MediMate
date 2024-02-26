@@ -12,12 +12,13 @@ import kotlinx.serialization.json.Json
  * This class is used to transfer the json database into the room database
  *
  * @property context The context of the application
- * @property dbFileName The name of the json file
+ * @property dbMedicineFileName The name of the json file
  */
 class MedicineJsonDatabase(
     val context: Context
 ) {
-    private val dbFileName = "databases/medicines_flat.json"
+    private val dbMedicineFileName = "databases/medicines_flat.json"
+    private val dbSideEffectsFileName = "databases/side_effects.json"
 
     /**
      * Transfers the medicines json database into the room database
@@ -41,14 +42,14 @@ class MedicineJsonDatabase(
      * @return The medicines from the json database
      */
     private fun getMedicinesFromJson(): List<Medicine> {
-        return Json.decodeFromString<List<Medicine>>(this.getJsonContent(this.dbFileName))
+        return Json.decodeFromString<List<Medicine>>(this.getJsonContent(this.dbMedicineFileName))
     }
 
     /**
      * Returns the side effects from the json database
      */
     private fun getSideEffects(): List<SideEffects> {
-        return Json.decodeFromString<List<SideEffects>>(this.getJsonContent("databases/side_effects.json"))
+        return Json.decodeFromString<List<SideEffects>>(this.getJsonContent(this.dbSideEffectsFileName))
     }
 
     /**

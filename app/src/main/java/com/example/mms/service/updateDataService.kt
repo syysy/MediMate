@@ -32,7 +32,7 @@ class UpdateDataService(context: Context) {
         // get the local version from the database
         var localVersion: Version? = null
         val thread = Thread {
-            localVersion = this.database.versionDao().getFirst() ?: Version(0, 0)
+            localVersion = this.database.versionDao().getFirst() ?: Version(0, 2)
         }
         thread.start() // start the thread
         thread.join() // wait for the thread to finish

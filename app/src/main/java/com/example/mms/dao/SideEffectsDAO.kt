@@ -13,4 +13,7 @@ interface SideEffectsDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertManySideEffects(sideEffects: List<SideEffects>)
+
+    @Query("SELECT Count(*) FROM side_effects")
+    fun getNbElements(): Int
 }
