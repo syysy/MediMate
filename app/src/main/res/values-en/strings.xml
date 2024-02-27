@@ -242,6 +242,10 @@
     <string name="selectionnez_votre_docteur">Choose your doctor</string>
     <string name="valider_modifs">Validate changes</string>
     <string name="recherche_medecins">Searching doctors</string>
+    <string name="effets_secondaires">side effects</string>
+    <string name="interactions_medicaments">Drug interactions with medications you are taking</string>
+    <string name="attention">Warning</string>
+    <string name="meme_substance_ajouter_quand_meme">You already have a medicine containing the same active substance as this one. Do you really want to add \"%s\" ?</string>
     <string name="title_MInfo">Information</string>
     <string name="button_MInfo">Information</string>
     <string name="information_type">Type :</string>

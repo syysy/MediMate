@@ -1,6 +1,8 @@
 package com.example.mms.ui.add
 
 import android.app.Activity.RESULT_OK
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -10,15 +12,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mms.MainActivity
 import com.example.mms.R
 import com.example.mms.Utils.getFormattedDate
 import com.example.mms.Utils.goToInAddFragments
+import com.example.mms.adapter.InteractionsAdapter
 import com.example.mms.adapter.RecapSpecificDaysAdapter
+import com.example.mms.dao.InteractionDao
 import com.example.mms.database.inApp.AppDatabase
 import com.example.mms.database.inApp.SingletonDatabase
 import com.example.mms.databinding.FragmentAddRecapBinding
 import com.example.mms.model.Cycle
+import com.example.mms.model.Interaction
 import com.example.mms.model.Task
 import com.example.mms.model.medicines.Medicine
 import com.example.mms.service.NotifService
@@ -37,6 +43,7 @@ class AddMedicamentRecapFragment : Fragment() {
     private lateinit var medicine: Medicine
     private var taskIsOnlyOneTime: Boolean = false
     private lateinit var db: AppDatabase
+    private lateinit var interactions: List<Interaction>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -67,6 +74,19 @@ class AddMedicamentRecapFragment : Fragment() {
                 binding.nameMedicine.text = medicineName
             }
         }.start()
+
+        val interactionDao = InteractionDao(requireContext())
+
+        val thread = Thread {
+            this.interactions = interactionDao.thisMedicineInteractsWith(medicine, this.tasksService.getCurrentUserMedicines())
+        }
+        thread.start()
+        thread.join()
+
+        if (this.interactions.isNotEmpty()) {
+            binding.btnEffetsSecondaires.visibility = View.VISIBLE
+            binding.imageDanger.visibility = View.VISIBLE
+        }
 
         if (cycle != null) {
             // Cycle
@@ -110,13 +130,16 @@ class AddMedicamentRecapFragment : Fragment() {
             binding.hourTask.text = ""
         }
 
+        binding.btnEffetsSecondaires.setOnClickListener {
+            this.openInteractionsDialog()
+        }
 
         binding.backButton.buttonArrowBack.setOnClickListener {
             goToInAddFragments(requireActivity(), R.id.action_recap_to_start_end_date)
         }
 
         binding.btnTaskValidate.setOnClickListener {
-            saveAndRedirect()
+            this.checkIfUserAlreadyTakeThisSubstance()
         }
 
         return root
@@ -140,7 +163,7 @@ class AddMedicamentRecapFragment : Fragment() {
         val specificDays = viewModel.specificDays.value!!
         for (specificDay in specificDays) {
             specificDay.taskId = addedTask.id
-            tasksService.storeSpecificDays(specificDay)
+            this.tasksService.storeSpecificDays(specificDay)
         }
     }
 
@@ -152,7 +175,7 @@ class AddMedicamentRecapFragment : Fragment() {
         val weight = viewModel.oneTakeWeight.value!!
 
         val thread = Thread {
-            tasksService.storeOneTake(cis, weight)
+            this.tasksService.storeOneTake(cis, weight)
         }
         thread.start()
         thread.join()
@@ -185,7 +208,7 @@ class AddMedicamentRecapFragment : Fragment() {
                 // store the task
                 val task = viewModel.taskData.value!!
                 task.userId = currentUserId
-                tasksService.storeTask(task)
+                this.tasksService.storeTask(task)
 
                 val addedTask = taskDAO.getLastInserted()!!
                 idLastInserted = addedTask.id
@@ -232,5 +255,50 @@ class AddMedicamentRecapFragment : Fragment() {
         }
 
         return hours
+    }
+
+    private fun openInteractionsDialog() {
+        val interactionsAdapters = InteractionsAdapter(interactions)
+
+        val dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.custom_dialog_interaction)
+
+        val recyclerView = dialog.findViewById<RecyclerView>(R.id.rv_interactions)
+        recyclerView.adapter = interactionsAdapters
+        recyclerView.layoutManager = LinearLayoutManager(this.requireContext())
+
+        val btnClose = dialog.findViewById<View>(R.id.btn_close_interactions)
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+    }
+
+    private fun checkIfUserAlreadyTakeThisSubstance() {
+        var userAlreadyTakeSameSubstance = false
+
+        val thread = Thread {
+            userAlreadyTakeSameSubstance = this.tasksService.ifUserAlreadyTakeThisSubstance(medicine)
+        }
+        thread.start()
+        thread.join()
+
+        if (userAlreadyTakeSameSubstance) {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle(getString(R.string.attention))
+            builder.setMessage(getString(R.string.meme_substance_ajouter_quand_meme, medicine.name))
+
+            builder.setPositiveButton(getString(R.string.oui)) { _, _ ->
+                saveAndRedirect()
+            }
+
+            builder.setNegativeButton(getString(R.string.non)) { _, _ ->
+            }
+
+            builder.show()
+        } else {
+            saveAndRedirect()
+        }
     }
 }
