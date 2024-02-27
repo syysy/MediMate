@@ -257,4 +257,6 @@
     <string name="recherche_medecins">Recherche des médecins</string>
     <string name="effets_secondaires">effets secondaires</string>
     <string name="interactions_medicaments">Intéractions médicamenteuses avec des médicaments que vous prenez</string>
+    <string name="attention">Attention</string>
+    <string name="meme_substance_ajouter_quand_meme">Vous avez déjà un médicament contenant la même substance active que celui-ci. Voulez-vous vraiment ajouté \"%s\" ?</string>
 </resources>

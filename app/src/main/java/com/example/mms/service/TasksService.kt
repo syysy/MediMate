@@ -776,16 +776,30 @@ class TasksService(context: Context) {
     fun getCurrentUserMedicines(): List<Medicine> {
         val tasks = this.getCurrentUserTasks()
         val medicines = mutableListOf<Medicine>()
-        val now = LocalDateTime.now()
+        val now = LocalDateTime.now().toLocalDate()
 
         for (task in tasks) {
             val medicine = this.db.medicineDao().getByCIS(task.medicineCIS)
 
-            if (task.startDate <= now && task.endDate >= now) {
+            if (task.startDate.toLocalDate() <= now && task.endDate.toLocalDate() >= now) {
                 medicines.add(medicine!!)
             }
         }
 
         return medicines
+    }
+
+    fun ifUserAlreadyTakeThisSubstance(newMedicine: Medicine): Boolean {
+        val medicines = this.getCurrentUserMedicines()
+
+        for (medicine in medicines) {
+            if (medicine.name == newMedicine.name ||
+                (medicine.composition != null &&
+                        medicine.composition!!.substance_code == newMedicine.composition!!.substance_code)) {
+                return true
+            }
+        }
+
+        return false
     }
 }

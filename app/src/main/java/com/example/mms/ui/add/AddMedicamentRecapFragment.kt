@@ -1,15 +1,14 @@
 package com.example.mms.ui.add
 
 import android.app.Activity.RESULT_OK
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -140,7 +139,7 @@ class AddMedicamentRecapFragment : Fragment() {
         }
 
         binding.btnTaskValidate.setOnClickListener {
-            saveAndRedirect()
+            this.checkIfUserAlreadyTakeThisSubstance()
         }
 
         return root
@@ -274,5 +273,32 @@ class AddMedicamentRecapFragment : Fragment() {
         }
 
         dialog.show()
+    }
+
+    private fun checkIfUserAlreadyTakeThisSubstance() {
+        var userAlreadyTakeSameSubstance = false
+
+        val thread = Thread {
+            userAlreadyTakeSameSubstance = this.tasksService.ifUserAlreadyTakeThisSubstance(medicine)
+        }
+        thread.start()
+        thread.join()
+
+        if (userAlreadyTakeSameSubstance) {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle(getString(R.string.attention))
+            builder.setMessage(getString(R.string.meme_substance_ajouter_quand_meme, medicine.name))
+
+            builder.setPositiveButton(getString(R.string.oui)) { _, _ ->
+                saveAndRedirect()
+            }
+
+            builder.setNegativeButton(getString(R.string.non)) { _, _ ->
+            }
+
+            builder.show()
+        } else {
+            saveAndRedirect()
+        }
     }
 }
