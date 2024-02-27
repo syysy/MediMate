@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/back_button"
+        layout="@layout/back_button" />
+
+    <TextView
+        android:id="@+id/titre_modify_medecin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/modifier_votre_medecin"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/back_button"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <TextView
+        android:id="@+id/ou"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ou"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/search_doctor"
+        app:layout_constraintEnd_toEndOf="@+id/edit_mail_medecin"
+        app:layout_constraintStart_toStartOf="@+id/edit_mail_medecin"
+        app:layout_constraintTop_toBottomOf="@+id/edit_mail_medecin"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <TextView
+        android:id="@+id/label_numero"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/numero_du_medecin"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/edit_numero_medecin"
+        app:layout_constraintTop_toBottomOf="@+id/titre_modify_medecin"
+        app:layout_constraintVertical_bias="0.073" />
+
+    <EditText
+        android:id="@+id/edit_numero_medecin"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/label_numero" />
+
+    <TextView
+        android:id="@+id/label_mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mail_du_medecin"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/edit_numero_medecin"
+        app:layout_constraintTop_toBottomOf="@+id/edit_numero_medecin"
+        app:layout_constraintVertical_bias="0.02" />
+
+    <EditText
+        android:id="@+id/edit_mail_medecin"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:singleLine="true"
+        app:layout_constraintStart_toStartOf="@+id/label_mail"
+        app:layout_constraintTop_toBottomOf="@+id/label_mail" />
+
+    <Button
+        android:id="@+id/button_valider_medecin"
+        style="@style/CustomButtonStyle3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/valider_modifs"
+        android:textAllCaps="false"
+        android:paddingStart="15sp"
+        android:paddingEnd="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_mail_medecin"
+        app:layout_constraintVertical_bias="0.75" />
+
+    <Button
+        android:id="@+id/search_doctor"
+        style="@style/CustomButtonStyle3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:width="230sp"
+        android:text="@string/recherche_medecin"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toTopOf="@+id/button_valider_medecin"
+        app:layout_constraintEnd_toEndOf="@+id/button_valider_medecin"
+        app:layout_constraintStart_toStartOf="@+id/button_valider_medecin"
+        app:layout_constraintTop_toBottomOf="@+id/edit_mail_medecin" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

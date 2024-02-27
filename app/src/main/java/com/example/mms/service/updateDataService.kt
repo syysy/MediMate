@@ -1,23 +1,21 @@
 package com.example.mms.service
 
 import android.content.Context
-import android.util.Log
 import com.example.mms.database.inApp.SingletonDatabase
 import com.example.mms.database.mongoObjects.MongoVersion
-import com.example.mms.errors.ConnectionFailed
 import com.example.mms.model.Version
 
 /**
  * Class to update the local database with the mongo database
  *
  * @param context the context of the application
- * @property apiService the api service to get data from the mongo database
+ * @property mongoApiService the api service to get data from the mongo database
  * @property database the local database
  * @property mongoVersion the version of the mongo database, default null
  * @property nbMedicinesToDownload the number of medicines to download
  */
 class UpdateDataService(context: Context) {
-    private val apiService = ApiService.getInstance(context)
+    private val mongoApiService = MongoApiService.getInstance(context)
     private val database = SingletonDatabase.getDatabase(context)
 
     private var mongoVersion: MongoVersion? = null
@@ -34,13 +32,13 @@ class UpdateDataService(context: Context) {
         // get the local version from the database
         var localVersion: Version? = null
         val thread = Thread {
-            localVersion = this.database.versionDao().getFirst() ?: Version(0, 0)
+            localVersion = this.database.versionDao().getFirst() ?: Version(0, 2)
         }
         thread.start() // start the thread
         thread.join() // wait for the thread to finish
 
         // call the api to get the mongo version
-        this.apiService.getMedicinesCodesToUpdate(localVersion!!.versionNumber, { mongoVersion ->
+        this.mongoApiService.getMedicinesCodesToUpdate(localVersion!!.versionNumber, { mongoVersion ->
             this.mongoVersion = mongoVersion
 
             if (this.mongoVersion == null) {
@@ -105,7 +103,7 @@ class UpdateDataService(context: Context) {
         val actualMedicineCIS = this.mongoVersion!!.updated_documents_cis[this.nbMedicinesToDownload]
 
         // call the api to get the medicine
-        this.apiService.getMedicine(actualMedicineCIS,
+        this.mongoApiService.getMedicine(actualMedicineCIS,
             { medicine ->
                 Thread {
                     // insert the medicine into the local database

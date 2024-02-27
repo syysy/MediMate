@@ -50,6 +50,7 @@ class DialogAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = dataList[position]
+
         holder.bind(currentItem, position)
     }
 

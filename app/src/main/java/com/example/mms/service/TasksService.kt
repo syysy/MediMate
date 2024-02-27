@@ -18,6 +18,7 @@ import com.example.mms.model.SpecificDaysHourWeight
 import com.example.mms.model.Takes
 import com.example.mms.model.Task
 import com.example.mms.model.medicines.MType
+import com.example.mms.model.medicines.Medicine
 import java.time.LocalDateTime
 import java.util.Date
 
@@ -403,7 +404,7 @@ class TasksService(context: Context) {
             }
         }
 
-        return false
+        return compareLocalDateTimeOnlyDays(pointerDate, dateStartDay)
     }
 
 
@@ -770,5 +771,35 @@ class TasksService(context: Context) {
         thread.join()
 
         return shTakes
+    }
+
+    fun getCurrentUserMedicines(): List<Medicine> {
+        val tasks = this.getCurrentUserTasks()
+        val medicines = mutableListOf<Medicine>()
+        val now = LocalDateTime.now().toLocalDate()
+
+        for (task in tasks) {
+            val medicine = this.db.medicineDao().getByCIS(task.medicineCIS)
+
+            if (task.startDate.toLocalDate() <= now && task.endDate.toLocalDate() >= now) {
+                medicines.add(medicine!!)
+            }
+        }
+
+        return medicines
+    }
+
+    fun ifUserAlreadyTakeThisSubstance(newMedicine: Medicine): Boolean {
+        val medicines = this.getCurrentUserMedicines()
+
+        for (medicine in medicines) {
+            if (medicine.name == newMedicine.name ||
+                (medicine.composition != null &&
+                        medicine.composition!!.substance_code == newMedicine.composition!!.substance_code)) {
+                return true
+            }
+        }
+
+        return false
     }
 }
