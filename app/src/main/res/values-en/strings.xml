@@ -246,4 +246,10 @@
     <string name="interactions_medicaments">Drug interactions with medications you are taking</string>
     <string name="attention">Warning</string>
     <string name="meme_substance_ajouter_quand_meme">You already have a medicine containing the same active substance as this one. Do you really want to add \"%s\" ?</string>
+    <string name="title_MInfo">Information</string>
+    <string name="button_MInfo">Information</string>
+    <string name="information_type">Type :</string>
+    <string name="information_code_cis">Code CIS :</string>
+    <string name="information_compo">Composition :</string>
+    <string name="information_usage">Usage :</string>
 </resources>
