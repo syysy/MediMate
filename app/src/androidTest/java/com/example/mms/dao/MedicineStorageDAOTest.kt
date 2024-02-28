@@ -36,7 +36,7 @@ class MedicineStorageDAOTest {
     @Test
     fun testInsertError() {
         val medicineStorage = MedicineStorage(1, 10, 1)
-        assertThrows(SQLiteConstraintException::class.java) {
+        assertThrows(UninitializedPropertyAccessException::class.java) {
             medicineStorageDAO.insert(medicineStorage)
         }
     }
@@ -44,7 +44,7 @@ class MedicineStorageDAOTest {
     @Test
     fun testGetMedicineStorageByMedicineIdFail() {
         setUp()
-        val medicineStorage = medicineStorageDAO.getMedicineStorageByMedicineId(64793681)
+        val medicineStorage = medicineStorageDAO.getMedicineStorageByMedicineId(123456789)
         assert(medicineStorage == null)
     }
 

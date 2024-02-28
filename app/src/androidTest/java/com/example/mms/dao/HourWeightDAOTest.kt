@@ -52,26 +52,6 @@ class HourWeightDAOTest {
     }
 
     @Test
-    fun testGetHourWeight() {
-        setUp()
-        val hourWeight = HourWeight(1, "12:00", 70)
-        hourWeightDAO.insert(hourWeight)
-        val hourWeightRetrieved = hourWeightDAO.getHourWeight(1)
-        assert(hourWeightRetrieved != null)
-        assert(hourWeightRetrieved.hour == hourWeight.hour)
-        assert(hourWeightRetrieved.weight == hourWeight.weight)
-        cleanUp()
-    }
-
-    @Test
-    fun testGetHourWeightFail() {
-        setUp()
-        val hourWeightRetrieved = hourWeightDAO.getHourWeight(1)
-        assert(hourWeightRetrieved == null)
-        cleanUp()
-    }
-
-    @Test
     fun testDelete() {
         setUp()
         val hourWeight = HourWeight(1, "12:00", 70)

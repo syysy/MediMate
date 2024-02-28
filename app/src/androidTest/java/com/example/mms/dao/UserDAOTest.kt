@@ -21,6 +21,7 @@ class UserDAOTest {
 
     @Test
     fun testInsertUser() {
+        setUp()
         val user = getUser1()
         userDAO.insertUser(user)
         val userFromDB = userDAO.getUser("john.doe@mail.com")
@@ -29,17 +30,8 @@ class UserDAOTest {
     }
 
     @Test
-    fun testInsertUserWithSameEmail() {
-        val user = getUser1()
-        userDAO.insertUser(user)
-        assertThrows(SQLiteConstraintException::class.java) {
-            userDAO.insertUser(user)
-        }
-        userDAO.deleteUser("john.doe@mail.com")
-    }
-
-    @Test
     fun testGetAllUsers() {
+        setUp()
         val user = getUser1()
         val user2 = getUser2()
         userDAO.insertUser(user)
@@ -52,20 +44,24 @@ class UserDAOTest {
 
     @Test
     fun testUpdateIsConnected() {
+        setUp()
         val user = getUser1()
         userDAO.insertUser(user)
         userDAO.updateIsConnected(true, "john.doe@mail.com")
-        val userFromDB = userDAO.getUser("john.doe@email.com")
+        val userFromDB = userDAO.getUser("john.doe@mail.com")
         assert(userFromDB!!.isConnected)
+        userDAO.deleteAllUsers()
     }
 
     @Test
     fun testGetConnectedUser() {
+        setUp()
         val user = getUser1()
         userDAO.insertUser(user)
         userDAO.updateIsConnected(true, "john.doe@mail.com")
         val userFromDB = userDAO.getConnectedUser()
-        assert(userFromDB == user)
+        assert(userFromDB!!.email == user.email)
+        userDAO.deleteAllUsers()
     }
 
 

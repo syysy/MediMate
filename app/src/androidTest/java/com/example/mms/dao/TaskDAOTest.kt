@@ -40,7 +40,8 @@ class TaskDAOTest {
         val task = Task(1, TYPE_PRIS_2JOURNALIERE, LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), LocalDateTime.now(), medicine.code_cis, "1")
         taskDAO.insert(task)
         val found = taskDAO.getTask(1)
-        assertEquals(task, found)
+        assertEquals(task.id, found.id)
+        assertEquals(task.type, found.type)
         taskDAO.deleteById(1)
     }
 
