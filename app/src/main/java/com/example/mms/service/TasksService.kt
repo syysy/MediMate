@@ -1,6 +1,7 @@
 package com.example.mms.service
 
 import android.content.Context
+import android.util.Log
 import com.example.mms.Utils.compareLocalDateTimeOnlyDays
 import com.example.mms.Utils.dateToLocalDatetime
 import com.example.mms.Utils.hourMinuteToString
@@ -321,7 +322,8 @@ class TasksService(context: Context) {
             }
             tt.start()
             tt.join()
-
+            Log.d("getNumberOfTaskDoneToday SHW", shw.toString())
+            Log.d("getNumberOfTaskDoneToday", takes.toString())
             if (takes != null) {
                 // If the Takes is done, increment the number of task done today
                 totalTakes++
