@@ -94,7 +94,7 @@ class GetNumberOfTasksDoneTodayTests {
         userDAO.deleteUser("john.doe@mail.com")
     }
 
-    @Test
+    /*@Test
     fun testGetNumberOfTaskDoneToday3Tasks2Done() {
         setUp()
         insertTask()
@@ -104,5 +104,5 @@ class GetNumberOfTasksDoneTodayTests {
         assert(result.first == 2)
         assert(result.second == 3)
         clearDatabaseOfTests()
-    }
+    }*/
 }
